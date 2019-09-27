@@ -11,7 +11,19 @@
                 "navigationBarTitleText": "主页"
             }
         }
-	],
+	    ,{
+            "path" : "pages/createHomework/createHomework",
+            "style" : {
+				"navigationBarTitleText": "布置作业"
+			}
+        }
+        ,{
+            "path" : "pages/checkHomework/checkHomework",
+            "style" : {
+				"navigationBarTitleText": "批改作业"
+			}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "授课评分系统",
