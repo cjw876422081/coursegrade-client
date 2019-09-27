@@ -20,8 +20,7 @@
 		    "style": {
 		        "navigationBarTitleText": "布置作业"
 		    }
-		}
-	    ,{
+		},{
             "path" : "pages/homeworkNote/homeworkNote",
             "style" : {
 				"navigationBarTitleText": "作业对应的笔记"
