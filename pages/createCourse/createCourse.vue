@@ -42,8 +42,8 @@
 	.navigation{
 		left: 0px;
 		top: 44px;
-		width: 411px;
-		height: 50px;
+		width: 100vw;
+		height: 6vh;
 		line-height: 20px;
 		background-color: rgba(0, 47, 147, 0.75);
 		text-align: center;
@@ -52,8 +52,8 @@
 	.imageUpload{
 		left: 0px;
 		top: 130px;
-		width: 410px;
-		height: 156px;
+		width: 100vw;
+		height: 20vh;
 		line-height: 20px;
 		text-align: center;
 		border: 1px solid rgba(187, 187, 187, 1);
@@ -61,8 +61,8 @@
 	.courseForm{
 		left: 0px;
 		top: 286px;
-		width: 410px;
-		height: 441px;
+		width: 100vw;
+		height: 50vh;
 		line-height: 20px;
 		text-align: center;
 		border: 1px solid rgba(187, 187, 187, 1);
@@ -70,8 +70,8 @@
 	.submitButton{
 		left: 0px;
 		top: 731px;
-		width: 411px;
-		height: 91px;
+		width: 100vw;
+		height: 16vh;
 		line-height: 20px;
 		text-align: center;
 		border: 1px solid rgba(187, 187, 187, 1);
