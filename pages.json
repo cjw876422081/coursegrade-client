@@ -11,15 +11,24 @@
                 "navigationBarTitleText": "主页"
             }
         },{
-            "path" : "pages/createHomework/createHomework",
+		    "path": "pages/checkHomework/checkHomework",
+		    "style": {
+		        "navigationBarTitleText": "批改作业"
+		    }
+		},{
+		    "path": "pages/creatHomework/creatHomework",
+		    "style": {
+		        "navigationBarTitleText": "布置作业"
+		    }
+		}
+	    ,{
+            "path" : "pages/homeworkNote/homeworkNote",
             "style" : {
-				"navigationBarTitleText": "布置作业"
+				"navigationBarTitleText": "作业对应的笔记"
 			}
         },{
-            "path" : "pages/checkHomework/checkHomework",
-            "style" : {
-				"navigationBarTitleText": "批改作业"
-			}
+            "path" : "pages/createCourse/createCourse",
+            "style" : {}
         }
     ],
 	"globalStyle": {
