@@ -16,7 +16,7 @@
 		        "navigationBarTitleText": "批改作业"
 		    }
 		},{
-		    "path": "pages/creatHomework/creatHomework",
+		    "path": "pages/createHomework/createHomework",
 		    "style": {
 		        "navigationBarTitleText": "布置作业"
 		    }
