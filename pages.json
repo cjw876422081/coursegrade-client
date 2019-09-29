@@ -30,9 +30,16 @@
             "style" : {}
         }
         ,{
-            "path" : "pages/createCourse/creatCoursePlan/creatCoursePlan",
+            "path" : "pages/creatCoursePlan/creatCoursePlan",
             "style" : {
 				"navigationBarTitleText": "添加授课内容"
+			}
+			
+        }
+        ,{
+            "path" : "pages/courseDetails/courseDetails/courseDetails",
+            "style" : {
+				"navigationBarTitleText": "查看课程"
 			}
         }
     ],
