@@ -64,6 +64,12 @@
 				"navigationBarTitleText": "学生查看班级学生列表"
 			}
         }
+        ,{
+            "path" : "pages/groupStudent/groupStudent",
+            "style" : {
+				"navigationBarTitleText": "班级加入人员名单"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
