@@ -82,7 +82,15 @@
             "style" : {
 				"navigationBarTitleText": "查看课程"
 			}
-        }
+		},
+		{
+			"path" : "pages/register/register",
+			"style" : {
+				"navigationBarTitleText": "注册"
+			}
+		}
+       
+		
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
