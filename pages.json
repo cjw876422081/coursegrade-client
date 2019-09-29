@@ -107,7 +107,7 @@
 				"navigationBarTitleText": "创建课程"
 			}
 		}, {
-			"path": "pages/student/checkClassStudentList",
+			"path": "pages/student/checkCourseList",
 			"style": {
 				"navigationBarTitleText": "学生查看课程列表"
 			}
