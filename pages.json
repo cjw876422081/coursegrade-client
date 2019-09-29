@@ -16,7 +16,7 @@
 		        "navigationBarTitleText": "批改作业"
 		    }
 		},{
-		    "path": "pages/creatHomework/creatHomework",
+		    "path": "pages/createHomework/createHomework",
 		    "style": {
 		        "navigationBarTitleText": "布置作业"
 		    }
@@ -28,6 +28,12 @@
         },{
             "path" : "pages/createCourse/createCourse",
             "style" : {}
+        }
+        ,{
+            "path" : "pages/createCourse/creatCoursePlan/creatCoursePlan",
+            "style" : {
+				"navigationBarTitleText": "添加授课内容"
+			}
         }
     ],
 	"globalStyle": {
