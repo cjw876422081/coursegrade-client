@@ -27,7 +27,7 @@
 			}
         },{
             "path" : "pages/createCourse/createCourse",
-            "style" : {"navigationBarTitleText": "创建课程"}
+            "style" : {}
         }
     ],
 	"globalStyle": {
