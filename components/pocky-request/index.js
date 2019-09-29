@@ -55,7 +55,7 @@ request.prototype.addGlobalInterce({
             console.log('is 4xx or 5xx')
 			if(parseInt(res.statusCode)===401){
 				uni.redirectTo({
-					url:'/pages/login/login.vue'
+					url:'/pages/login/login'
 				})
 			}
             return Promise.reject(res)

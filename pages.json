@@ -11,12 +11,30 @@
                 "navigationBarTitleText": "主页"
             }
         },{
-			"path":"pages/checkHomework/homeworkSituation",
+			"path":"pages/homeworkSituation/homeworkSituation",
 			"style":{
 				"navigationBarTitleText":"查看作业提交情况"
 			}
-		}
-	],
+		},{
+		    "path": "pages/checkHomework/checkHomework",
+		    "style": {
+		        "navigationBarTitleText": "批改作业"
+		    }
+		},{
+		    "path": "pages/createHomework/createHomework",
+		    "style": {
+		        "navigationBarTitleText": "布置作业"
+		    }
+		},{
+            "path" : "pages/homeworkNote/homeworkNote",
+            "style" : {
+				"navigationBarTitleText": "作业对应的笔记"
+			}
+        },{
+            "path" : "pages/createCourse/createCourse",
+            "style" : {"navigationBarTitleText": "创建课程"}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "授课评分系统",
