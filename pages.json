@@ -36,7 +36,7 @@
 				"navigationBarTitleText": "创建课程"
 			}
 		}, {
-			"path": "pages/coursePlan/coursePlan-teacher/coursePlan-teacher",
+			"path": "pages/coursePlan/coursePlan-teacher",
 			"style": {
 				"navigationBarTitleText": "老师查看课程内容"
 			}
