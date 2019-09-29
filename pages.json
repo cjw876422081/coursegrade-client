@@ -160,6 +160,12 @@
 			"style": {
 				"navigationBarTitleText": "查看已创建班级"
 			}
+		},
+		{
+			"path": "pages/personalCenter/personalCenter",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
 		}
 	],
 	"globalStyle": {
