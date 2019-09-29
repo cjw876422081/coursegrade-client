@@ -36,7 +36,9 @@
         }
         ,{
             "path" : "pages/groupStudent/groupStudent",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "班级加入人员名单"
+			}
         }
     ],
 	"globalStyle": {
