@@ -83,6 +83,10 @@
 				"navigationBarTitleText": "查看课程"
 			}
         }
+        ,{
+            "path" : "pages/searchClass/searchClass",
+            "style" : {"navigationBarTitleText": "查看已创建班级"}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
