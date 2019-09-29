@@ -36,7 +36,7 @@
 				"navigationBarTitleText": "创建课程"
 			}
 		}, {
-			"path": "pages/coursePlan/coursePlan-teacher",
+			"path": "pages/coursePlan/coursePlan-teacher/coursePlan-teacher",
 			"style": {
 				"navigationBarTitleText": "老师查看课程内容"
 			}
@@ -106,7 +106,7 @@
 				"navigationBarTitleText": "创建课程"
 			}
 		}, {
-			"path": "pages/student/checkClassStudentList",
+			"path": "pages/student/checkCourseList",
 			"style": {
 				"navigationBarTitleText": "学生查看课程列表"
 			}
@@ -161,8 +161,7 @@
 			"style": {
 				"navigationBarTitleText": "查看已创建班级"
 			}
-		},
-		{
+		}, {
 			"path": "pages/personalCenter/personalCenter",
 			"style": {
 				"navigationBarTitleText": "个人中心"
