@@ -11,6 +11,11 @@
                 "navigationBarTitleText": "主页"
             }
         },{
+			"path":"pages/homeworkSituation/homeworkSituation",
+			"style":{
+				"navigationBarTitleText":"查看作业提交情况"
+			}
+		},{
 		    "path": "pages/checkHomework/checkHomework",
 		    "style": {
 		        "navigationBarTitleText": "批改作业"
@@ -27,7 +32,43 @@
 			}
         },{
             "path" : "pages/createCourse/createCourse",
-            "style" : {}
+			"style" : {"navigationBarTitleText": "创建课程"}
+        },{
+            "path" : "pages/student/checkClassStudentList",
+            "style" : {
+				"navigationBarTitleText": "学生查看课程列表"
+			}
+        },{
+            "path" : "pages/student/checkCourseInfo",
+            "style" : {
+				"navigationBarTitleText": "学生查看课程信息"
+			}
+        },{
+            "path" : "pages/student/checkCourseContent",
+            "style" : {
+				"navigationBarTitleText": "学生查看单个课程内容"
+			}
+        },{
+            "path" : "pages/student/checkCourseContentHomeworkList",
+            "style" : {
+				"navigationBarTitleText": "学生查看课程内容作业列表"
+			}
+        },{
+            "path" : "pages/student/checkCourseClassList",
+            "style" : {
+				"navigationBarTitleText": "学生查看课程开班列表"
+			}
+        },{
+            "path" : "pages/student/checkClassStudentList",
+            "style" : {
+				"navigationBarTitleText": "学生查看班级学生列表"
+			}
+        }
+        ,{
+            "path" : "pages/groupStudent/groupStudent",
+            "style" : {
+				"navigationBarTitleText": "班级加入人员名单"
+			}
         }
         ,{
             "path" : "pages/creatCoursePlan/creatCoursePlan",
