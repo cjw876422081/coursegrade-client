@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="main-content">
 		<scroll-view scroll-y="true" class="scroll-Y" @scrolltoupper="refreshData" @scrolltolower="getNextPage">
 				
 		</scroll-view>
@@ -25,7 +25,7 @@
 				abc:"test-abc"
 			});
 			this.courseService.getTeacherCourses({page:this.page,size:this.size});
-			console.log(this.courseInfo)
+			console.log("courseHomework vue",this.courseInfo)
 		},
 		methods: {
 			refreshData:function(e){
@@ -39,5 +39,5 @@
 </script>
 
 <style>
-
+	
 </style>
