@@ -177,6 +177,7 @@
             "path" : "pages/createGroup/createGroup",
             "style" : {"navigationBarTitleText": "创建班级"}
         }
+        
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
