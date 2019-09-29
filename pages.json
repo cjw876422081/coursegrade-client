@@ -1,35 +1,72 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-            "path": "pages/login/login",
-            "style": {
-                "navigationBarTitleText": "登录"
-            }
-        },{
-            "path": "pages/main/main",
-            "style": {
-                "navigationBarTitleText": "主页"
-            }
-        },{
-		    "path": "pages/checkHomework/checkHomework",
-		    "style": {
-		        "navigationBarTitleText": "批改作业"
-		    }
-		},{
-		    "path": "pages/createHomework/createHomework",
-		    "style": {
-		        "navigationBarTitleText": "布置作业"
-		    }
-		},{
-            "path" : "pages/homeworkNote/homeworkNote",
-            "style" : {
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		}, {
+			"path": "pages/main/main",
+			"style": {
+				"navigationBarTitleText": "主页"
+			}
+		}, {
+			"path": "pages/checkHomework/checkHomework",
+			"style": {
+				"navigationBarTitleText": "批改作业"
+			}
+		}, {
+			"path": "pages/createHomework/createHomework",
+			"style": {
+				"navigationBarTitleText": "布置作业"
+			}
+		}, {
+			"path": "pages/homeworkNote/homeworkNote",
+			"style": {
 				"navigationBarTitleText": "作业对应的笔记"
 			}
-        },{
-            "path" : "pages/createCourse/createCourse",
-            "style" : {}
-        }
-    ],
+		}, {
+			"path": "pages/createCourse/createCourse",
+			"style": {
+				"navigationBarTitleText": "创建课程"
+			}
+		}, {
+			"path": "pages/coursePlan/coursePlan-teacher/coursePlan-teacher",
+			"style": {
+				"navigationBarTitleText": "老师查看课程内容"
+			}
+		}, {
+			"path": "pages/courseNote/courseNoteByPlan-teacher/courseNoteByPlan-teacher",
+			"style": {
+				"navigationBarTitleText": "老师查看单个授课内容的笔记"
+			}
+		}, {
+			"path": "pages/courseHomework/courseHomeworkList-teacher",
+			"style": {
+				"navigationBarTitleText": "老师查看作业列表"
+			}
+		}, {
+			"path": "pages/courseHomework/getOneHomework",
+			"style": {
+				"navigationBarTitleText": "学生查看单个作业"
+			}
+		}, {
+			"path": "pages/courseHomework/submitHomework",
+			"style": {
+				"navigationBarTitleText": "学生提交作业"
+			}
+		}, {
+			"path": "pages/courseHomework/submittedHomework",
+			"style": {
+				"navigationBarTitleText": "学生查看已提交作业"
+			}
+		}, {
+			"path": "pages/courseInfo/courseEvaluation",
+			"style": {
+				"navigationBarTitleText": "学生查看课程掌握程度评估"
+			}
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "授课评分系统",
