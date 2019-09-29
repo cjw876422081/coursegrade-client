@@ -14,13 +14,7 @@ export default class CourseService{
 		if(pageParam){
 			Object.assign(requestParam,{data:pageParam});
 		}
-		this.request.get(requestParam).then((result)=>{
-			console.log("CourseService getTeacherCourses",result)
-		}).catch(err=>{
-			
-		}).finally(()=>{
-			
-		})
+		return this.request.get(requestParam);
 	}
 	
 }

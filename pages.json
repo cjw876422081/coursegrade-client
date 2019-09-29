@@ -6,6 +6,12 @@
 				"navigationBarTitleText": "登录"
 			}
 		}, {
+			"path": "pages/teacherCourse/teacherCourse",
+			"style": {
+				"navigationBarTitleText": "我的课程"
+			}
+		},
+		{
 			"path": "pages/main/main",
 			"style": {
 				"navigationBarTitleText": "主页"
