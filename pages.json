@@ -11,6 +11,11 @@
                 "navigationBarTitleText": "主页"
             }
         },{
+			"path":"pages/homeworkSituation/homeworkSituation",
+			"style":{
+				"navigationBarTitleText":"查看作业提交情况"
+			}
+		},{
 		    "path": "pages/checkHomework/checkHomework",
 		    "style": {
 		        "navigationBarTitleText": "批改作业"
