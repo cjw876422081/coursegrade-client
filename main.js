@@ -2,8 +2,8 @@ import Vue from 'vue'
 import App from './App'
 
 Vue.config.productionTip = false
-Vue.prototype.$authLoginUrl = './api/authenticate'
-Vue.prototype.$accountUrl = './api/account'
+Vue.prototype.$authLoginUrl = '/api/authenticate'
+Vue.prototype.$accountUrl = '/api/account'
 Vue.prototype.dateFormat = function(date = new Date(), format){
             format = format || 'YYYY-MM-DD HH:mm:ss';
 

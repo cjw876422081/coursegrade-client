@@ -16,5 +16,12 @@ export default class CourseService{
 		}
 		return this.request.get(requestParam);
 	}
+	createCourse(courseInfo){
+		
+	}
+	delCourse(courseId){
+		const url="/api/course-infos/"+courseId;
+		return this.request.delete({url:url});
+	}
 	
 }
