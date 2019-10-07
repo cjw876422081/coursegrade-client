@@ -166,12 +166,14 @@
 			"style": {
 				"navigationBarTitleText": "个人中心"
 			}
-		}, {
-			"path": "pages/createGroup/createGroup",
-			"style": {
-				"navigationBarTitleText": "创建班级"
-			}
-		}, {
+		}, 
+		// {
+		// 	"path": "pages/createGroup/createGroup",
+		// 	"style": {
+		// 		"navigationBarTitleText": "创建班级"
+		// 	}
+		// }, 
+		{
 			"path": "pages/courseHomework/getHomeworkByPlan",
 			"style": {
 				"navigationBarTitleText": "老师查看单个授课内容的作业"
