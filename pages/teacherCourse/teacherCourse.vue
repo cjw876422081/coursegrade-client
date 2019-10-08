@@ -60,7 +60,7 @@
 				totalElements:0,
 				downOption: { 
 					use: true, // 是否启用下拉刷新; 默认true
-					auto: true, // 是否在初始化完毕之后自动执行下拉刷新的回调; 默认true
+					auto: true // 是否在初始化完毕之后自动执行下拉刷新的回调; 默认true
 				},
 				upOption: {
 					use: true, // 是否启用上拉加载; 默认true
@@ -124,7 +124,7 @@
 						
 						this.isEnd=result.data.last;
 						this.pageIndex=result.data.number;
-						this.pageSize=result.data.numberOfElements;
+						//this.pageSize=result.data.numberOfElements;
 						this.totalElements=result.data.totalElements;
 					}
 				}).catch(err=>{

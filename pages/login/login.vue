@@ -21,6 +21,11 @@
         <view class="btn-row">
             <button type="primary" class="default" size="default" @tap="bindLogin">登录</button>
         </view>
+		
+		
+		<view class="btn-row">
+		    <button type="default" class="default" size="default" @tap="bindReg">注册新用户</button>
+		</view>
        
     </view>
 </template>
@@ -103,7 +108,7 @@
 								}
 							})
 							if(flag){
-								uni.setStorageSync(USER_INFO, user);
+								uni.setStorageSync("userInfo", user);
 								uni.setStorageSync("loginuser",data);
 								this.toMain(accountRes.data.login);
 							}else{
@@ -130,9 +135,14 @@
                 });
 				
             },
+			bindReg(){
+				uni.navigateTo({
+					url: '../register/register'
+				});
+			},
             toMain(userName) {
                 uni.navigateTo({
-                	url: '../main/main'
+                	url: '../teacherCourse/teacherCourse'
                 });
 
             }

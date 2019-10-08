@@ -33,7 +33,8 @@
 		}, {
 			"path": "pages/createCourse/createCourse",
 			"style": {
-				"navigationBarTitleText": "创建课程"
+				"navigationBarTitleText": "创建课程",
+				"backgroundColor":"#eee"
 			}
 		}, {
 			"path": "pages/coursePlan/coursePlan-teacher",
