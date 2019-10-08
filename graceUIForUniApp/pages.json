@@ -1,0 +1,378 @@
+{
+    "pages" : [
+        //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+        {
+            "path" : "pages/index/index",
+            "style" : {
+                "titleNView" : false,
+                "bounce" : "none", // app 端禁止回弹
+                "scrollIndicator" : "none" //隐藏滚动条
+            }
+        },
+        {
+            "path" : "pages/jm/jm",
+            "style" : {
+                "titleNView" : false,
+                "bounce" : "none", // app 端禁止回弹
+                "scrollIndicator" : "none" //隐藏滚动条
+            }
+        },
+        {
+            "path" : "pages/gy/gy",
+            "style" : {
+                "titleNView" : false,
+                "bounce" : "none", // app 端禁止回弹
+                "scrollIndicator" : "none" //隐藏滚动条
+            }
+        },
+        {
+            "path" : "pages/rows/rows",
+            "style" : {}
+        },
+        {
+            "path" : "pages/scroll/scroll",
+            "style" : {}
+        },
+        {
+            "path" : "pages/text/text",
+            "style" : {}
+        },
+        {
+            "path" : "pages/list/list",
+            "style" : {}
+        },
+        {
+            "path" : "pages/boxes/boxes",
+            "style" : {}
+        },
+        {
+            "path" : "pages/imgitem/imgitem",
+            "style" : {}
+        },
+        {
+            "path" : "pages/newslist/newslist",
+            "style" : {}
+        },
+        {
+            "path" : "pages/tab/tab",
+            "style" : {}
+        },
+        {
+            "path" : "pages/tabfullpage/tabfullpage",
+            "style" : {}
+        },
+        {
+            "path" : "pages/speaker/speaker",
+            "style" : {}
+        },
+        {
+            "path" : "pages/star/star",
+            "style" : {}
+        },
+        {
+            "path" : "pages/accordion/accordion",
+            "style" : {}
+        },
+        {
+            "path" : "pages/button/button",
+            "style" : {}
+        },
+        {
+            "path" : "pages/loading/loading",
+            "style" : {}
+        },
+        {
+            "path" : "pages/badge/badge",
+            "style" : {}
+        },
+        {
+            "path" : "pages/titleandmore/titleandmore",
+            "style" : {}
+        },
+        {
+            "path" : "pages/boxbanner/boxbanner",
+            "style" : {}
+        },
+        {
+            "path" : "pages/selecttips/selecttips",
+            "style" : {}
+        },
+        {
+            "path" : "pages/footer/footer",
+            "style" : {}
+        },
+        {
+            "path" : "pages/form/form",
+            "style" : {}
+        },
+        {
+            "path" : "pages/comments/comments",
+            "style" : {}
+        },
+        {
+            "path" : "pages/search/search",
+            "style" : {}
+        },
+        {
+            "path" : "pages/login/login",
+            "style" : {}
+        },
+        {
+            "path" : "pages/city/city",
+            "style" : {}
+        },
+        {
+            "path" : "pages/banner/banner",
+            "style" : {}
+        },
+        {
+            "path" : "pages/addfile/addfile",
+            "style" : {}
+        },
+        {
+            "path" : "pages/set/set",
+            "style" : {}
+        },
+        {
+            "path" : "pages/icons/icons",
+            "style" : {}
+        },
+        {
+            "path" : "pages/echarts/echarts",
+            "style" : {}
+        },
+        {
+            "path" : "pages/pulltorefresh/pulltorefresh",
+            "style" : {
+                "enablePullDownRefresh" : true
+            }
+        },
+        {
+            "path" : "pages/loadmore/loadmore",
+            "style" : {}
+        },
+        {
+            "path" : "pages/table/table",
+            "style" : {}
+        },
+        {
+            "path" : "pages/timeline/timeline",
+            "style" : {}
+        },
+        {
+            "path" : "pages/cate/cate",
+            "style" : {}
+        },
+        {
+            "path" : "pages/shoppingcart/shoppingcart",
+            "style" : {}
+        },
+        {
+            "path" : "pages/checker/checker",
+            "style" : {}
+        },
+        {
+            "path" : "pages/steps/steps",
+            "style" : {}
+        },
+        {
+            "path" : "pages/countdown/countdown",
+            "style" : {}
+        },
+        {
+            "path" : "pages/filter/filter",
+            "style" : {}
+        },
+        {
+            "path" : "pages/swiper/swiper",
+            "style" : {}
+        },
+        {
+            "path" : "pages/slidedo/slidedo",
+            "style" : {}
+        },
+        {
+            "path" : "pages/moveview/moveview",
+            "style" : {}
+        },
+        {
+            "path" : "pages/date/date",
+            "style" : {}
+        },
+        {
+            "path" : "pages/slider/slider",
+            "style" : {}
+        },
+        {
+            "path" : "pages/richtext/richtext",
+            "style" : {}
+        },
+        {
+            "path" : "pages/alert/alert",
+            "style" : {}
+        },
+        {
+            "path" : "pages/table2/table2",
+            "style" : {}
+        },
+        {
+            "path" : "pages/waterfall/waterfall",
+            "style" : {}
+        },
+        {
+            "path" : "pages/crooper/crooper",
+            "style" : {}
+        },
+        {
+            "path" : "pages/product/product",
+            "style" : {}
+        },
+        {
+            "path" : "pages/lazyload/lazyload",
+            "style" : {}
+        },
+        {
+            "path" : "pages/citySelect/citySelect",
+            "style" : {}
+        },
+        {
+            "path" : "pages/navBtn/navBtn",
+            "style" : {
+                "app-plus" : {
+                    "titleNView" : {
+                        "buttons" : [
+                            {
+                                "type" : "share"
+                            },
+                            {
+                                "type" : "none",
+                                "text" : "提交",
+                                "fontSize" : "16",
+                                "color" : "#007AFF"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "path" : "pages/navTransparent/navTransparent",
+            "style" : {
+                "app-plus" : {
+                    "titleNView" : {
+                        "type" : "transparent"
+                    }
+                }
+            }
+        },
+        {
+            "path" : "pages/numberBox/numberBox",
+            "style" : {}
+        },
+        {
+            "path" : "pages/im/im",
+            "style" : {
+                "bounce" : "none"
+            }
+        },
+        {
+            "path" : "pages/skeleton/skeleton",
+            "style" : {}
+        },
+        {
+            "path" : "pages/segmented-control/segmented-control",
+            "style" : {}
+        },
+        {
+            "path" : "pages/segmented-control-demo/segmented-control-demo",
+            "style" : {
+                "enablePullDownRefresh" : true
+            }
+        },
+        {
+            "path" : "pages/lotteryDraw/lotteryDraw",
+            "style" : {}
+        },
+        {
+            "path" : "pages/scratchCard/scratchCard",
+            "style" : {
+                "bounce" : "none",
+                "disableScroll" : true
+            }
+        },
+        {
+            "path" : "pages/questionnaire/questionnaire",
+            "style" : {}
+        },
+        {
+            "path" : "pages/progressbar/progressbar",
+            "style" : {}
+        },
+        {
+            "path" : "pages/popupmenu/popupmenu",
+            "style" : {}
+        },
+        {
+            "path" : "pages/popovermenu/popovermenu",
+            "style" : {}
+        },
+        {
+            "path" : "pages/animate/animate",
+            "style" : {}
+        },
+        {
+            "path" : "pages/numberKeyboard/numberKeyboard",
+            "style" : {}
+        },
+        {
+            "path" : "pages/address/address",
+            "style" : {}
+        },
+        {
+            "path" : "pages/address-add/address-add",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/IDcard/IDcard",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/richtext-strong/richtext-strong",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/cardView/cardView",
+            "style" : {}
+        }
+    ],
+    "globalStyle" : {
+        "navigationBarTextStyle" : "black",
+        "navigationBarTitleText" : "GraceUI",
+        "navigationBarBackgroundColor" : "#FFFFFF",
+        "backgroundColor" : "#FFFFFF"
+    },
+    "tabBar" : {
+        "color" : "#707070",
+        "selectedColor" : "#00B26A",
+        "list" : [
+            {
+                "pagePath" : "pages/index/index",
+                "text" : "基础组件",
+                "iconPath" : "static/imgs/zj.png",
+                "selectedIconPath" : "static/imgs/zj-a.png"
+            },
+            {
+                "pagePath" : "pages/jm/jm",
+                "text" : "界面库",
+                "iconPath" : "static/imgs/jm.png",
+                "selectedIconPath" : "static/imgs/jm-a.png"
+            },
+            {
+                "pagePath" : "pages/gy/gy",
+                "text" : "关于grace",
+                "iconPath" : "static/imgs/gy.png",
+                "selectedIconPath" : "static/imgs/gy-a.png"
+            }
+        ]
+    }
+}

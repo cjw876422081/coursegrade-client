@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App'
 
+
+
 Vue.config.productionTip = false
 Vue.prototype.$authLoginUrl = './api/authenticate'
 Vue.prototype.$accountUrl = './api/account'
