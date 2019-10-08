@@ -13,6 +13,8 @@
 </script>
 
 <style>
+	@import './common/uni.css';
+	@import './common/uni-nvue.css';
 	/*每个页面公共css */
 	page {
 		min-height: 100%;

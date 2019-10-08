@@ -17,7 +17,11 @@ export default class CourseService{
 		return this.request.get(requestParam);
 	}
 	createCourse(courseInfo){
-		
+		return this.request.post({
+			url:'/api/course-infos/',
+			data:courseInfo,
+			contentType: 'json'
+		})
 	}
 	delCourse(courseId){
 		const url="/api/course-infos/"+courseId;
