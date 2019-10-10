@@ -27,5 +27,10 @@ export default class CourseService{
 		const url="/api/course-infos/"+courseId;
 		return this.request.delete({url:url});
 	}
-	
+	getCourseInfo(courseId){
+		const requestParam={
+			url:"/api/course-infos/"+courseId,
+		}
+		return this.request.get(requestParam);
+	}
 }
