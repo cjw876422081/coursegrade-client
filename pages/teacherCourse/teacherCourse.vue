@@ -1,7 +1,7 @@
 <template>
 	<view class="main-content">
 		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
-			<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course)">
+			<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
 					<uni-swipe-action :options="course.delOptions" @click="delClick" data-course="course">
 						<uni-card
 						:title="course.courseName" 
@@ -135,8 +135,11 @@
 					}
 				});
 			},
-			courseClick(course){
-				console.log("courseClick",course);
+			courseClick(cId){
+				/* console.log("courseClick",course); */
+				uni.navigateTo({
+									url: '../courseDetails/courseDetails?cId=' + cId
+								});
 			},
 			delClick(e){
 				
