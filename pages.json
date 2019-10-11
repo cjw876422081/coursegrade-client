@@ -84,7 +84,8 @@
 		}, {
 			"path": "pages/homeworkSituation/homeworkSituation",
 			"style": {
-				"navigationBarTitleText": "查看作业提交情况"
+				"navigationBarTitleText": "查看作业提交情况",
+				"backgroundColor":"#eee"
 			}
 		}, {
 			"path": "pages/checkHomework/checkHomework",
@@ -180,7 +181,7 @@
 				"navigationBarTitleText": "老师查看单个授课内容的作业"
 			}
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "授课评分系统",

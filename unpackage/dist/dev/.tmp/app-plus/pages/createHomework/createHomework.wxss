@@ -1,0 +1,26 @@
+
+form{
+	margin-top: 40vh;
+}
+.input-group{
+	background: rgba(0,0,0,0);
+}
+.input-group .title{
+	font-family: "\6977\4F53";
+	width:190rpx;
+	color:#111;
+}
+.input-group input{
+	font-family: "\6977\4F53";
+	margin-top: 19rpx;
+}
+.input-group textarea{
+	font-family: "\6977\4F53";
+	margin-top: 19rpx;
+}
+.createBtn{
+	width: 80vw;
+	margin: 10vh 10vw;
+	background: rgba(220,220,220,0.5);
+}
+

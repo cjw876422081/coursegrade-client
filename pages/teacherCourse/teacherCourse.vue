@@ -1,8 +1,10 @@
 <template>
 	<view class="main-content">
+
 		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
 			<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
 					<uni-swipe-action :options="course.delOptions" @click="delClick" data-course="course">
+
 						<uni-card
 						:title="course.courseName" 
 						thumbnail="/static/logocolor.png" 
@@ -149,6 +151,7 @@
 				console.log('当前点击的是第'+e.index+'个按钮，点击内容是'+e.content.text,e)
 				if(e.content){
 					const courseId=e.content.courseId;
+					console.log('---------1---',courseId)
 					this.courseService.delCourse(courseId).then((result)=>{
 						this.deleteCourse(courseId);
 					}).catch((err)=>{
