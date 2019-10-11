@@ -1,7 +1,11 @@
 <template>
 	<view class="content">
 		<view class="courseName">{{ list.courseName }}</view>
-		<mix-tree :list="list.children" @treeItemClick="treeItemClick"></mix-tree>
+		<view class="addButton">
+			<button class="mini-btn" type="default" size="mini" @click="addCoursePlan">添加章节</button>
+		</view>
+		<mix-tree :list="list.children"></mix-tree>
+		<!-- @treeItemClick="treeItemClick" -->
 		<view></view>
 	</view>
 </template>
@@ -20,8 +24,9 @@ export default {
 			coursePlanTeacherTreeService: new CoursePlanTeacherTreeService()
 		};
 	},
-	onLoad() {
-		this.courseId = 15;
+	onLoad(option) {
+		this.courseId = option.courseId;
+		console.log('courseId:' + this.courseId);
 		this.getCoursesPlan();
 	},
 	methods: {
@@ -45,6 +50,16 @@ export default {
 				content: `点击了${parentId.length + 1}级菜单, ${planMemo.toString()}, id为${id}, 父id为${parentId.toString()}`
 			});
 			console.log(item);
+		},
+		addCoursePlan(){
+			// console.log(JSON.stringify(this.list));
+			uni.showToast({
+			    title: '显示:' + JSON.stringify(this.list.id),
+			    duration: 2000
+			});
+			uni.navigateTo({
+			    url: '添加授课内容路径'
+			});
 		}
 	}
 };
@@ -54,6 +69,9 @@ export default {
 .courseName {
 	text-align: center;
 	margin-top: 20rpx;
-	
+}
+.addButton{
+	text-align: center;
+	margin-top: 10px;
 }
 </style>

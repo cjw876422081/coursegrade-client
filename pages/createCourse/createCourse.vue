@@ -67,7 +67,7 @@
 			
 		</view> -->
 		<view class="submit">
-			<button type="primary"  form-type="submit">提交课程信息</button>
+			<button type="primary" form-type="submit">提交课程信息</button>
 		</view>
 	</form>
 	</view>
