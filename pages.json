@@ -179,6 +179,9 @@
 			"style": {
 				"navigationBarTitleText": "老师查看单个授课内容的作业"
 			}
+		},
+		{
+			"path":"pages/teacherCourse/testFile"
 		}
 	],
 	"globalStyle": {
