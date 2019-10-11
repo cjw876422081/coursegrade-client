@@ -1,0 +1,1 @@
+<view><view class="uni-padding-wrap uni-common-mt"><view class="uni-flex uni-column"><view class="navigation">这里是导航栏</view><view class="imageUpload">这里是课程图片上传组件区域</view><view class="courseForm">这里是课程信息表单区域</view><view class="submitButton">这里是提交按钮区域</view></view></view></view>
