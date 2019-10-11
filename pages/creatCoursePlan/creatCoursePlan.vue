@@ -1,5 +1,6 @@
 <template>
 	<view class="content">	
+	<form @submit="formSubmit">
 	<p style="text-align: center;
 			   margin-top: 20px;
 			  font-size: 17px;">
@@ -13,31 +14,42 @@
 	</p>
 		<view class="uni-title uni-common-pl"></view>
 		        <view class="uni-title uni-common-pl"></view>
+				<view>
 				<textarea class="MemoText" name="planMemo" placeholder-style="color:#888888" placeholder="授课内容:"/>
-			
+				</view>
 		
 		<view class="uni-title uni-common-pl"></view>
 		        <view class="uni-title uni-common-pl"></view>
+				<view>
 				<textarea class="targetText" name="planTarget" placeholder-style="color:#888888" placeholder="授课目标:"/>
-				
-				
-		<button type="primary" form-type="submit"
+				</view>
+		
+		<!-- <button type="primary" form-type="submit"
 		style="left: 10px;
 		top: 105px;
 		width: 247px;
 		height: 37px;
 		border-radius: 4px;
 		text-align: center;
-		"
-		>添加</button>
+		">添加</button> -->
 		
+		<view class="submit">
+			<button type="primary" 
+			style="left: 10px;
+			top: 105px;
+			width: 247px;
+			height: 37px;
+			border-radius: 4px;
+			text-align: center;"  form-type="submit">添加</button>
+		</view>
+		</form>
 	</view>
 </template>
 
 <script>
 	import CoursePlan from "../../common/model/CoursePlan.js";
 	import CoursePlanService from "../../common/service/CoursePlanService.js";
-export default {
+	export default {
     data() {
         return {
 			CoursePlanService: new CoursePlanService(),
@@ -47,7 +59,7 @@ export default {
     },
     methods: {
 	 formSubmit(e){
-	 		console.log("course formSubmit",e);
+	 		console.log("coursePlan formSubmit",e);
 	 		const formData=e.detail.value;
 	 		const validResult=this.formValid(formData);
 	 		if(!validResult){
