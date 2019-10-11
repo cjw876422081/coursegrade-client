@@ -1,8 +1,15 @@
 <template>
 	<view class="main-content">
-		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
-			<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course)">
-					<uni-swipe-action :options="course.delOptions" @click="delClick" data-course="course">
+		<mescroll-uni :down="downOption" 
+					  @down="downCallback" 
+					  :up="upOption" 
+					  @up="upperCallback" >
+			<view v-for="(course,i) in courses" :key="i" 
+				  style="margin-bottom:10rpx;" 
+				  @click="courseClick(course)">
+					<uni-swipe-action :options="course.delOptions" 
+									  @click="delClick" 
+									  data-course="course">
 						<uni-card
 						:title="course.courseName" 
 						thumbnail="/static/logocolor.png" 

@@ -84,7 +84,8 @@
 		}, {
 			"path": "pages/homeworkSituation/homeworkSituation",
 			"style": {
-				"navigationBarTitleText": "查看作业提交情况"
+				"navigationBarTitleText": "查看作业提交情况",
+				"backgroundColor":"#eee"
 			}
 		}, {
 			"path": "pages/checkHomework/checkHomework",
