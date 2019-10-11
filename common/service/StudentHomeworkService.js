@@ -1,10 +1,6 @@
 import request from '../../components/pocky-request/index.js';
 /**
-<<<<<<< HEAD
- * 课程数据交互服务
-=======
  * 提交作业数据交互服务
->>>>>>> aa95cb1462fde2b19d011267b81722b636feca12
  */
 export default class StudentHomeworkService{
 	constructor() {
