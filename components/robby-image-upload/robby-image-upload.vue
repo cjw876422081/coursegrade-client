@@ -14,7 +14,7 @@
 <script>
 	export default {
 		name:'robby-image-upload',
-		props: ['value','enableDel','enableAdd','enableDrag','serverUrl','formData','limit','fileKeyName','showUploadProgress','serverUrlDeleteImage'],
+		props: ['value','enableDel','enableAdd','enableDrag','serverUrl','formData','limit','fileKeyName','serverUrlDeleteImage'],
 		data() {
 			return {
 				imageBasePos:{
