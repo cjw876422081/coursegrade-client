@@ -1,12 +1,8 @@
 <template>
 	<view class="container">
 		<view class="top">
-			<view class="box">
-				<view class="avatar-box"><image :src="course.courseCover" mode="scaleToFill" class="cover"></image></view>
-				<view class="info-box">
-					<text class="nickname">{{ course.courseName }}</text>
-				</view>
-			</view>
+			<view class="avatar-box"><image :src="course.courseCover" mode="scaleToFill" class="cover"></image></view>
+	
 		</view>
 
 		<view class="grace-tab" style="margin-top:10px;">
@@ -17,21 +13,37 @@
 			</scroll-view>
 			<swiper class="grace-tab-swiper" :current="swiperCurrentIndex" @change="swiperChange" style="height:1000upx;">
 				<swiper-item>
-					
+					<uni-list-item title="课程名称" :note="course.courseName" show-arrow="false"></uni-list-item>
+					<uni-list-item title="课程总数" :note="course.courseCount" show-arrow="false"></uni-list-item>
+					<uni-list-item title="课程描述" :note="course.courseMemo" show-arrow="false"></uni-list-item>
+					<uni-list-item title="课程周数" :note="course.courseWeekCount" show-arrow="false"></uni-list-item>
+					<uni-list-item title="创建时间" :note="course.dataTime" show-arrow="false"></uni-list-item>
 				</swiper-item>
 				<swiper-item>
-					<view class="my-plan-style">
-						<!-- 3D轮播 -->
-						<view class="">
-							<swiper class="imageContainer" @change="handleChange" previous-margin="50rpx" next-margin="50rpx" circular autoplay>
-								<block v-for="(item, index) in imgList" :key="index">
-									<swiper-item class="swiperitem">
-										<image class="itemImg" :class="currentIndex == index ? 'swiperactive' : ''" :src="item" lazy-load mode="scaleToFill"></image>
-									</swiper-item>
-								</block>
-							</swiper>
+					<!-- <uni-collapse accordion="true">
+					    <uni-collapse-item title="标题文字">
+					        <view style="padding: 30upx;">
+					            手风琴效果
+					        </view>
+					    </uni-collapse-item>
+					    <uni-collapse-item title="标题文字">
+					       <uni-list-item title="基本资料" show-arrow="false" disabled="true"></uni-list-item>
+					    </uni-collapse-item>
+					    <uni-collapse-item title="标题文字">
+					        <view style="padding: 30upx;">
+					            手风琴效果
+					        </view>
+					    </uni-collapse-item>
+					</uni-collapse> -->
+					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
+						<view v-for="(homework, i) in homeworks" :key="i" style="margin-bottom:10rpx;">
+							<uni-swipe-action data-course="homework">
+								<uni-card :title="homework.homeworkMeno" thumbnail="/static/logocolor.png" :extra="course.courseCode">
+									<text>{{ homework.homeworkMeno }}</text>
+								</uni-card>
+							</uni-swipe-action>
 						</view>
-					</view>
+					</mescroll-uni>
 				</swiper-item>
 				<swiper-item>更多</swiper-item>
 			</swiper>
@@ -40,7 +52,19 @@
 </template>
 <script>
 import CourseService from '../../common/service/CourseService.js';
+import uniGrid from '@dcloudio/uni-ui/lib/uni-grid/uni-grid.vue';
+import uniList from '@dcloudio/uni-ui/lib/uni-list/uni-list.vue';
+import uniListItem from '@dcloudio/uni-ui/lib/uni-list-item/uni-list-item.vue';
+import uniCollapse from '@/components/uni-collapse/uni-collapse.vue';
+import uniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue';
 export default {
+	components: {
+		uniGrid,
+		uniList,
+		uniListItem,
+		uniCollapse,
+		uniCollapseItem
+	},
 	data() {
 		return {
 			courseService: new CourseService(),
@@ -48,32 +72,37 @@ export default {
 			swiperCurrentIndex: 0,
 			tabs: [
 				{
-					name: '主页',
+					name: '课程详情',
 					id: 'guanye'
 				},
 				{
-					name: '动态',
+					name: '作业',
 					id: 'dongtai'
 				},
 				{
-					name: '更多',
+					name: '笔记',
 					id: 'gengduo'
 				}
 			],
 			titleShowId: 'tabTag-0',
-
-			/* course: {
-				id: 0,
-				courseCode: '',
-				courseCount: '',
-				courseCover: '',
-				courseMemo: '',
-				courseName: '',
-				courseUser: '',
-				courseWeekCount: '',
-				dataTime: ''
-			} */
-			course: {}
+			course: {},
+			homeworks: [],
+			downOption: {
+				use: true, // 是否启用下拉刷新; 默认true
+				auto: true // 是否在初始化完毕之后自动执行下拉刷新的回调; 默认true
+			},
+			upOption: {
+				use: true, // 是否启用上拉加载; 默认true
+				auto: false, // 是否在初始化完毕之后自动执行上拉加载的回调; 默认true
+				page: {
+					num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
+					size: 10 // 每页数据的数量,默认10
+				},
+				noMoreSize: 5, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
+				empty: {
+					tip: '暂未查询到数据'
+				}
+			}
 		};
 	},
 	onLoad: function(option) {
@@ -85,6 +114,7 @@ export default {
 	},
 	onShow: function() {
 		this.getCourse();
+		this.getCourseHomework();
 	},
 	methods: {
 		tabChange: function(e) {
@@ -109,58 +139,67 @@ export default {
 				})
 				.catch(err => {})
 				.finally(() => {});
+		},
+		getCourseHomework: function() {
+			const courseId = this.course.id;
+			this.courseService
+				.getCourseHomework(courseId)
+				.then(result => {
+					// this.getCourseInfo(courseId);
+					console.log('zhangwenxv', result.data);
+
+					this.homeworks = result.data;
+				})
+				.catch(err => {})
+				.finally(() => {});
 		}
 	}
 };
 </script>
 <style scoped>
-.grace-tab-title {
-	color: #000000;
-}
-
-.background {
+.container {
 	width: 100%;
-	height: 190px;
 }
-
-.box {
-	position: absolute;
-	top: 35px;
-	left: 85px;
-	color: rgb(255, 255, 255);
+.cover {
+	width: 100%;
 }
-
-.top {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	margin-top: 5px;
-	height: 190px;
+.avatar-box {
+	width: 100%;
+	height: 100px;
 }
 
 .info-box {
+	padding-top: 140px;
+}
+.grace-tab-title {
+	color: #000000;
+}
+/* 
+.background {
+	width: 100%;
+	height: 190px;
+} */
+
+.grace-tab {
+	padding-top: 50px;
+}
+.top {
 	display: flex;
 	flex-direction: column;
-	padding-left: 10px;
-	padding-top: 10upx;
+	margin-top: 5px;
+	height: 190px;
+	width: 100%;
 }
 
-.nickname {
-	font-weight: bold;
-	font-size: 25px;
-}
-
-.fans {
-	font-size: 16px;
-}
+/* 
 .imageContainer {
 	width: 100%;
-	/* height: 500rpx; */
-	/* background: #000; */
+	height: 500rpx; 
+	 background: #000;
 	height: 325upx;
 	background-color: #fff;
 }
-
+ */
 .swiperitem {
 	/* height: 500rpx; */
 	height: 255upx;
@@ -187,12 +226,12 @@ export default {
 			line-height: 37upx;
 			margin-bottom: 10upx;
 		}
-		.zq,
+		/* 	.zq,
 		.cz {
 			font-size: 20upx;
 			color: rgba(253, 57, 91, 1);
 			line-height: 35upx;
-		}
+		} */
 		.addNl {
 			width: 120upx;
 			height: 26upx;
@@ -210,7 +249,7 @@ export default {
 
 .itemImg {
 	position: absolute;
-	width: 95%;
+	width: 100%;
 	/* height: 380rpx; */
 	height: 255upx;
 	border-radius: 15rpx;
@@ -228,12 +267,5 @@ export default {
 	height: 287upx;
 	top: 0%;
 	transition: all 0.2s ease-in 0s;
-}
-
-.zhankai {
-	text-align: center;
-	.iconfont {
-		margin-left: 10upx;
-	}
 }
 </style>
