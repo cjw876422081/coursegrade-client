@@ -2,7 +2,6 @@
 	<view class="container">
 		<view class="top">
 			<view class="avatar-box"><image :src="course.courseCover" mode="scaleToFill" class="cover"></image></view>
-	
 		</view>
 
 		<view class="grace-tab" style="margin-top:10px;">
@@ -36,14 +35,23 @@
 					    </uni-collapse-item>
 					</uni-collapse> -->
 					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
-						<view v-for="(homework, i) in homeworks" :key="i" style="margin-bottom:10rpx;">
-							<uni-swipe-action data-course="homework">
-								<uni-card :title="homework.homeworkMeno" thumbnail="/static/logocolor.png" :extra="course.courseCode">
-									<text>{{ homework.homeworkMeno }}</text>
+						<view v-for="(homework, i) in homeworks" :key="i" style="margin-bottom:10rpx;" @click="homeworkClick(homework.id)">
+							<uni-swipe-action :options="homework.delOptions" @click="delClick" data-course="homework">
+								<uni-card :title="homework.homeworkMemo"  :extra="homework.homeworkCode">
+									<view class="code">
+									<text>{{ homework.homeworkCode }}</text>
+									</view>
+                                    <view class="grade">
+									<text >{{ homework.homeworkGrade }}</text>
+									</view>
 								</uni-card>
 							</uni-swipe-action>
 						</view>
 					</mescroll-uni>
+					<view class="btn">
+						<button class="circle-btn" ><text class="icon-text">+</text></button>
+					</view>
+					
 				</swiper-item>
 				<swiper-item>更多</swiper-item>
 			</swiper>
@@ -57,6 +65,10 @@ import uniList from '@dcloudio/uni-ui/lib/uni-list/uni-list.vue';
 import uniListItem from '@dcloudio/uni-ui/lib/uni-list-item/uni-list-item.vue';
 import uniCollapse from '@/components/uni-collapse/uni-collapse.vue';
 import uniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue';
+import uniCard from '@/components/uni-card/uni-card';
+import MescrollUni from '@/components/mescroll-uni/mescroll-uni.vue';
+import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
+import uniFab from '@/components/uni-fab/uni-fab.vue';
 export default {
 	components: {
 		uniGrid,
@@ -102,7 +114,8 @@ export default {
 				empty: {
 					tip: '暂未查询到数据'
 				}
-			}
+			},
+			
 		};
 	},
 	onLoad: function(option) {
@@ -152,6 +165,28 @@ export default {
 				})
 				.catch(err => {})
 				.finally(() => {});
+		},
+		homeworkClick(hId) {
+			/* console.log("courseClick",course); */
+			uni.navigateTo({});
+		},
+		delClick(e) {
+			console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text, e);
+			if (e.content) {
+				const homeworkId = e.content.homeworkId;
+				this.courseService
+					.delHomewoIdrk(homeworkId)
+					.then(result => {
+						this.deleteHomework(homeworkId);
+					})
+					.catch(err => {
+						uni.showToast({
+							icon: 'none',
+							title: err.data.title
+						});
+					})
+					.finally(() => {});
+			}
 		}
 	}
 };
@@ -200,6 +235,14 @@ export default {
 	background-color: #fff;
 }
  */
+.main-content {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+.scroll-Y {
+	height: 100vh;
+}
 .swiperitem {
 	/* height: 500rpx; */
 	height: 255upx;
@@ -263,9 +306,30 @@ export default {
 	width: 95%;
 	opacity: 1;
 	z-index: 10;
-	/* height: 430rpx; */
+	height: 430rpx;
 	height: 287upx;
 	top: 0%;
 	transition: all 0.2s ease-in 0s;
 }
+.circle-btn {
+		position: absolute;
+		bottom: 65px;
+		right: 15px;
+		position: fixed;
+		width: 58px;
+		height: 58px;
+		border-radius: 50%;
+		background-color: #de533a;
+		background: linear-gradient(40deg, #ffd86f, #fc6262);
+		box-shadow: 2px 5px 10px #aaa;
+		cursor: pointer;
+		border: none;
+		outline: none;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.grade{
+		margin-right: 100px;
+	}
 </style>

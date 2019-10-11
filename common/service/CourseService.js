@@ -35,9 +35,13 @@ export default class CourseService{
 	}
 	getCourseHomework(courseId){
 		const requestParam={
-			url:"/api/homework-grade/"+courseId,
+			url:"/api/course-homeworks/getAllTaskByCourse/"+courseId,
 		}
 		return this.request.get(requestParam);
 		
+	}
+	delHomework(homeworkId){
+		const url="/api/course-homeworks/"+homeworkId;
+		return this.request.delete({url:url});
 	}
 }
