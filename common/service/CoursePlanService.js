@@ -1,21 +1,12 @@
+import request from '../../components/pocky-request/index.js';
 export default class CoursePlanService {
 	constructor() {
 	    this.request=new request();
 	}
-	// getCoursePlan(pageParam){
-	// 	console.log("InsertCoursePlan pageParam",pageParam);
-	// 	const requestParam={
-	// 		url:'/api/course-plans',
-	// 	}
-	// 	if(pageParam){
-	// 		Object.assign(requestParam,{data:pageParam});
-	// 	}
-	// 	return this.request.get(requestParam);
-	// }
-	createCoursePlan(coursePlan){
+	createCoursePlan(CoursePlan){
 		return this.request.post({
 			url:'/api/course-plans',
-			data:coursePlan,
+			data:CoursePlan,
 			contentType: 'json'
 		})
 	}
