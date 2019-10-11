@@ -143,6 +143,7 @@
 				console.log('当前点击的是第'+e.index+'个按钮，点击内容是'+e.content.text,e)
 				if(e.content){
 					const courseId=e.content.courseId;
+					console.log('---------1---',courseId)
 					this.courseService.delCourse(courseId).then((result)=>{
 						this.deleteCourse(courseId);
 					}).catch((err)=>{

@@ -1,0 +1,1 @@
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/courseNote/courseNoteByPlan-teacher/courseNoteByPlan-teacher.wxml') } }));

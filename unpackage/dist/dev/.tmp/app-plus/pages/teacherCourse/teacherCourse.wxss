@@ -1,0 +1,11 @@
+
+.main-content{
+	width:100vw;
+	height:100vh;
+	overflow: hidden;
+}
+.scroll-Y{
+	height:100vh;
+}
+
+

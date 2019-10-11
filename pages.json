@@ -180,7 +180,7 @@
 				"navigationBarTitleText": "老师查看单个授课内容的作业"
 			}
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "授课评分系统",
