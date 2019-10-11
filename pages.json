@@ -147,7 +147,7 @@
 				"navigationBarTitleText": "添加授课内容"
 			}
 		}, {
-			"path": "pages/courseDetails/courseDetails/courseDetails",
+			"path": "pages/courseDetails/courseDetails",
 			"style": {
 				"navigationBarTitleText": "查看课程"
 			}

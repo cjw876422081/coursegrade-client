@@ -1,7 +1,7 @@
 <template>
 	<view class="main-content">
 		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
-			<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course)">
+			<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
 					<uni-swipe-action :options="course.delOptions" @click="delClick" data-course="course">
 						<uni-card
 						:title="course.courseName" 
@@ -100,12 +100,13 @@
 				});
 			},
 			getCourses(callback){
+				//调用CourseService获取教师已创建课程的列表方法，CourseService为封装的服务调用类
 				this.courseService.getTeacherCourses({
-					page:this.pageIndex,
-					size:this.pageSize
-				}).then((result)=>{
-					console.log("CourseService getTeacherCourses",result)
-					if(result.data && result.data.content){
+					page:this.pageIndex,//页码
+					size:this.pageSize//页长
+				}).then((result)=>{//.then表示成功响应的回调函数，result是获取到的数据
+					console.log("CourseService getTeacherCourses",result)//调试：在控制台输出返回值
+					if(result.data && result.data.content){//如果结果不为空
 						result.data.content.forEach((item)=>{
 							item.delOptions=[{
 									text: '删除',
@@ -114,29 +115,34 @@
 									},
 									courseId:item.id
 								}]
-						});
+						});//为每一个课程增加一个delOptions的属性，该属性用于绑定在左滑删除操作
 						console.log("deloptions add",result.data.content);
-						if(this.pageIndex==0){
+						if(this.pageIndex==0){//如果是获取的第一页数据，则覆盖courses数组
 							this.courses=result.data.content;
 						}else{
+							//如果是后续页码的数据，则不能覆盖，需要追加到courses数组中
 							this.courses=this.courses.concat(result.data.content);
 						}
-						
+						//如果已经是最后一页，为isEnd变量赋值
 						this.isEnd=result.data.last;
+						//使用当前返回的页码覆盖界面上的页码，以确保翻页准确
 						this.pageIndex=result.data.number;
-						//this.pageSize=result.data.numberOfElements;
+						//获取记录总数;
 						this.totalElements=result.data.totalElements;
 					}
-				}).catch(err=>{
+				}).catch(err=>{//这里是获取数据报错的分支
 					
-				}).finally(()=>{
-					if(callback){
+				}).finally(()=>{//这里是无论成功失败都会进入的分值
+					if(callback){//如果存在回调函数，则执行。
 						callback();
 					}
 				});
 			},
-			courseClick(course){
-				console.log("courseClick",course);
+			courseClick(cId){
+				/* console.log("courseClick",course); */
+				uni.navigateTo({
+									url: '../courseDetails/courseDetails?cId=' + cId
+								});
 			},
 			delClick(e){
 				
@@ -179,5 +185,4 @@
 		}
 	}
 </script>
-
 

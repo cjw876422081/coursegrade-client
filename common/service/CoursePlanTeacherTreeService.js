@@ -8,12 +8,30 @@ export default class CoursePlanTeacherTreeService {
 	}
 	getCoursePlanTeacherTree(pageParam, courseId) {
 		const requestParam = {
-			url: '/api/course-plans/tree' + "/" + courseId,
+			url: '/api/course-plans/tree/' + courseId,
 		}
 		if (pageParam) {
 			Object.assign(requestParam, {
 				data: pageParam
 			});
+		}
+		return this.request.get(requestParam);
+	}
+	deleteCoursePlan(pageParam,planId) {
+		const requestParam = {
+			url: '/api/course-plans/' + planId,
+		}
+		if (pageParam) {
+			Object.assign(requestParam, {
+				data: pageParam
+			});
+		}
+		return this.request.delete(requestParam);
+	}
+	
+	addCoursePlan(){
+		const requestParam = {
+			url: '/api/course-plans',
 		}
 		return this.request.get(requestParam);
 	}

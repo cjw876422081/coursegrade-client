@@ -13,4 +13,14 @@ export default class CourseHomeworkService{
 			contentType: 'json'
 		})
 	}
+	getTeacherCourses(pageParam){
+		console.log("getTeacherCourses pageParam",pageParam);
+		const requestParam={
+			url:'/api/course-infos/teacher',
+		}
+		if(pageParam){
+			Object.assign(requestParam,{data:pageParam});
+		}
+		return this.request.get(requestParam);
+	}
 }

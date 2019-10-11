@@ -10,7 +10,7 @@ export default class CourseHomework {
 		this.courseId=0;
 		this.planId=0;
 		this.homeworkId=0;
-		this.parentNoteId=0;
+		this.pid=0;
 		/**
 		 * @param {Object} args 初始化对象值
 		 */

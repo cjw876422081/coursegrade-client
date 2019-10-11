@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
     <view class="main-content" style="background-image: url('./static/img/createhomework-bg.png');
 		background-repeat: no-repeat;background-color: rgb(230,230,240);
@@ -167,3 +168,5 @@
 		background: rgba(220,220,220,0.5);
 	}
 </style>
+=======
+>>>>>>> cfa8ecda7b99dcd6de8b36bad52ae14acbd0a5ba
