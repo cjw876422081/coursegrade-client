@@ -84,7 +84,8 @@
 		}, {
 			"path": "pages/homeworkSituation/homeworkSituation",
 			"style": {
-				"navigationBarTitleText": "查看作业提交情况"
+				"navigationBarTitleText": "查看作业提交情况",
+				"backgroundColor":"#eee"
 			}
 		}, {
 			"path": "pages/checkHomework/checkHomework",
@@ -168,19 +169,19 @@
 				"navigationBarTitleText": "个人中心"
 			}
 		}, 
-		// {
-		// 	"path": "pages/createGroup/createGroup",
-		// 	"style": {
-		// 		"navigationBarTitleText": "创建班级"
-		// 	}
-		// }, 
+		{
+			"path": "pages/createGroup/createGroup",
+			"style": {
+				"navigationBarTitleText": "创建班级"
+			}
+		}, 
 		{
 			"path": "pages/courseHomework/getHomeworkByPlan",
 			"style": {
 				"navigationBarTitleText": "老师查看单个授课内容的作业"
 			}
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "授课评分系统",
