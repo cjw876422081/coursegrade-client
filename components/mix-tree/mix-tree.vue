@@ -22,6 +22,11 @@
 						<image class="mix-tree-icon" :src="item.lastRank ? treeParams.lastIcon : item.showChild ? treeParams.currentIcon : treeParams.defaultIcon"></image>
 						{{ item.planMemo }}
 					</view>
+					<view>
+						<img class="option-icon" src="/static/img/add.png" @click="addCoursePlan(index)"></img>
+						<!-- v-if="item.leaf != true" -->
+						<img class="option-icon" src="/static/img/delete.png" @click="deleteCoursePlan(index)"></img>
+					</view>
 				</view>
 			</block>
 		</view>
@@ -29,6 +34,7 @@
 </template>
 
 <script>
+import CoursePlanTeacherTreeService from '../../common/service/CoursePlanTeacherTreeService.js';
 export default {
 	props: {
 		list: {
@@ -52,7 +58,8 @@ export default {
 				currentIcon: '/static/mix-tree/currentIcon.png',
 				lastIcon: '',
 				border: false
-			}
+			},
+			coursePlanTeacherTreeService: new CoursePlanTeacherTreeService()
 		};
 	},
 	watch: {
@@ -116,6 +123,27 @@ export default {
 					}
 				}
 			});
+		},
+		addCoursePlan(index){
+			uni.showToast({
+			    title: '点击了'+JSON.stringify(this.treeList[index].id),
+			    duration: 2000
+			});
+			uni.navigateTo({
+			    url: '添加授课内容路径'
+			});
+		},
+		deleteCoursePlan(index){
+			const planId = JSON.stringify(this.treeList[index].id);
+			this.coursePlanTeacherTreeService.deleteCoursePlan(null,planId)
+				.then(result => {
+					uni.showToast({
+					    title: '删除成功',
+					    duration: 2000
+					});
+				})
+				.catch(err => {})
+				.finally(() => {});
 		}
 	}
 };
@@ -136,6 +164,7 @@ export default {
 	opacity: 0;
 	transition: 0.2s;
 	position: relative;
+	justify-content: space-between;
 }
 .mix-tree-item.border {
 	border-bottom: 1px solid #eee;
@@ -157,4 +186,11 @@ export default {
 .mix-tree-item.last:before {
 	opacity: 0;
 }
+.option-icon{
+	width: 35upx;
+	height: 35upx;
+	margin-right: 10upx;
+	opacity: 0.9;
+}
+
 </style>
