@@ -38,7 +38,6 @@
 		margin-top:20rpx;
 	}
 </style>
-
 <script>
 	import CourseGroupService from "../../common/service/CourseGroupService.js"
 	export default {
