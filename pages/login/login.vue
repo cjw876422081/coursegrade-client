@@ -142,7 +142,7 @@
 			},
             toMain(userName) {
                 uni.navigateTo({
-                	url: '../teacherCourse/teacherCourse'
+                	url: '../creatCoursePlan/creatCoursePlan'
                 });
 
             }
