@@ -2,15 +2,13 @@
 	<view class="main-content">
 			<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
 		      <wuc-tab :tab-list="tabList3" textFlex :tabCur.sync="TabCur3" tab-class="text-center text-black bg-white" select-class="text-orange"></wuc-tab>
-			  	<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course)">
-			  			<uni-swipe-action :options="course.delOptions" @click="delClick" data-course="course">
+			  	<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
 			  				<uni-card
 			  				:title="course.courseName" 
 			  				thumbnail="/static/logocolor.png" 
 			  				:extra="course.courseCode" >
 			  					<text>{{course.courseMemo}}</text>
 			  				</uni-card>
-			  			</uni-swipe-action>
 			  	</view>
 			  </mescroll-uni>
   </view>
@@ -158,9 +156,19 @@ export default {
 				}
 			});
 		},
+		
 		checkCourse(course){
-			
-		}
+			console.log("addClick",course);
+			uni.navigateTo({
+				url: '../student/checkCourseInfo'
+			});
+		},
+		courseClick(cId){
+			/* console.log("courseClick",course); */
+			uni.navigateTo({
+								url: '../student/checkCourseInfo?cId=' + cId
+							});
+		},
 	},
 
     onLoad() {
