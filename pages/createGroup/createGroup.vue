@@ -60,19 +60,19 @@
 					});
 					return;
 				}
-				this.groupService.createGroup(formData).then((result)=>{
-						console.log("course formSubmit callback",result);
-						if(result.data && result.data.id>0){
-							uni.showToast({
-							    icon:'success',
-							    title: "班级创建成功"
-							});
-							setTimeout(()=>{
-								console.log("settime out")
-								uni.navigateBack();
-							},1500);
-						}
-					}).catch((error)=>{
+				this.coursegroupService.getCreateGroup(formData,5).then((result)=>{
+					console.log("group formSubmit callback",result);
+					if(result.data && result.data.courseGroupId>0){
+						uni.showToast({
+							icon:'success',
+							title: "班级创建成功"
+						});
+						setTimeout(()=>{
+							console.log("settime out")
+							uni.navigateBack();
+						},1500);
+					}
+				}).catch((error)=>{
 						
 					}).finally(()=>{
 						
@@ -87,11 +87,11 @@
 						error:false
 					}
 					let result=true;
-					if(formData.groupCode==null || formData.groupeCode.length==0){
+					if(formData.groupCode==null || formData.groupCode.length==0){
 						errItem.error=true;
 						errItem.errorText="请输入班级号";
 						this.groupCodeError=true;
-						result= false;
+						result= false; 
 					}
 					if(formData.groupName==null || formData.groupName.length==0){
 						errItem.error=true;

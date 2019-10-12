@@ -68,9 +68,9 @@
 			return {
 				flag:false,
 				//学生提交作业的id，应从上页面获取
-				studentHomeworkId:2,
+				studentHomeworkId:0,
 				grade:0,
-				studentHomework:new StudentHomework(),
+				studentHomework:[],
 				studentHomeworkService:new StudentHomeworkService(),
 			    //笔记列表
 				notes:[],
@@ -107,25 +107,13 @@
 			}
 		},
 		methods: {
+			
 			//加载列表数据
 			loadData(e){
 				this.getStudentHomework()
 			},
-			getStudentHomework(){
-				this.studentHomeworkService.getStudentHomework(
-				this.studentHomeworkId).then((result)=>{
-					if(result.data){
-						this.studentHomework=result.data;
-					}
-				}).catch(err=>{
-					
-				}).finally(()=>{
-					
-				});
-			},
-			onLoad(){
-				this.loadData()
-			},
+		
+			
 			onBlur (event) {
 			  let value = event.detail.value
 			  if (!value) {
@@ -203,7 +191,6 @@
 						}else{
 							this.notes=this.notes.concat(result.data.content);
 						}
-						
 						this.isEnd=result.data.last;
 						this.pageIndex=result.data.number;
 						//this.pageSize=result.data.numberOfElements;
@@ -217,6 +204,26 @@
 					} 
 				});
 			},
+			onLoad(option){
+				this.studentHomeworkId=option.studentId
+				this.loadData()
+				console.log("===================",option.studentId)
+				
+				console.log("++++++++++++++++++++",this.studentHomeworkId)
+			},
+			getStudentHomework(){
+				this.studentHomeworkService.getStudentHomework(
+					this.studentHomeworkId
+				).then((result)=>{
+					if(result.data){
+						this.studentHomework=result.data;
+					}
+				}).catch(err=>{
+					
+				}).finally(()=>{
+					
+				});
+			}
 		}
 	}
 </script>
