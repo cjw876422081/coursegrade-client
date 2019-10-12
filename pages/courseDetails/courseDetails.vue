@@ -12,8 +12,8 @@
 			</scroll-view>
 			<swiper class="grace-tab-swiper" :current="swiperCurrentIndex" @change="swiperChange" style="height:1000upx;">
 				<swiper-item>
-					<uni-list-item title="课程名称" :note="course.courseName" show-arrow="false"></uni-list-item>
-					<uni-list-item title="课程总数" :note="course.courseCount" show-arrow="false"></uni-list-item>
+					<uni-list-item title="课程名称" :note="course.courseName" ></uni-list-item>
+					<uni-list-item title="课程总数" :note="course.courseCount" show-arrow="true"></uni-list-item>
 					<uni-list-item title="课程描述" :note="course.courseMemo" show-arrow="false"></uni-list-item>
 					<uni-list-item title="课程周数" :note="course.courseWeekCount" show-arrow="false"></uni-list-item>
 					<uni-list-item title="创建时间" :note="course.dataTime" show-arrow="false"></uni-list-item>
@@ -41,19 +41,39 @@
 									<view class="code">
 									<text>{{ homework.homeworkCode }}</text>
 									</view>
-                                    <view class="grade">
-									<text >{{ homework.homeworkGrade }}</text>
+									<view  style="border-bottom: #E0E0E0 1px solid; margin-top: 5px;" >
+									
 									</view>
 								</uni-card>
 							</uni-swipe-action>
 						</view>
 					</mescroll-uni>
 					<view class="btn">
-						<button class="circle-btn" ><text class="icon-text">+</text></button>
+						<button class="circle-btn" @tap="gotoDetail"><text class="icon-text">+</text></button>
 					</view>
 					
 				</swiper-item>
-				<swiper-item>更多</swiper-item>
+				<swiper-item>
+					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
+						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;" @click="homeworkClick(note.id)">
+							<uni-swipe-action :options="note.delOptions" @click="delClick" data-course="note">
+								<uni-card :title="note.noteMemo"  :extra="note.noteType">
+									<view class="note">
+									<view class="code">
+									<text>笔记描述:{{ note.noteMemo }}</text>
+									</view>
+									<view >
+										<text>笔记类型：{{ note.noteType }}</text>
+									</view>
+									<view  style="border-bottom: #E0E0E0 1px solid; margin-top: 5px;" >
+									
+									</view>
+									</view>
+								</uni-card>
+							</uni-swipe-action>
+						</view>
+					</mescroll-uni>
+				</swiper-item>
 			</swiper>
 		</view>
 	</view>
@@ -82,6 +102,10 @@ export default {
 			courseService: new CourseService(),
 			tabCurrentIndex: 0,
 			swiperCurrentIndex: 0,
+			//页码
+			pageIndex:0,
+			//页长
+			pageSize:10,
 			tabs: [
 				{
 					name: '课程详情',
@@ -99,6 +123,7 @@ export default {
 			titleShowId: 'tabTag-0',
 			course: {},
 			homeworks: [],
+			notes:[],
 			downOption: {
 				use: true, // 是否启用下拉刷新; 默认true
 				auto: true // 是否在初始化完毕之后自动执行下拉刷新的回调; 默认true
@@ -128,6 +153,7 @@ export default {
 	onShow: function() {
 		this.getCourse();
 		this.getCourseHomework();
+		this.getCoursePlan();
 	},
 	methods: {
 		tabChange: function(e) {
@@ -166,6 +192,20 @@ export default {
 				.catch(err => {})
 				.finally(() => {});
 		},
+		getCoursePlan: function() {
+			const courseId = this.course.id;
+			const page = this.pageIndex;//页码
+			const size = this.pageSize;//页长
+			const type = "课程";
+			this.courseService
+				.getCoursePlan(courseId,page,size,type)
+				.then(result => {
+					console.log('plans', result.data.content);
+					this.notes = result.data.content;
+				})
+				.catch(err => {})
+				.finally(() => {});
+		},
 		homeworkClick(hId) {
 			/* console.log("courseClick",course); */
 			uni.navigateTo({});
@@ -187,6 +227,11 @@ export default {
 					})
 					.finally(() => {});
 			}
+		},
+		gotoDetail: function() {
+			
+				uni.navigateTo({});
+	
 		}
 	}
 };
