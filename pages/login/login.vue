@@ -145,20 +145,6 @@ export default {
 	},
 	onReady() {}
 };
-=======
-			},
-            toMain(userName) {
-                uni.navigateTo({
-                	url: '../teacherCourse/teacherCourse'
-                });
-
-            }
-        },
-        onReady() {
-            
-        }
-    }
->>>>>>> f79c34d4292fc7256ad225ad8b4c2d96b5f72567
 </script>
 
 <style>
