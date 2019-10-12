@@ -19,5 +19,8 @@ export default class CourseHomework {
 		}
 		
 	}
+	setId(id){
+		this.id = id;
+	}
 	
 }
