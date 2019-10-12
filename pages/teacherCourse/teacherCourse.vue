@@ -82,6 +82,18 @@
 						selectedIconPath: '/static/add-icon.png',
 						text: '创建课程',
 						active: false
+					},
+					{
+						iconPath: '/static/add-icon.png',
+						selectedIconPath: '/static/add-icon.png',
+						text: '我的班级',
+						active: false
+					},
+					{
+						iconPath: '/static/add-icon.png',
+						selectedIconPath: '/static/add-icon.png',
+						text: '我的作业',
+						active: false
 					}
 				]
 			}
@@ -177,9 +189,20 @@
 			},
 			addClick(e){
 				console.log("addClick",e);
-				uni.navigateTo({
-					url: '../createCourse/createCourse'
-				});
+				if(e.index==0){
+					uni.navigateTo({
+						url: '../createCourse/createCourse'
+					});
+				}else if(e.index==1){
+					uni.navigateTo({
+						url: '../searchClass/searchClass'
+					});
+				}else if(e.index==2){
+					uni.navigateTo({
+						url: '../courseHomework/courseHomeworkList-teacher'
+					});
+				}
+				
 			}
 		},
 		onLoad() {

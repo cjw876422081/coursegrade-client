@@ -23,9 +23,8 @@
 						{{ item.planMemo }}
 					</view>
 					<view>
+						<img class="option-icon" src="/static/img/delete.png" @click="deleteCoursePlan(index)" v-if="item.leaf == true"></img>
 						<img class="option-icon" src="/static/img/add.png" @click="addCoursePlan(index)"></img>
-						<!-- v-if="item.leaf != true" -->
-						<img class="option-icon" src="/static/img/delete.png" @click="deleteCoursePlan(index)"></img>
 					</view>
 				</view>
 			</block>
