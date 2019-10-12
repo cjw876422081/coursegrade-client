@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/coursegrade-client.iml" filepath="$PROJECT_DIR$/.idea/coursegrade-client.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/coursegrade-client1.iml" filepath="$PROJECT_DIR$/.idea/coursegrade-client1.iml" />
+>>>>>>> a897f56e4d18832d182ccda666869592c6842e2e
     </modules>
   </component>
 </project>
