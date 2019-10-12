@@ -91,7 +91,7 @@
 						errItem.error=true;
 						errItem.errorText="请输入班级号";
 						this.groupCodeError=true;
-						result= false;
+						result= false; 
 					}
 					if(formData.groupName==null || formData.groupName.length==0){
 						errItem.error=true;
