@@ -146,7 +146,8 @@
 			},
             toMain(userName) {
                 uni.navigateTo({
-                	url: '../teacherCourse/teacherCourse'
+                	// url: '../teacherCourse/teacherCourse'
+					url: '../groupStudent/groupStudent'
                 });
 
             }
