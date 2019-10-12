@@ -149,8 +149,7 @@ export default {
 			},
             toMain(userName) {
                 uni.navigateTo({
-                	// url: '../teacherCourse/teacherCourse'
-					url: '../groupStudent/groupStudent'
+                	url: '../teacherCourse/teacherCourse'
                 });
 
             }
