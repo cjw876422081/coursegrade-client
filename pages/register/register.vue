@@ -11,16 +11,10 @@
 	        <view class="input-group">			
 	            <view>				
 	                <view class="input-row border">				    
-	                    <xfl-select 
-	                        :list="list"
-	                        :clearable="false"
-	                        :showItemNum="5" 
-	                        :listShow="true"
-	                        :isCanInput="true"  
-	                        :style_Container="'height: 50px; font-size: 16px;background-color:transparent;'"
-	                        :placeholder = "'请选择'"
-	                        :selectHideType="'hideAll'">
-	                    </xfl-select>				
+	                    <radio-group name="rolegroup" >
+							<label class="radio"><radio value="student" />学生</label>
+							<label class="radio"><radio value="teacher" />教师</label>
+						</radio-group>			
 	                </view>			
 	            </view>		    
 	            <view class="input-row border">			    
@@ -52,18 +46,11 @@
 				accountService:new AccountService(),
 				loginError:false,
 				passwordError:false,
-				repasswordError:false,
-				
-				 list: ['老师',
-				        '学生',
-                       ],	
+				repasswordError:false	
 			}
 		},
 		components: { xflSelect },  //注册为子组件
 		methods:{
-			bindPickerChange:function(e){
-				this.index = e.target.value
-			},
 			formSubmit(e){
 				console.log("register formSubmit",e);
 				const formData=e.detail.value;
@@ -102,7 +89,7 @@
 					error:false
 				}
 				let result=true;
-				if(formData.login==null || formData.login.length==0){
+				if(formData.account==null || formData.account.length==0){
 					errItem.error=true;
 					errItem.errorText="请输入账号";
 					this.loginError=true;
@@ -120,7 +107,7 @@
 					this.repasswordError=true;
 					result=false;
 				}
-				if(formData.password.value != formData.repassword.value){
+				if(formData.password != formData.repassword){
 					errItem.error=true;
 					errItem.errorText="两次密码不匹配";
 					result=false;

@@ -56,7 +56,7 @@
 	.formitem {
 		border: 1px solid rgba(0, 122, 255, 0.5);
 		border-radius: 10rpx;
-		margin: 0 auto;
+		margin: 0 auto
 	}
 
 	.formitem.formerror {
