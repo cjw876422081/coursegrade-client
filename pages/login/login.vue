@@ -1,30 +1,34 @@
 <template>
-    <view class="content" 
-		style="background-image: url('./static/img/login-bg.jpg');
-		background-repeat: no-repeat;
-		background-size: cover;padding:0;"
-		>
-		<view class="bgmask"></view>
-		<view class="header">
-			<text>授课评分系统</text>
-		</view>
-        <view class="input-group">
-            <view class="input-row border">
-                <text class="title">账号：</text>
-                <m-input class="m-input" type="text" clearable focus v-model="account" placeholder="请输入账号"></m-input>
-            </view>
-            <view class="input-row">
-                <text class="title">密码：</text>
-                <m-input type="password" displayable v-model="password" placeholder="请输入密码"></m-input>
-            </view>
-        </view>
-        <view class="btn-row">
-            <button type="primary" class="default" size="default" @tap="bindLogin">登录</button>
-        </view>
+      <view class="content" 
+   		style="background-image: url('./static/img/9.jpg');
+   		background-repeat: no-repeat;
+   		background-size: cover;padding:0;"
+   		>
+   		
+   		<view class="bgmask"></view>
+   		<view class="header">
+   			<text>授课评分系统</text>
+   		</view>
+           <view class="input-group">
+               <view class="input-row border">
+                   <text class="title">账号：</text>
+                   <m-input class="m-input" type="text" clearable focus v-model="account" placeholder="请输入账号"></m-input>
+               </view>
+               <view class="input-row">
+                   <text class="title">密码：</text>
+                   <m-input type="password" displayable v-model="password" placeholder="请输入密码"></m-input>
+               </view>
+           </view>
+           <view class="btn-row">
+   				<button type="primary" class="default" size="10upx" @tap="bindLogin" plain="flase" >登录</button>
+           </view>
+          <!-- <view class="btn-row">
+   		   <button type="primary" plain="flase" class="default" size="10upx" @tap="bindLogin">GO</button>
+   	   </view> -->
 		
 		
 		<view class="btn-row">
-		    <button type="default" class="default" size="default" @tap="bindReg">注册新用户</button>
+		    <button type="default" class="default" size="default" @tap="bindReg" plain="flase" >注册新用户</button>
 		</view>
        
     </view>
@@ -155,26 +159,29 @@
 
 <style>
 	.header{
-		font-size: 150%;
+font-size: 150%;
 		width:100%;
 		text-align: center;
-		color:#fff;
+		color:#F1F1F1;
 		margin-top:10vh;
 		margin-bottom:10vh;
 		z-index:3;
 		font-weight:600;
 	}
 	.title{
-		color:#fff;
+		color:#FFFFFF;
+		margin-left: 50rpx;
+		size:a3;
 	}
 	.uni-input-placeholder{
-		color:rgba(255,255,255,0.7);
+		color: #FFFFFF;
+		margin-left: 60rpx;
 	}
 	.bgmask{
 		position:absolute;
 		width:100vw;
 		height:100vh;
-		background-color:rgba(0,0,0,0.6);
+		background-color:rgba(0,0,0,0.2);
 	}
 	.input-group{
 		background-color:transparent;
@@ -182,10 +189,10 @@
 		margin-bottom:10vh;
 	}
 	.m-input{
-		color:#fff;
+		color:#333333;
 	}
 	.uni-input-input{
-		color:#fff !important;
+		color:#0FAEFF !important;
 	}
 	
     .action-row {
@@ -195,7 +202,7 @@
     }
 
     .action-row navigator {
-        color: #007aff;
+        color:#333333;
         padding: 0 20upx;
     }
 
@@ -210,12 +217,12 @@
     }
 
     .oauth-image {
-        width: 100upx;
-        height: 100upx;
-        border: 1upx solid #dddddd;
-        border-radius: 100upx;
-        margin: 0 40upx;
-        background-color: #ffffff; 
+           width: 100upx;
+           height: 100upx;
+           border: 1upx solid #333333;
+           border-radius: 100upx;
+           margin: 0 40upx;
+           background-color: #333333; 
     }
 
     .oauth-image image {
@@ -223,4 +230,10 @@
         height: 60upx;
         margin: 20upx;
     }
+	.btn-row{
+			width: 140px;
+			height: 150upx;
+			margin-left: 200rpx;
+			
+		}
 </style>

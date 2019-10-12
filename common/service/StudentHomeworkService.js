@@ -25,5 +25,12 @@ export default class StudentHomeworkService{
 		const url="/api/student-homeworks/id/grade?id="+studentHomeworkId+"&grade="+grade;
 		return this.request.put({url:url}); 
 	}
+	submitHomework(studentHomeworkInfo){
+		return this.request.post({
+			url:'/api/student-homeworks',
+			data:studentHomeworkInfo,
+			contentType:'json'
+		})
+	}
 }
 
