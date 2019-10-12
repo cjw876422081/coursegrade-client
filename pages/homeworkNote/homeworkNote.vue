@@ -19,6 +19,10 @@
 		                <view class="uni-comment-top">
 		                    <text>{{note.publishUser}}</text> 
 		                </view>
+						<view class="uni-comment-replay-btn"
+						style="float: right;"
+						@click="addClick"
+						>回复</view>
 		                <view class="uni-comment-date">
 		                    <text>{{note.noteTime}}  笔记ID:{{note.id}}</text>
 		                </view>
@@ -31,8 +35,8 @@
 		        </view>
 				</uni-swipe-action>
 				</view>
-				
 		    </view> 
+			<view style="align:center;" @click="addClick"><button type="primary" plain="true">发布笔记</button></view>
 			</mescroll-uni>
 		</view>
 		<!-- <uni-fab
@@ -305,7 +309,7 @@
 			addClick(e){
 				console.log("addClick",e);
 				uni.navigateTo({
-					url: '../createCourse/createCourse'
+					url: '../createHomeworkNote/createHomeworkNote'
 				});
 			},
 			/* search(e, val) {
@@ -313,8 +317,10 @@
 			    this['val'+val] = e;
 			} */
 		},
-		onLoad() {
+		/* onLoad(option) {
+			this.homeworkId=option.
 			
-		}
+			
+		} */
 	}
 </script>
