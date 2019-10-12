@@ -1,3 +1,4 @@
+import CourseHomework from "../../common/model/CourseHomework.js";
 
 /*
  * 学生作业实体类型
