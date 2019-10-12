@@ -1,5 +1,8 @@
 <template>
-	<view class="content">	
+	<view class="content"
+	style="background-image: url('./static/img/createCoursePlan.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;padding:0;overflow: hidden;">	
 	<form @submit="formSubmit">
 	<p style="text-align: center;
 			   margin-top: 20px;
@@ -10,32 +13,24 @@
 			  font-size: 22px;
 			  margin-top: 50px;
 			  margin-left: 62px;">
-		课程名称:xx/xx
+		课程名称:数学/第一章
 	</p>
 		<view class="uni-title uni-common-pl"></view>
 		        <view class="uni-title uni-common-pl"></view>
 				<view>
-				<textarea class="MemoText" name="planMemo" placeholder-style="color:#888888" placeholder="授课内容:"/>
+				<textarea class="MemoText" name="planMemo" placeholder-style="color:#000000" placeholder="授课内容:"/>
 				</view>
 		
 		<view class="uni-title uni-common-pl"></view>
 		        <view class="uni-title uni-common-pl"></view>
 				<view>
-				<textarea class="targetText" name="planTarget" placeholder-style="color:#888888" placeholder="授课目标:"/>
+				<textarea class="targetText" name="planTarget" placeholder-style="color:#000000" placeholder="授课目标:"/>
 				</view>
-		
-		<!-- <button type="primary" form-type="submit"
-		style="left: 10px;
-		top: 105px;
-		width: 247px;
-		height: 37px;
-		border-radius: 4px;
-		text-align: center;
-		">添加</button> -->
+
 		
 		<view class="submit">
 			<button type="primary" 
-			style="left: 10px;
+			style="left: 0px;
 			top: 105px;
 			width: 247px;
 			height: 37px;
@@ -119,30 +114,28 @@
 <style>
 
 	.MemoText{
-		background-color: white;
+		background-color: transparent;
 		left: 62px;
 		top: 20px;
 		width: 247px;
 		height: 70px;
 		line-height: 20px;
-		color: rgba(136, 136, 136, 1);
 		font-size: 14px;
 		text-align: left;
 		font-family: Microsoft Yahei;
-		border: 1px solid rgba(187, 187, 187, 1);
+		border: 1px solid rgba(0, 0, 0, 1);
 		}
 	.targetText{
-		background-color: white;
+		background-color: transparent;
 		left: 62px;
 		top: 50px;
 		width: 247px;
 		height: 70px;
 		line-height: 20px;
-		color: rgba(136, 136, 136, 1);
 		font-size: 14px;
 		text-align: left;
 		font-family: Microsoft Yahei;
-		border: 1px solid rgba(187, 187, 187, 1);
+		border: 1px solid rgba(0, 0, 0, 1);
 	}
 
 
