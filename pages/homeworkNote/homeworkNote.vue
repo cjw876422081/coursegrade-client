@@ -20,7 +20,7 @@
 		                    <text>{{note.publishUser}}</text> 
 		                </view>
 		                <view class="uni-comment-date">
-		                    <text>{{note.noteTime}}</text>
+		                    <text>{{note.noteTime}}  笔记ID:{{note.id}}</text>
 		                </view>
 		                <view class="uni-comment-content">{{note.noteMemo}}</view>
 						
@@ -231,7 +231,7 @@
 				).then((result)=>{
 					console.log("CourseNoteService getHomeworkNotes",result)
 					if(result.data && result.data.content){
-						result.data.content.forEach((item)=>{
+						/* result.data.content.forEach((item)=>{
 							item.delOptions=[{
 									text: '删除',
 									style: {
@@ -239,7 +239,7 @@
 									},
 									noteId:item.id
 								}]
-						});
+						}); */
 						console.log("deloptions add",result.data.content);
 						
 						if(this.pageIndex==0){
