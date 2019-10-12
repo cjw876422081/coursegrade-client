@@ -52,33 +52,53 @@
 			formSubmit(e){
 				console.log("group formSubmit",e);
 				const formData=e.detail.value;
-				const validResult=this.formValid(formData);
-				if(!validResult){
-					uni.showToast({
-						icon:'none',
-						title:"输入数据不合法"
-					});
-					return;
-				}
-				this.groupService.createGroup(formData).then((result)=>{
-						console.log("course formSubmit callback",result);
-						if(result.data && result.data.id>0){
-							uni.showToast({
-							    icon:'success',
-							    title: "班级创建成功"
-							});
-							setTimeout(()=>{
-								console.log("settime out")
-								uni.navigateBack();
-							},1500);
-						}
-					}).catch((error)=>{
+				//const validResult=this.formValid(formData);
+				// if(!validResult){
+				// 	uni.showToast({
+				// 		icon:'none',
+				// 		title:"输入数据不合法"
+				// 	});
+				// 	return;
+				// }
+				this.coursegroupService.getCreateGroup(formData,5).then((result)=>{
+					console.log("group formSubmit callback",result);
+					if(result.data && result.data.courseGroupId>0){
+						uni.showToast({
+							icon:'success',
+							title: "班级创建成功"
+						});
+						setTimeout(()=>{
+							console.log("settime out")
+							uni.navigateBack();
+						},1500);
+					}
+				}).catch((error)=>{
 						
 					}).finally(()=>{
 						
 					})
 					
 				},
+				
+				// this.groupService.createGroup(formData).then((result)=>{
+				// 		console.log("course formSubmit callback",result);
+				// 		if(result.data && result.data.id>0){
+				// 			uni.showToast({
+				// 			    icon:'success',
+				// 			    title: "班级创建成功"
+				// 			});
+				// 			setTimeout(()=>{
+				// 				console.log("settime out")
+				// 				uni.navigateBack();
+				// 			},1500);
+				// 		}
+				// 	}).catch((error)=>{
+						
+				// 	}).finally(()=>{
+						
+				// 	})
+					
+				// },
 				formValid(formData){
 					this.groupCodeError=false;
 					this.groupNameError=false;
@@ -87,13 +107,13 @@
 						error:false
 					}
 					let result=true;
-					if(formData.groupCode==null || formData.groupeCode.length==0){
+					if(formData.courseGroupId==null || formData.courseGroupId.length==0){
 						errItem.error=true;
 						errItem.errorText="请输入班级号";
 						this.groupCodeError=true;
 						result= false;
 					}
-					if(formData.groupName==null || formData.groupName.length==0){
+					if(formData.courseGroupName==null || formData.courseGroupName.length==0){
 						errItem.error=true;
 						errItem.errorText="请输入班级名称";
 						this.groupNameError=true;
