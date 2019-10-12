@@ -1,140 +1,129 @@
-<template  >
+<template>
 	<view class="content">	
-	<p style="text-align: center;">
+	<form @submit="formSubmit">
+	<p style="text-align: center;
+			   margin-top: 20px;
+			  font-size: 17px;">
 		授课内容
 	</p>
-		<view class="choose">
-                    <picker @change="bindPickerChange" :value="index" :range="array">
-                        <view class="uni-input">{{array[index]}}</view>
-                    </picker>
+	<p style="
+			  font-size: 22px;
+			  margin-top: 50px;
+			  margin-left: 62px;">
+		课程名称:xx/xx
+	</p>
+		<view class="uni-title uni-common-pl"></view>
+		        <view class="uni-title uni-common-pl"></view>
+				<view>
+				<textarea class="MemoText" name="planMemo" placeholder-style="color:#888888" placeholder="授课内容:"/>
+				</view>
+		
+		<view class="uni-title uni-common-pl"></view>
+		        <view class="uni-title uni-common-pl"></view>
+				<view>
+				<textarea class="targetText" name="planTarget" placeholder-style="color:#888888" placeholder="授课目标:"/>
+				</view>
+		
+		<!-- <button type="primary" form-type="submit"
+		style="left: 10px;
+		top: 105px;
+		width: 247px;
+		height: 37px;
+		border-radius: 4px;
+		text-align: center;
+		">添加</button> -->
+		
+		<view class="submit">
+			<button type="primary" 
+			style="left: 10px;
+			top: 105px;
+			width: 247px;
+			height: 37px;
+			border-radius: 4px;
+			text-align: center;"  form-type="submit">添加</button>
 		</view>
-		<!-- <select 
-		style="left: 62px;
-		top: 386px;
-		width: 247px;
-		height: 47px;
-		line-height: 20px;
-		background-color: rgba(255, 255, 255, 1);
-		color: rgba(16, 16, 16, 1);
-		font-size: 14px;
-		font-family: Microsoft Yahei;
-		border: 1px solid rgba(187, 187, 187, 1);">
-			<option>请选择课程名称：</option>
-			<option>1</option>
-			<option>2</option>
-			<option>3</option>
-		</select> -->
-		
-		<view class="uni-title uni-common-pl"></view>
-		        <view class="uni-title uni-common-pl"></view>
-		        <view class="uni-textarea">
-				<textarea class="MemoText" placeholder-style="color:#888888" placeholder="授课内容:"/>
-				</view>
-		
-		
-		<view class="uni-title uni-common-pl"></view>
-		        <view class="uni-title uni-common-pl"></view>
-		        <view class="uni-textarea">
-				<textarea class="targetText" placeholder-style="color:#888888" placeholder="授课目标:"/>
-				</view>
-		<!-- <button
-		style="left: 10px;
-		top: 276px;
-		width: 247px;
-		height: 37px;
-		border-radius: 4px;
-		background-color: rgba(173, 185, 255, 1);
-		color: rgba(16, 16, 16, 1);
-		font-size: 14px;
-		text-align: center;
-		font-family: Microsoft Yahei;
-		border: 1px solid rgba(187, 187, 187, 1);"  
-		type="primary" plain="true">添加</button> -->
-		<button type="primary"
-		style="left: 10px;
-		top: 276px;
-		width: 247px;
-		height: 37px;
-		border-radius: 4px;
-		text-align: center;
-		"
-		>添加</button>
-		
+		</form>
 	</view>
 </template>
 
 <script>
-export default {
+	import CoursePlan from "../../common/model/CoursePlan.js";
+	import CoursePlanService from "../../common/service/CoursePlanService.js";
+	export default {
     data() {
-        const currentDate = this.getDate({
-            format: true
-        })
         return {
-            title: 'picker',
-            array: ['请选择课程：','中国', '美国', '巴西', '日本'],
-            index: 0,
-            date: currentDate,
-            time: '12:01'
-        }
-    },
-    computed: {
-        startDate() {
-            return this.getDate('start');
-        },
-        endDate() {
-            return this.getDate('end');
-        }
+			CoursePlanService: new CoursePlanService(),
+			planMemoError:false,
+			planTargetError:false,
+			}
     },
     methods: {
-        bindPickerChange: function(e) {
-            console.log('picker发送选择改变，携带值为', e.target.value)
-            this.index = e.target.value
-        },
-        bindDateChange: function(e) {
-            this.date = e.target.value
-        },
-        bindTimeChange: function(e) {
-            this.time = e.target.value
-        },
-        getDate(type) {
-            const date = new Date();
-            let year = date.getFullYear();
-            let month = date.getMonth() + 1;
-            let day = date.getDate();
-
-            if (type === 'start') {
-                year = year - 60;
-            } else if (type === 'end') {
-                year = year + 2;
-            }
-            month = month > 9 ? month : '0' + month;;
-            day = day > 9 ? day : '0' + day;
-            return `${year}-${month}-${day}`;
-        }
-    }
+	 formSubmit(e){
+	 		console.log("coursePlan formSubmit",e);
+	 		const formData=e.detail.value;
+	 		const validResult=this.formValid(formData);
+	 		if(!validResult){
+	 			uni.showToast({
+	 			    icon:'none',
+	 			    title: "输入数据不合法"
+	 			});
+	 			return;
+	 		}
+	 		this.CoursePlanService.createCoursePlan(formData).then((result)=>{
+	 			console.log("coursePlan formSubmit callback",result);
+	 			if(result.data && result.data.id>0){
+	 				uni.showToast({
+	 				    icon:'success',
+	 				    title: "添加成功！"
+	 				});
+	 				setTimeout(()=>{
+	 					console.log("settime out")
+	 					uni.navigateBack();
+	 				},1500);
+	 			}
+	 		}).catch((error)=>{
+	 			
+	 		}).finally(()=>{
+	 			
+	 		})
+	 		
+	 	},
+	 	formValid(formData){
+	 		this.planMemoError=false;
+	 		this.planTargetError=false;
+	 		let errItem={
+	 			errorText:"",
+	 			error:false
+	 		}
+	 		let result=true;
+	 		if(formData.planMemo==null || formData.planMemo.length==0){
+	 			errItem.error=true;
+	 			errItem.errorText="请输入授课内容！";
+	 			this.planMemoError=true;
+	 			result= false;
+	 		}
+	 		if(formData.planTarget==null || formData.planTarget.length==0){
+	 			errItem.error=true;
+	 			errItem.errorText="请输入授课目标";
+	 			this.planTargetError=true;
+	 			result= false;
+	 		}
+	 		return result;
+	 	}
+	 }
 }
   
 </script>
 
 
 <style>
-	/* .btn{
-		left: 84px;
-		top: 386px;
-		width: 247px;
-		height: 37px;
-		border-radius: 4px;
-	
-		font-size: 14px;
-		text-align: center;
-		font-family: Microsoft Yahei;
-		border: 1px solid rgba(187, 187, 187, 1);
-	} */
+
 	.MemoText{
+		background-color: white;
 		left: 62px;
-		top: 150px;
+		top: 20px;
 		width: 247px;
-		height: 57px;
+		height: 70px;
 		line-height: 20px;
 		color: rgba(136, 136, 136, 1);
 		font-size: 14px;
@@ -143,10 +132,11 @@ export default {
 		border: 1px solid rgba(187, 187, 187, 1);
 		}
 	.targetText{
+		background-color: white;
 		left: 62px;
-		top: 220px;
+		top: 50px;
 		width: 247px;
-		height: 57px;
+		height: 70px;
 		line-height: 20px;
 		color: rgba(136, 136, 136, 1);
 		font-size: 14px;
@@ -154,14 +144,6 @@ export default {
 		font-family: Microsoft Yahei;
 		border: 1px solid rgba(187, 187, 187, 1);
 	}
-	.choose{
-		text-align: center;
-		width: 247px;
-		height: 24px;
-		font-size: 14px;
-		font-family: Microsoft Yahei;
-		border: 1px solid rgba(187, 187, 187, 1);
-		
-	}
+
 
 </style>

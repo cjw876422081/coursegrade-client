@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"main-content{ width:100vw; height:100vh; overflow: hidden; }\n.",[1],"scroll-Y{ height:100vh; }\n",],undefined,{path:"./pages/teacherCourse/teacherCourse.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/teacherCourse/teacherCourse.wxml') } }));
