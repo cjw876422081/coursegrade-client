@@ -6,6 +6,7 @@ export default class CourseService{
 	constructor() {
 	    this.request=new request();
 	}
+	
 	getTeacherCourses(pageParam){
 		console.log("getTeacherCourses pageParam",pageParam);
 		const requestParam={
@@ -16,12 +17,26 @@ export default class CourseService{
 		}
 		return this.request.get(requestParam);
 	}
-	createCourse(courseInfo){
-		
-	}
-	delCourse(courseId){
-		const url="/api/course-infos/"+courseId;
-		return this.request.delete({url:url});
+	
+	getStudentCourses(pageParam){
+		console.log("getStudentCourses pageParam", pageParam);
+		const requestParam={
+			url:'/api/student-course-infos/student',
+		}
+		if(pageParam){
+			Object.assign(requestParam,{data:pageParam});
+		}
+		return this.request.get(requestParam);
 	}
 	
+	getAllCourses(){
+		console.log("getStudentCourses pageParam", pageParam);
+		const requestParam={
+			url:'/api/student-course-infos/student',
+		}
+		if(pageParam){
+			Object.assign(requestParam,{data:pageParam});
+		}
+		return this.request.get(requestParam);
+	}
 }
