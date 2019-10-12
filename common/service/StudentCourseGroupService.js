@@ -8,7 +8,10 @@ export default class StudentCourseGroupService{
 	getStudentCourseGroup(CourseGroupId,pageParam){
 		console.log("getstudentCourseGroup studentCourseGroupId",CourseGroupId);
 		const requestParam={
-			url:"/api/student-course-groups/id?id="+CourseGroupId+"&pageable="+pageParam,
+			url:"/api/student-course-groups/id?id="+CourseGroupId
+		}
+		if(pageParam){
+			Object.assign(requestParam,{data:pageParam});
 		}
 		return this.request.get(requestParam);
 	}

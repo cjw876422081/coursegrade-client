@@ -42,12 +42,10 @@
 									<view class="code">
 										<text>{{ homework.homeworkCode }}</text>
 										<view class="time">
-										<text>{{ handleTime(homework.dataTime)}}</text>
+											<text>{{ handleTime(homework.dataTime) }}</text>
 										</view>
 									</view>
-									
-										
-									
+
 									<view style="border-bottom: #E0E0E0 1px solid; margin-top: 5px;"></view>
 								</uni-card>
 							</uni-swipe-action>
@@ -60,7 +58,7 @@
 				<swiper-item>
 					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
 						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;" @click="homeworkClick(note.id)">
-							<uni-swipe-action :options="note.delOptions" @click="delClick" data-course="note">
+							<uni-swipe-action  @click="delClick" data-course="note">
 								<uni-card :title="note.noteMemo" :extra="note.noteType">
 									<view class="note">
 										<view class="code">
@@ -79,7 +77,17 @@
 						<button class="circle-btn" @tap="gotoNote"><text class="icon-text">+</text></button>
 					</view>
 				</swiper-item>
+<<<<<<< HEAD
 				<swiper-item></swiper-item>
+				<swiper-item></swiper-item>
+=======
+
+				<swiper-item>
+					<!-- 授课内容 -->
+					<view class="addButton"><button class="mini-btn" type="default" size="mini" @click="addCoursePlan">添加章节</button></view>
+					<mix-tree :list="list.children"></mix-tree>
+				</swiper-item>
+>>>>>>> f80cb5765a3827fdf720d1791d4a3ba869a2adf3
 			</swiper>
 		</view>
 	</view>
@@ -95,16 +103,23 @@ import uniCard from '@/components/uni-card/uni-card';
 import MescrollUni from '@/components/mescroll-uni/mescroll-uni.vue';
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
 import uniFab from '@/components/uni-fab/uni-fab.vue';
+import mixTree from '@/components/mix-tree/mix-tree';
+import CoursePlanTeacherTreeService from '../../common/service/CoursePlanTeacherTreeService.js';
 export default {
 	components: {
 		uniGrid,
 		uniList,
 		uniListItem,
 		uniCollapse,
-		uniCollapseItem
+		uniCollapseItem,
+		mixTree
 	},
 	data() {
 		return {
+			//授课内容
+			list: [],
+			coursePlanTeacherTreeService: new CoursePlanTeacherTreeService(),
+			
 			courseService: new CourseService(),
 			tabCurrentIndex: 0,
 			swiperCurrentIndex: 0,
@@ -128,6 +143,10 @@ export default {
 				{
 					name: '授课内容',
 					id: 'shouke'
+				 },
+				{
+					name:"班级",
+					id:'banji'
 				}
 			],
 			titleShowId: 'tabTag-0',
@@ -163,6 +182,7 @@ export default {
 		this.getCourse();
 		this.getCourseHomework();
 		this.getCoursePlan();
+		this.getCoursesPlan();
 	},
 	methods: {
 		tabChange: function(e) {
@@ -242,21 +262,53 @@ export default {
 				url: '../createHomework/createHomework?cId=' + cId
 			});
 		},
-			gotoNote: function() {
-
-					uni.navigateTo({});
-
-			},handleTime: function(date) {
-				var d = new Date(date);
-				var year = d.getFullYear();
-				var month = d.getMonth() + 1;
-				var day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate();
-				var hour = d.getHours() < 10 ? '0' + d.getHours() : '' + d.getHours();
-				var minutes = d.getMinutes() < 10 ? '0' + d.getMinutes() : '' + d.getMinutes();
-				var seconds = d.getSeconds() < 10 ? '0' + d.getSeconds() : '' + d.getSeconds();
-				return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
-			},
-			
+		gotoNote: function() {
+			uni.navigateTo({});
+		},
+		handleTime: function(date) {
+			var d = new Date(date);
+			var year = d.getFullYear();
+			var month = d.getMonth() + 1;
+			var day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate();
+			var hour = d.getHours() < 10 ? '0' + d.getHours() : '' + d.getHours();
+			var minutes = d.getMinutes() < 10 ? '0' + d.getMinutes() : '' + d.getMinutes();
+			var seconds = d.getSeconds() < 10 ? '0' + d.getSeconds() : '' + d.getSeconds();
+			return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
+		},
+		//授课内容
+		getCoursesPlan() {
+			const courseId = this.course.id;
+			console.log('courseId：' + courseId);
+			this.coursePlanTeacherTreeService
+				.getCoursePlanTeacherTree(null, courseId)
+				.then(result => {
+					console.log('coursePlanTeacherTreeService getCoursePlanTeacherTree', result);
+					if (result.data) {
+						this.list = result.data;
+						console.log('授课内容-----------list：', this.list);
+					}
+				})
+				.catch(err => {})
+				.finally(() => {});
+		},
+		//点击最后一级时触发该事件
+		treeItemClick(item) {
+			let { id, planMemo, parentId } = item;
+			uni.showModal({
+				content: `点击了${parentId.length + 1}级菜单, ${planMemo.toString()}, id为${id}, 父id为${parentId.toString()}`
+			});
+			console.log(item);
+		},
+		addCoursePlan() {
+			// console.log(JSON.stringify(this.list));
+			uni.showToast({
+				title: '显示:' + JSON.stringify(this.list.id),
+				duration: 2000
+			});
+			uni.navigateTo({
+				url: '添加授课内容路径'
+			});
+		}
 	}
 };
 </script>
@@ -295,7 +347,6 @@ export default {
 	width: 100%;
 }
 
-
 /* 
 .imageContainer {
 	width: 100%;
@@ -327,7 +378,7 @@ export default {
 		top: 56upx;
 		left: 51upx;
 		z-index: 998;
-		width: 162upx;
+		width: 140upx;
 		height: 163upx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 8upx;
@@ -401,5 +452,13 @@ export default {
 }
 .grade {
 	margin-right: 100px;
+}
+.courseName {
+	text-align: center;
+	margin-top: 20rpx;
+}
+.addButton {
+	text-align: center;
+	margin-top: 10px;
 }
 </style>
