@@ -12,12 +12,13 @@
 			</scroll-view>
 			<swiper class="grace-tab-swiper" :current="swiperCurrentIndex" @change="swiperChange" style="height:1000upx;">
 				<swiper-item>
-					<uni-list-item title="课程名称" :note="course.courseName" ></uni-list-item>
+					<uni-list-item title="课程名称" :note="course.courseName"></uni-list-item>
 					<uni-list-item title="课程总数" :note="course.courseCount" show-arrow="true"></uni-list-item>
 					<uni-list-item title="课程描述" :note="course.courseMemo" show-arrow="false"></uni-list-item>
 					<uni-list-item title="课程周数" :note="course.courseWeekCount" show-arrow="false"></uni-list-item>
-					<uni-list-item title="创建时间" :note="course.dataTime" show-arrow="false"></uni-list-item>
+					<uni-list-item title="创建时间" :note="handleTime(course.dataTime)" show-arrow="false"></uni-list-item>
 				</swiper-item>
+				<!-- <text>{{handleTime(course.dateTime)}}</text> -->
 				<swiper-item>
 					<!-- <uni-collapse accordion="true">
 					    <uni-collapse-item title="标题文字">
@@ -37,43 +38,48 @@
 					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
 						<view v-for="(homework, i) in homeworks" :key="i" style="margin-bottom:10rpx;" @click="homeworkClick(homework.id)">
 							<uni-swipe-action :options="homework.delOptions" @click="delClick" data-course="homework">
-								<uni-card :title="homework.homeworkMemo"  :extra="homework.homeworkCode">
+								<uni-card :title="homework.homeworkMemo" :extra="homework.homeworkCode">
 									<view class="code">
-									<text>{{ homework.homeworkCode }}</text>
+										<text>{{ homework.homeworkCode }}</text>
+										<view class="time">
+										<text>{{ handleTime(homework.dataTime)}}</text>
+										</view>
 									</view>
-									<view  style="border-bottom: #E0E0E0 1px solid; margin-top: 5px;" >
 									
+										
+									
+									<view style="border-bottom: #E0E0E0 1px solid; margin-top: 5px;"></view>
+								</uni-card>
+							</uni-swipe-action>
+						</view>
+					</mescroll-uni>
+					<view class="btn">
+						<button class="circle-btn" @tap="gotoDetail(course.id)"><text class="icon-text">+</text></button>
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
+						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;" @click="homeworkClick(note.id)">
+							<uni-swipe-action :options="note.delOptions" @click="delClick" data-course="note">
+								<uni-card :title="note.noteMemo" :extra="note.noteType">
+									<view class="note">
+										<view class="code">
+											<text>笔记描述:{{ note.noteMemo }}</text>
+										</view>
+										<view>
+											<text>笔记类型：{{ note.noteType }}</text>
+										</view>
+										<view style="border-bottom: #E0E0E0 1px solid; margin-top: 5px;"></view>
 									</view>
 								</uni-card>
 							</uni-swipe-action>
 						</view>
 					</mescroll-uni>
 					<view class="btn">
-						<button class="circle-btn" @tap="gotoDetail"><text class="icon-text">+</text></button>
+						<button class="circle-btn" @tap="gotoNote"><text class="icon-text">+</text></button>
 					</view>
-					
 				</swiper-item>
-				<swiper-item>
-					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
-						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;" @click="homeworkClick(note.id)">
-							<uni-swipe-action :options="note.delOptions" @click="delClick" data-course="note">
-								<uni-card :title="note.noteMemo"  :extra="note.noteType">
-									<view class="note">
-									<view class="code">
-									<text>笔记描述:{{ note.noteMemo }}</text>
-									</view>
-									<view >
-										<text>笔记类型：{{ note.noteType }}</text>
-									</view>
-									<view  style="border-bottom: #E0E0E0 1px solid; margin-top: 5px;" >
-									
-									</view>
-									</view>
-								</uni-card>
-							</uni-swipe-action>
-						</view>
-					</mescroll-uni>
-				</swiper-item>
+				<swiper-item></swiper-item>
 			</swiper>
 		</view>
 	</view>
@@ -103,9 +109,9 @@ export default {
 			tabCurrentIndex: 0,
 			swiperCurrentIndex: 0,
 			//页码
-			pageIndex:0,
+			pageIndex: 0,
 			//页长
-			pageSize:10,
+			pageSize: 10,
 			tabs: [
 				{
 					name: '课程详情',
@@ -118,12 +124,16 @@ export default {
 				{
 					name: '笔记',
 					id: 'gengduo'
+				},
+				{
+					name: '授课内容',
+					id: 'shouke'
 				}
 			],
 			titleShowId: 'tabTag-0',
 			course: {},
 			homeworks: [],
-			notes:[],
+			notes: [],
 			downOption: {
 				use: true, // 是否启用下拉刷新; 默认true
 				auto: true // 是否在初始化完毕之后自动执行下拉刷新的回调; 默认true
@@ -139,8 +149,7 @@ export default {
 				empty: {
 					tip: '暂未查询到数据'
 				}
-			},
-			
+			}
 		};
 	},
 	onLoad: function(option) {
@@ -194,11 +203,11 @@ export default {
 		},
 		getCoursePlan: function() {
 			const courseId = this.course.id;
-			const page = this.pageIndex;//页码
-			const size = this.pageSize;//页长
-			const type = "课程";
+			const page = this.pageIndex; //页码
+			const size = this.pageSize; //页长
+			const type = '课程';
 			this.courseService
-				.getCoursePlan(courseId,page,size,type)
+				.getCoursePlan(courseId, page, size, type)
 				.then(result => {
 					console.log('plans', result.data.content);
 					this.notes = result.data.content;
@@ -228,11 +237,26 @@ export default {
 					.finally(() => {});
 			}
 		},
-		gotoDetail: function() {
+		gotoDetail: function(cId) {
+			uni.navigateTo({
+				url: '../createHomework/createHomework?cId=' + cId
+			});
+		},
+			gotoNote: function() {
+
+					uni.navigateTo({});
+
+			},handleTime: function(date) {
+				var d = new Date(date);
+				var year = d.getFullYear();
+				var month = d.getMonth() + 1;
+				var day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate();
+				var hour = d.getHours() < 10 ? '0' + d.getHours() : '' + d.getHours();
+				var minutes = d.getMinutes() < 10 ? '0' + d.getMinutes() : '' + d.getMinutes();
+				var seconds = d.getSeconds() < 10 ? '0' + d.getSeconds() : '' + d.getSeconds();
+				return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
+			},
 			
-				uni.navigateTo({});
-	
-		}
 	}
 };
 </script>
@@ -270,6 +294,7 @@ export default {
 	height: 190px;
 	width: 100%;
 }
+
 
 /* 
 .imageContainer {
@@ -357,24 +382,24 @@ export default {
 	transition: all 0.2s ease-in 0s;
 }
 .circle-btn {
-		position: absolute;
-		bottom: 65px;
-		right: 15px;
-		position: fixed;
-		width: 58px;
-		height: 58px;
-		border-radius: 50%;
-		background-color: #de533a;
-		background: linear-gradient(40deg, #ffd86f, #fc6262);
-		box-shadow: 2px 5px 10px #aaa;
-		cursor: pointer;
-		border: none;
-		outline: none;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	.grade{
-		margin-right: 100px;
-	}
+	position: absolute;
+	bottom: 65px;
+	right: 15px;
+	position: fixed;
+	width: 58px;
+	height: 58px;
+	border-radius: 50%;
+	background-color: #de533a;
+	background: linear-gradient(40deg, #ffd86f, #fc6262);
+	box-shadow: 2px 5px 10px #aaa;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.grade {
+	margin-right: 100px;
+}
 </style>

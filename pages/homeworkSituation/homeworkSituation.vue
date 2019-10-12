@@ -48,7 +48,7 @@
 							<label>作业内容:</label><br><br>
 								<text>{{student.submitMemo}}</text><br><br>
 								<label >提交时间:{{student.submitTime}}</label><br>
-								<button type="primary" size="default" style="margin: 0 15vh 0 15vh;" @trigger="score">去评分</button>
+								<button type="primary" size="default" style="margin: 0 15vh 0 15vh;" @click="score">去评分</button>
 							</uni-card>
 				</view>
 			</view>
@@ -193,7 +193,6 @@
 							if( this.allStudentHomework[i].submitMemo==null||
 								this.allStudentHomework[i].submitMemo==""){	
 							}else{
-		
 								count++;
 							}
 						}
@@ -210,10 +209,8 @@
 							flag0=false;
 							let num = 0;
 							for(let i = 0;i<count;i++){
-								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){
-									
+								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){				
 									num++;
-									console.log("==========================",num)
 								}
 								
 							}
@@ -223,21 +220,17 @@
 							 if(num==0){//只显示未评分
 								flag2=false;
 							}
-							
 						}
 						else if(count!=result.data.totalElements){//判断评分和未评分
 							for(let i = 0 ;i<result.data.totalElements;i++){
 								if(this.allStudentHomework[i].submitMemo!=null||this.allStudentHomework[i].submitMemo!=""){
 									if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=null){
 										count2++;
-										console.log("ppppppppppppppppppppp",count2)
 									}else{
 										
 									}
 								}
 							}
-							console.log("-----------ppppppppppppppppppppp",count2)
-							console.log("uuuuuuuuuuuuuuuuuuuuuuuuu",count)
 							if(count2==0){//全部都是未评分
 								flag2=false;
 							}
@@ -258,7 +251,6 @@
 							if( this.allStudentHomework[i].submitMemo==null||
 								this.allStudentHomework[i].submitMemo==""){	
 							}else{
-								
 								count++;
 							}
 						}
@@ -275,12 +267,9 @@
 							flag0=false;
 							let num = 0;
 							for(let i = 0;i<count;i++){
-								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){
-									
+								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){	
 									num++;
-									console.log("==========================",num)
 								}
-								
 							}
 							if(num==count){//没有未评分的学生
 								flag1=false;
@@ -288,21 +277,15 @@
 							 if(num==0){//只显示未评分
 								flag2=false;
 							}
-							
 						}
 						else if(count!=result.data.totalElements){//判断评分和未评分
 							for(let i = 0 ;i<result.data.totalElements;i++){
 								if(this.allStudentHomework[i].submitMemo!=null||this.allStudentHomework[i].submitMemo!=""){
 									if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=null){
 										count2++;
-										console.log("ppppppppppppppppppppp",count2)
-									}else{
-										
 									}
 								}
 							}
-							console.log("-----------ppppppppppppppppppppp",count2)
-							console.log("uuuuuuuuuuuuuuuuuuuuuuuuu",count)
 							if(count2==0){//全部都是未评分
 								flag2=false;
 							}
