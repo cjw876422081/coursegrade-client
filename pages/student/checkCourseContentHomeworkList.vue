@@ -132,13 +132,13 @@
 					addClick(e){
 							console.log("addClick",e);
 							uni.navigateTo({
-								url: '../courseHomework/getOneHomework'
+							    url: '../courseHomework/submittedHomework'
 							});
 						},
 						gotoIndex(){
 							console.log("点击")
 							uni.navigateTo({
-								url: '../courseHomework/getOneHomework'
+								url: '../courseHomework/submittedHomework'
 							});
 						},
 					},
