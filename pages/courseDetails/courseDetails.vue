@@ -81,7 +81,7 @@
 				<swiper-item>
 					<!-- 授课内容 -->
 					<view class="addButton"><button class="mini-btn" type="default" size="mini" @click="addCoursePlan">添加章节</button></view>
-					<mix-tree :list="list.children"></mix-tree>
+					<mix-tree :list="list"></mix-tree>
 				</swiper-item>
 			</swiper>
 		</view>
