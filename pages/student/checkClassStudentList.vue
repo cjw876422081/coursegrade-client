@@ -60,7 +60,7 @@
 				pageIndex:0,
 				//页长
 				pageSize:3,
-				courseGroupId:2,
+				courseGroupId:1,
 				studentCourseGroupservice:new StudentCourseGroupService(),
 				isEnd:false,
 				totalElements:0,
@@ -113,8 +113,17 @@
 			},
 			
 		},
-		onLoad() {
+		onLoad(e) {
+			var classId='';
+			classId=e.id;
+			console.log("班级为："+classId);
+			if(classId!=''){
+			this.courseGroupId=classId;
 			this.getStudents();
+			}
+			else{
+				
+			}
 		}
 	}
 	</script>

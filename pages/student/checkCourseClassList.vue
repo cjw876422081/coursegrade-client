@@ -8,10 +8,12 @@
 				        <t-th align="left">班级</t-th>
 				        <t-th align="left">人数</t-th>
 				    </t-tr>
-				    <t-tr font-size="15" color="black" align="left" v-for="(courseGroup,i) in classes" :key="i" @click="classclick(courseGroup.id)">
+				    <view v-for="(courseGroup,i) in classes" :key="i" @click="classclick(courseGroup.id)">
+						<t-tr font-size="15" color="black" align="left" >
 				        <t-td align="left" >{{courseGroup.groupName}}</t-td>
 						<t-td align="left">{{courseGroup.groupCount}} </t-td>
 				    </t-tr>
+					</view>
 				</t-table>
 		</view>
 </template>
@@ -59,7 +61,7 @@
 			},
 			classclick(cgid){
 				uni.navigateTo({
-									url: '../checkClassStudentList/checkClassStudentList?id='+cgid
+									url: 'checkClassStudentList?id='+cgid
 								});
 			}
 			
