@@ -44,7 +44,6 @@
 </template>
 
 <script>
-	import xflSelect from '../../components/xfl-select/xfl-select.vue'; 
 	import AccountService from "../../common/service/AccountService.js"
 	export default {
 		data() {
