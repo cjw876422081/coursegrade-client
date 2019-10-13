@@ -173,12 +173,13 @@ export default {
 		});
 		console.log(option.cId);
 		this.course.id = option.cId;
+		this.getCoursesPlan();
 	},
 	onShow: function() {
 		this.getCourse();
 		this.getCourseHomework();
 		this.getCoursePlan();
-		this.getCoursesPlan();
+		// this.getCoursesPlan();
 	},
 	methods: {
 		tabChange: function(e) {
