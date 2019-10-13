@@ -1,53 +1,4 @@
 <template>
-<!-- 	<view class="main-content">
-		<uni-segmented-control :current="current" :values="items"   @clickItem="onClickItem" />
-		<view class="content">
-			<view v-show="current === 0">
-				
-				 <mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
-			    <view v-for="(courseHomework,i) in courseHomeworks" :key="i">
-				<uni-card
-				 	:title="courseHomework.homeworkCode"
-				 	:is-shadow="true"
-				 	thumbnail="../../static/img/homework.png"
-				 	:extra="grade+courseHomework.homeworkGrade"
-				 	:note="deadlineTime+courseHomework.homeworkDeadline">
-					<text>{{courseHomework.homeworkMemo}}</text>
-					 </uni-card> 
-				 </view>
-				</mescroll-uni>
-			</view>
-			<view v-show="current === 1">
-				
-				<view v-for="(courseHomework,i) in courseHomeworks" :key="i">
-				<uni-card
-				 	:title="courseHomework.homeworkCode"
-				 	:is-shadow="true"
-				 	thumbnail="../../static/img/homework.png"
-				 	:extra="grade+courseHomework.homeworkGrade"
-				 	:note="deadlineTime+courseHomework.homeworkDeadline">
-					<text>{{courseHomework.homeworkMemo}}</text>
-					 </uni-card> 
-				 </view>
-			</view>
-			<view v-show="current === 2">
-				
-				 <view v-for="(courseHomework,i) in courseHomeworks" :key="i">
-				<uni-card
-				 	:title="courseHomework.homeworkCode"
-				 	:is-shadow="true"
-				 	thumbnail="../../static/img/homework.png"
-				 	:extra="grade+courseHomework.homeworkGrade"
-				 	:note="deadlineTime+courseHomework.homeworkDeadline">
-					<text>{{courseHomework.homeworkMemo}}</text>
-					
-					<button class="mini-button" size="mini" type="warn" plain="true" >提交</button>
-					 </uni-card> 
-					 </view>
-		
-			</view>
-</view>
-</view> -->
 <view>
 <mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
                <view v-for="(courseHomework,i) in courseHomeworks" :key="i">
@@ -68,33 +19,6 @@
 					@trigger="addClick"
 				></uni-fab>
             </view>
-           <!-- <view v-show="current === 1">
-                <view v-for="(courseHomework,i) in courseHomeworks" :key="i">
-                <uni-card
-                 	:title="courseHomework.homeworkCode"
-                 	:is-shadow="true"
-                 	thumbnail="../../static/img/homework.png"
-                 	:extra="grade+courseHomework.homeworkGrade"
-                 	:note="deadlineTime+courseHomework.homeworkDeadline">
-                	<text>{{courseHomework.homeworkMemo}}</text>
-                	 </uni-card> 
-                 </view>
-            </view>
-            <view v-show="current === 2">
-                <view v-for="(courseHomework,i) in courseHomeworks" :key="i"
-				 v-if="!courseHomework.submitMemo">
-                <uni-card
-                 	:title="courseHomework.homeworkCode"
-                 	:is-shadow="true"
-                 	thumbnail="../../static/img/homework.png"
-                 	:extra="grade+courseHomework.homeworkGrade"
-                 	:note="deadlineTime+courseHomework.homeworkDeadline">
-                	<text>{{courseHomework.homeworkMemo}}</text>
-                	
-                	<button class="mini-button" size="mini" type="warn" plain="true" >提交</button>
-                	 </uni-card> 
-                	 </view>
-            </view> -->
         </view>
     </view>
 </template>
