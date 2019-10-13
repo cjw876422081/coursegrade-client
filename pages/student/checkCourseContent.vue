@@ -40,7 +40,7 @@
 			      list :[],
 				  course:{},
 		          TabCur: 0,
-				  courseId: 1,
+				  courseId: 0,
 				  StudentCourseGroupService: new StudentCourseGroupService(),
 				  CourseService: new CourseService(),
 		          tabList: [{ name: '课程简介' }, { name: '章节内容' }],
@@ -54,7 +54,7 @@
 
 		    methods: {
 				getCourseInfo(){
-					const courseId = this.course.id;
+					const courseId = this.courseId;
 					console.log('啦啦啦',courseId)
 					this.StudentCourseGroupService
 						.getCourseInfo(courseId)
@@ -135,12 +135,13 @@
 							this.TabCur = current;
 				 }
 		    },
-			onLoad() {
-				// this.course.id = option.course_id
-
+			onLoad(option) {
+				console.log("option" , option.cId)
+				this.courseId = option.cId
+				this.getCourseInfo();
 			},
 			onShow() {
-				this.getCourseInfo();
+			
 				this.getCoursesPlan();
 				this.IsJoinTheClass();
 			}
