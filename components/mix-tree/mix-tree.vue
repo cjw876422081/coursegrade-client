@@ -23,13 +23,10 @@
 						{{ item.planMemo }}
 					</view>
 					<view>
-						<!-- <img class="option-icon" src="/static/img/delete.png" @click="deleteCoursePlan(index)" v-if="item.leaf == true"></img> -->
+						<img class="option-icon" src="/static/img/delete.png" @click="deleteCoursePlan(index)" v-if="item.leaf == true"></img>
 						<img class="option-icon" src="/static/img/add.png" @click="addCoursePlan(index)"></img>
 						<img class="option-icon" src="/static/img/add.png" @click="courseHomework(index)"></img>
 						<img class="option-icon" src="/static/img/add.png" @click="courseNote(index)"></img>
-						<img class="option-icon" src="/static/img/delete.png" @click="getParmter(index)">
-							<navigator :url="'../creatCoursePlan/creatCoursePlan?parmeter='+ encodeURIComponent(parmeter)"></navigator>
-						</img>
 					</view>
 					
 				</view>
@@ -67,6 +64,7 @@ export default {
 			},
 			coursePlanTeacherTreeService: new CoursePlanTeacherTreeService(),
 			parmeter:{
+				planId:0,
 				courseId:0,
 				courseName: '',
 				planMemo:[]
@@ -190,7 +188,15 @@ export default {
 			});
 		},
 		getParmter(index){
-			// console.log("this.list:"+JSON.stringify(this.courseTreeList));
+			
+			this.parmeter = {
+				planId:0,
+				courseId:0,
+				courseName: '',
+				planMemo:[]
+			}
+			// console.log("this.list:"+JSON.stringify(this.treeList));
+			this.parmeter.planId = this.treeList[index].id;
 			this.parmeter.courseId =  this.courseTreeList.id;
 			this.parmeter.courseName = this.courseTreeList.courseName;
 			console.log("courseId",this.parmeter.courseName);
