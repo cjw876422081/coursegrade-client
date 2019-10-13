@@ -1,5 +1,5 @@
 <template>
-	<view class="mescroll-uni-warp">
+	<view class="mescroll-uni-warp" >
 		<scroll-view :id="viewId" class="mescroll-uni" :class="{'mescroll-uni-fixed':fixed}" :style="{'padding-top':padTop,'padding-bottom':padBottom,'top':fixedTop,'bottom':fixedBottom}" :scroll-top="scrollTop" :scroll-with-animation="scrollAnim" @scroll="scroll" @touchstart="touchstartEvent" @touchmove="touchmoveEvent" @touchend="touchendEvent" @touchcancel="touchendEvent" :scroll-y='scrollAble' :throttle="mescroll.optUp.onScroll==null" :enable-back-to-top="true">
 			<!-- 下拉加载区域-->
 			<view v-if="mescroll.optDown.use" class="mescroll-downwarp" :style="{'height': downHight, 'transition': supplyHeight}">
@@ -13,11 +13,11 @@
 			<slot></slot>
 			
 			<!-- 空布局 -->
-			<view v-if="isShowEmpty" class="mescroll-empty" :class="{'empty-fixed':optEmpty.fixed}" :style="{'z-index':optEmpty.zIndex,'top':optEmpty.top}">
+			<!-- <view v-if="isShowEmpty" class="mescroll-empty" :class="{'empty-fixed':optEmpty.fixed}" :style="{'z-index':optEmpty.zIndex,'top':optEmpty.top}">
 				<image v-if="optEmpty.icon" class="empty-icon" :src="optEmpty.icon" mode="widthFix" />
 				<view v-if="optEmpty.tip" class="empty-tip">{{optEmpty.tip}}</view>
 				<view v-if="optEmpty.btnText" class="empty-btn" @click="emptyClick">{{optEmpty.btnText}}</view>
-			</view>
+			</view> -->
 		
 			<!-- 上拉加载区域 -->
 			<view v-if="mescroll.optUp.use" class="mescroll-upwarp">

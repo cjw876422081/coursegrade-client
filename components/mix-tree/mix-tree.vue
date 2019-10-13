@@ -23,9 +23,15 @@
 						{{ item.planMemo }}
 					</view>
 					<view>
-						<img class="option-icon" src="/static/img/delete.png" @click="deleteCoursePlan(index)" v-if="item.leaf == true"></img>
+						<!-- <img class="option-icon" src="/static/img/delete.png" @click="deleteCoursePlan(index)" v-if="item.leaf == true"></img> -->
 						<img class="option-icon" src="/static/img/add.png" @click="addCoursePlan(index)"></img>
+						<img class="option-icon" src="/static/img/add.png" @click="courseHomework(index)"></img>
+						<img class="option-icon" src="/static/img/add.png" @click="courseNote(index)"></img>
+						<img class="option-icon" src="/static/img/delete.png" @click="getParmter(index)">
+							<navigator :url="'../creatCoursePlan/creatCoursePlan?parmeter='+ encodeURIComponent(parmeter)"></navigator>
+						</img>
 					</view>
+					
 				</view>
 			</block>
 		</view>
@@ -51,6 +57,7 @@ export default {
 	},
 	data() {
 		return {
+			courseTreeList:[],
 			treeList: [],
 			treeParams: {
 				defaultIcon: '/static/mix-tree/defaultIcon.png',
@@ -58,14 +65,20 @@ export default {
 				lastIcon: '',
 				border: false
 			},
-			coursePlanTeacherTreeService: new CoursePlanTeacherTreeService()
+			coursePlanTeacherTreeService: new CoursePlanTeacherTreeService(),
+			parmeter:{
+				courseId:0,
+				courseName: '',
+				planMemo:[]
+			}
 		};
 	},
 	watch: {
 		list(list) {
 			this.treeParams = Object.assign(this.treeParams, this.params);
 			console.log(this.treeParams, this.params);
-			this.renderTreeList(list);
+			this.courseTreeList = list;
+			this.renderTreeList(list.children);
 		}
 	},
 	methods: {
@@ -83,7 +96,7 @@ export default {
 					children: item.children,
 					courseHomeworks: item.courseHomeworks,
 					leaf: item.leaf,
-					parentId, //父级id数组
+					parentId,//父级id数组
 					showChild: false, //子级是否显示
 					show: rank === 0 // 自身是否显示
 				});
@@ -123,26 +136,82 @@ export default {
 				}
 			});
 		},
-		addCoursePlan(index){
-			uni.showToast({
-			    title: '点击了'+JSON.stringify(this.treeList[index].id),
-			    duration: 2000
-			});
-			uni.navigateTo({
-			    url: '添加授课内容路径'
-			});
-		},
 		deleteCoursePlan(index){
 			const planId = JSON.stringify(this.treeList[index].id);
-			this.coursePlanTeacherTreeService.deleteCoursePlan(null,planId)
-				.then(result => {
-					uni.showToast({
-					    title: '删除成功',
-					    duration: 2000
-					});
-				})
-				.catch(err => {})
-				.finally(() => {});
+			uni.showModal({
+			    title: '提示',
+			    content: '确认删除',
+			    success: function (res) {
+			        if (res.confirm) {
+			            this.coursePlanTeacherTreeService.deleteCoursePlan(null,planId)
+			            	.then(result => {
+			            		uni.showToast({
+			            		    title: '删除成功',
+			            		    duration: 2000
+			            		});
+			            	})
+			            	.catch(err => {})
+			            	.finally(() => {});
+			        } else if (res.cancel) {
+			            console.log('用户点击取消');
+			        }
+			    }
+			});
+			
+		},
+		addCoursePlan(index){
+			this.getParmter(index);
+			// uni.showToast({
+			//     title: '点击了'+JSON.stringify(this.treeList[index].id),
+			//     duration: 2000
+			// });
+			
+			console.log("+++++++++++=1:"+JSON.stringify(this.parmeter));
+			// console.log("+++++++++++=2:"+JSON.stringify(encodeURIComponent(this.parmeter)));
+			// console.log("+++++++++++=3:"+JSON.stringify(decodeURIComponent(this.parmeter)));
+			
+			uni.navigateTo({
+			    url: '../creatCoursePlan/creatCoursePlan?parmeter='+ encodeURIComponent(JSON.stringify(this.parmeter))
+			});
+		},
+		courseHomework(index){
+			this.getParmter(index);
+			//进入单个授课内容的作业  courseHomework/getHomeworkByPlan，传 homework-plan  id
+			uni.navigateTo({
+			    url: '../courseHomework/getHomeworkByPlan?parmeter='+encodeURIComponent(JSON.stringify(this.parmeter))
+			});
+		},
+		courseNote(index){
+			this.getParmter(index);
+			// console.log("this.treeList:"+JSON.stringify(this.treeList[index].id));
+			//进入单个笔记及全部回复
+			uni.navigateTo({
+			    url: '../courseNote/courseNoteByPlan-teacher/courseNoteByPlan-teacher?parmeter='+encodeURIComponent(JSON.stringify(this.parmeter))
+			});
+		},
+		getParmter(index){
+			// console.log("this.list:"+JSON.stringify(this.courseTreeList));
+			this.parmeter.courseId =  this.courseTreeList.id;
+			this.parmeter.courseName = this.courseTreeList.courseName;
+			console.log("courseId",this.parmeter.courseName);
+			console.log("courseName",this.courseTreeList.courseName);
+			// console.log("planMemo",this.parmeter);
+			this.parmeter.planMemo.push(this.treeList[index].planMemo);
+			for(;;){
+				const level =  this.treeList[index].parentId.length;
+				// console.log("级别:"+level);
+				// console.log("this.list_________:"+this.treeList[index].pId);
+				// console.log("this.list+++++++++++++:"+JSON.stringify(this.treeList[index].planMemo));
+				if(level > 0 && this.treeList[index].pId && (this.treeList[index].pId != null || this.treeList[index].course != null)){
+					this.parmeter.planMemo.push(this.treeList[index-1].planMemo);
+					// console.log("planMemo+++++++++++++:"+JSON.stringify(this.treeList[index-1].planMemo));
+					index = index - 1;
+				}
+				if(level < 2){
+					// console.log("跳出循环");
+					return;
+				}
+			}
 		}
 	}
 };
