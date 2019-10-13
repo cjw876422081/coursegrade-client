@@ -46,9 +46,10 @@
 							:title="student.student" 
 							:extra="'得分:'+student.grade" >
 							<label>作业内容:</label><br><br>
-								<text>{{student.submitMemo}}</text><br><br>
+								<text style="word-wrap: break-word;word-break: break-all;">{{student.submitMemo}}</text><br><br>
 								<label >提交时间:{{student.submitTime}}</label><br>
-								<button type="primary" size="default" style="margin: 0 15vh 0 15vh;" @click="score">去评分</button>
+								<label>{{student.id}}</label><br><br>
+								<button type="primary" size="default" style="margin: 0 15vh 0 15vh;" @click="score(student.id)">去评分</button>
 							</uni-card>
 				</view>
 			</view>
@@ -299,6 +300,7 @@
 						this.numberOfSubmissions=count;
 					}
 					console.log("allStudentHomework===------------++-",result.data.content);
+					console.log("allStudentHomework================",this.allStudentHomework);
 					//获取发布该作业的教师
 					this.teacher=this.allStudentHomework[0].teacher;
 					//获取总人数
@@ -315,10 +317,10 @@
 					}
 				})
 				},
-			score(e){
-				console.log("score",e);
+			score(studentId){
+				console.log("score",studentId);
 				uni.navigateTo({
-					url: '../checkHomework/checkHomework'
+					url: '../checkHomework/checkHomework?studentId='+studentId
 				});
 			}
 		}

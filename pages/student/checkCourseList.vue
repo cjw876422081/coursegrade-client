@@ -2,7 +2,8 @@
 	<view class="main-content">
 			<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
 		      <wuc-tab :tab-list="tabList3" textFlex :tabCur.sync="TabCur3" tab-class="text-center text-black bg-white" select-class="text-orange"></wuc-tab>
-			  	<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
+			  <swiper-item v-for="(item,index) in tabList3" :key="index">	 
+			  	<view v-for="(course,i) in allCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
 			  				<uni-card
 			  				:title="course.courseName" 
 			  				thumbnail="/static/logocolor.png" 
@@ -10,6 +11,18 @@
 			  					<text>{{course.courseMemo}}</text>
 			  				</uni-card>
 			  	</view>
+				</swiper-item>
+				
+				<swiper-item v-for="(item,index) in tabList3" :key="index">
+					<view v-for="(course,i) in studentCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
+								<uni-card
+								:title="course.courseName" 
+								thumbnail="/static/logocolor.png" 
+								:extra="course.courseCode" >
+									<text>{{course.courseMemo}}</text>
+								</uni-card>
+					</view>
+				</swiper-item>
 			  </mescroll-uni>
   </view>
 </template>
@@ -31,7 +44,7 @@ export default {
             TabCur3: 0,
 
 			studentCourses:[],
-			allCourse:[],
+			allCourses:[],
 			pageIndex: 0,
 			pageSize: 10,
 			courseService: new CourseService(),
@@ -91,7 +104,7 @@ export default {
 				page:this.pageIndex,
 				size:this.pageSize
 			}).then((result)=>{
-				console.log("CourseService getTeacherCourses",result)
+				console.log("CourseService getAllCourses",result)
 				if(result.data && result.data.content){
 					result.data.content.forEach((item)=>{
 						item.delOptions=[{
@@ -102,11 +115,11 @@ export default {
 								courseId:item.id
 							}]
 					});
-				console.log("CourseService getTeacherCourses",result);
+				console.log("CourseService getStudentCourses",result);
 				if(this.pageIndex==0){
-					this.courses=result.data.content;
+					this.studentCourses=result.data.content;
 				}else{
-					this.courses=this.courses.concat(result.data.content);
+					this.studentCourses=this.studentCourses.concat(result.data.content);
 				}
 				this.isEnd=result.data.last;
 				this.pageIndex=result.data.number;
@@ -120,13 +133,12 @@ export default {
 					callback();
 				}
 			});
-		},
-		getAllCourses(callback){
-			this.courseService.getStudentCourses({
+			
+			this.courseService.getAllCourses({
 				page:this.pageIndex,
 				size:this.pageSize
 			}).then((result)=>{
-				console.log("CourseService getTeacherCourses",result)
+				console.log("CourseService getAllCourses",result)
 				if(result.data && result.data.content){
 					result.data.content.forEach((item)=>{
 						item.delOptions=[{
@@ -139,9 +151,9 @@ export default {
 					});
 				console.log("CourseService getTeacherCourses",result);
 				if(this.pageIndex==0){
-					this.courses=result.data.content;
+					this.allCourses=result.data.content;
 				}else{
-					this.courses=this.courses.concat(result.data.content);
+					this.allCourses=this.allCourses.concat(result.data.content);
 				}
 				this.isEnd=result.data.last;
 				this.pageIndex=result.data.number;
