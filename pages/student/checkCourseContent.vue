@@ -117,8 +117,10 @@
 					.catch(e=>{})
 					.finally(()=>{})
 				},
-				JointheClass(s){
-					console.log("执行了加入课程")
+				JointheClass(){
+					uni.navigateTo({
+					url: '../student/checkClassStudentList?id=' + this.courseId
+					});
 				},
 				treeItemClick(item) {
 					let { id, planMemo, parentId } = item;
