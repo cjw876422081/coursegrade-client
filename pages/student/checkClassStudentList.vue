@@ -2,8 +2,8 @@
 	<view class="main-content" v-if="courseGroupId">
 		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback"  >
 			<t-table class="tab" border="3" border-color="#eeeeee" :is-check="false" >
-				<t-tr font-size="20" color="#00CCFF" align="center">
-				    <t-th>{{courseGroupId}}班学生列表</t-th>
+				<t-tr font-size="16" color="#00CCFF" align="center">
+				    <t-th>{{courseGroupName}}班学生列表</t-th>
 				</t-tr>
 			    <t-tr class="title" font-size="15" color="#00CCFF" align="left" >
 			        <t-th align="center">编号</t-th>
@@ -13,6 +13,7 @@
 			        <t-td align="center">{{student.id}}</t-td>
 			        <t-td align="center">{{student.student}}</t-td>
 			    </t-tr>
+				<t-tr><t-td align="center" style="height: 60vh;"></t-td></t-tr>
 			</t-table>
 			</mescroll-uni>
 	</view>
@@ -71,6 +72,7 @@
 				//页长
 				pageSize:10,
 				courseGroupId:0,
+				courseGroupName:'',
 				studentCourseGroupservice:new StudentCourseGroupService(),
 				isEnd:false,
 				totalElements:0,
@@ -85,7 +87,7 @@
 						num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
 						size: 10 // 每页数据的数量,默认10
 					},
-					noMoreSize: 5, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
+					noMoreSize: 10, // 配置列表的总数量要大于等于5条才显示'-- END --'的提示
 					empty: {
 						tip: '暂未查询到数据'
 					}
@@ -148,9 +150,10 @@
 		onLoad(e) {
 			var classId='';
 			classId=e.id;
-			console.log("班级为："+classId);
 			if(classId!=''){
 			this.courseGroupId=classId;
+			this.courseGroupName=e.className;
+			 console.log("班级为"+e.className)
 			this.getStudents();
 			}
 			else{
