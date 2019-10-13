@@ -1,30 +1,38 @@
 <template> 
 	<view class="main-content">
-			<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
 		      <wuc-tab :tab-list="tabList3" textFlex :tabCur.sync="TabCur3" tab-class="text-center text-black bg-white" select-class="text-orange"></wuc-tab>
-			  <swiper-item v-for="(item,index) in tabList3" :key="index">	 
-			  	<view v-for="(course,i) in allCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
+			  <swiper-item>
+				  <mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" v-show="markFlag=0">
+					<view style="margin-top: 30px;z-index: 10;">1213515</view>
+					<view v-for="(course,i) in allCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
+						<uni-swipe-action :options="course.delOptions" @click="courseGroupClick(course.id)" data-course="course">
 			  				<uni-card
 			  				:title="course.courseName" 
 			  				thumbnail="/static/logocolor.png" 
 			  				:extra="course.courseCode" >
 			  					<text>{{course.courseMemo}}</text>
 			  				</uni-card>
-			  	</view>
-				</swiper-item>
-				
-				<swiper-item v-for="(item,index) in tabList3" :key="index">
-					<view v-for="(course,i) in studentCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
-								<uni-card
-								:title="course.courseName" 
-								thumbnail="/static/logocolor.png" 
-								:extra="course.courseCode" >
-									<text>{{course.courseMemo}}</text>
-								</uni-card>
+							</uni-swipe-action>
 					</view>
-				</swiper-item>
-			  </mescroll-uni>
+				</mescroll-uni>
+			</swiper-item>
+			
+			<swiper-item>
+				<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
+					<view v-for="(course,i) in studentCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
+						<uni-swipe-action :options="course.delOptions" @click="courseGroupClick(course.id)" data-course="course">
+			  				<uni-card
+			  				:title="course.courseName" 
+			  				thumbnail="/static/logocolor.png" 
+			  				:extra="course.courseCode" >
+			  					<text>{{course.courseMemo}}</text>
+			  				</uni-card>
+							</uni-swipe-action>
+					</view>
+				</mescroll-uni>
+			</swiper-item>
   </view>
+  
 </template>
 
 <script>
@@ -108,7 +116,7 @@ export default {
 				if(result.data && result.data.content){
 					result.data.content.forEach((item)=>{
 						item.delOptions=[{
-								text: '进入详情',
+								text: '查看开班列表',
 								style: {
 								    backgroundColor: '#FF7b00'
 								},
@@ -142,7 +150,7 @@ export default {
 				if(result.data && result.data.content){
 					result.data.content.forEach((item)=>{
 						item.delOptions=[{
-								text: '进入详情',
+								text: '查看课程开设班级列表',
 								style: {
 								    backgroundColor: '#FF7b00'
 								},
@@ -178,9 +186,14 @@ export default {
 		courseClick(cId){
 			/* console.log("courseClick",course); */
 			uni.navigateTo({
-								url: '../student/checkCourseInfo?cId=' + cId
+								url: '../student/checkCourseContent?cId=' + cId
 							});
 		},
+		courseGroupClick(cId){
+			uni.navigateTo({
+								url: '../student/checkCourseClassList?cId=' + cId
+							});
+		}
 	},
 
     onLoad() {

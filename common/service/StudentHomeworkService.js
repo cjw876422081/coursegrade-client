@@ -21,9 +21,16 @@ export default class StudentHomeworkService{
 		const url='/api/student-homeworks/'+studentHomeworkId;
 		return this.request.get({url:url});
 	}
-	updateStudentHomeworkGrade(studentHomeworkId,grade){	
-		const url="/api/student-homeworks/id/grade?id="+studentHomeworkId+"&grade="+grade;
-		return this.request.put({url:url}); 
+	updateStudentHomeworkGrade(studentHomework){
+		console.log("-------updateStudentHomeworkGrade updateStudentHomeworkGrade",studentHomework);
+		
+		const requestParam={
+			url:"/api/student-homeworks"
+		}
+		if(studentHomework){
+			Object.assign(requestParam,{data:studentHomework});
+		}
+		return this.request.put(requestParam);
 	}
 	submitHomework(studentHomeworkInfo){
 		return this.request.post({

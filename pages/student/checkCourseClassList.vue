@@ -8,7 +8,7 @@
 				        <t-th align="left">班级</t-th>
 				        <t-th align="left">人数</t-th>
 				    </t-tr>
-				    <view v-for="(courseGroup,i) in classes" :key="i" @click="classclick(courseGroup.id)">
+				    <view v-for="(courseGroup,i) in classes" :key="i" @click="classclick(courseGroup.id,courseGroup.groupName)">
 						<t-tr font-size="15" color="black" align="left" >
 				        <t-td align="left" >{{courseGroup.groupName}}</t-td>
 						<t-td align="left">{{courseGroup.groupCount}} </t-td>
@@ -44,7 +44,7 @@
 		data() {
 			return {
 				classes:[],
-				courseId: 5,
+				courseId:0,
 				courseName:'',
 				studentCourseGroupservice:new StudentCourseGroupService(),
 				CourseService:new CourseService(),
@@ -73,24 +73,26 @@
 					
 				});
 			},
-			classclick(cgid){
+			classclick(cgid,cgname){
 				uni.navigateTo({
-									url: 'checkClassStudentList?id='+cgid
+									url: 'checkClassStudentList?id='+cgid+'&className='+cgname
 								});
 			}
 			
 		},
 		onLoad(e) {
-			this.getclasses();
+			
 			var courseName = this.getCourseName();
+			console.log(e.cId)
 			console.log("课程名"+courseName);
-			var courseId = e.cId;
-			console.log("课程id为："+courseId);
-			if(courseId!=''){
-			this.courseId=courseId;
-			}else{
+			this.courseId = e.cId;
+			console.log("*******************************课程id为："+this.courseId);
+			this.getclasses();
+			// if(courseId!=''){
+			// this.courseId=courseId;
+			// }else{
 				
-			}
+			// }
 			
 		}
 	}
