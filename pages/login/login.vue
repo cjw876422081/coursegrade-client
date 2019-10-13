@@ -135,7 +135,7 @@ export default {
 			if (userName == 'teacher') {
 				uni.navigateTo({
 					url: '../teacherCourse/teacherCourse'
-				});
+				}); 
 			} else {
 				uni.navigateTo({
 					url: '../student/checkCourseInfo'
