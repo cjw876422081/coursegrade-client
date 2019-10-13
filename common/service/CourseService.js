@@ -30,9 +30,9 @@ export default class CourseService{
 	}
 	
 	getAllCourses(){
-		console.log("getStudentCourses pageParam", pageParam);
+		console.log("getAllCourses pageParam", pageParam);
 		const requestParam={
-			url:'/api/student-course-infos/student',
+			url:'/api/allcourse-infos',
 		}
 		if(pageParam){
 			Object.assign(requestParam,{data:pageParam});

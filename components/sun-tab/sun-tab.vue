@@ -3,7 +3,7 @@
 		<view
 		v-for="(tab,index) in tabList" :key="index" 
 		:class="{ 'uni-tab-active': index === value, 'uni-tab-scroll-item': scroll === true, ' uni-tab-scroll-active': index === value && scroll === true }"
-		:style="[{color:index === value ? activeColor : defaultColor}]"
+		:style="[{color:index === value ? activeColor : defaultColor,backgroundColor: bgColor}]"
 		@tap="itemClick(index,tab)"
 		class="uni-tab-item">
 			<span v-if="tab.icon != undefined" class="iconfont mr5" :class="tab.icon"></span>
@@ -43,7 +43,7 @@
 			defaultColor: { //默认未选中文字颜色
 				type: String,
 				default () {
-					return '#FFFFFF';
+					return '#000000';
 				}
 			},
 			activeColor: { //选中时文字颜色 线条颜色
@@ -93,13 +93,14 @@
 	};
 </script>
 <style lang="scss" scoped>
-// @import "@/static/sun-tab/iconfont.css";
+@import "../../static/sun-tab/iconfont.css";
 .uni-tab{
 	position: relative;
 	display: flex;
 	font-size: 14px;
 	height: 44px;
 	line-height: 44px;
+	background-color: #fff;
 	.uni-tab-item{
 		flex: 1;
 		height: 100%;
