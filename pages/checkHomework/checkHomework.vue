@@ -16,7 +16,7 @@
 					<view class="input-row" >
 						<view class="gradeItme input-row">
 							<label>评分：</label>
-							<input name="grade" type="number" @blur="onBlur" ref="grade"/>
+							<input name="grade" :class="{'formerror':gradeError}" type="number" @blur="onBlur" ref="grade"/>
 						</view>
 						<button class="subBtn" form-type="submit">提交</button>
 					</view>
@@ -84,6 +84,8 @@
 				sortS:'asc',
 				//作业类型
 				type:'作业',
+				
+				gradeError:false,
 
 				courseNoteService:new CourseNoteService(),
 				isEnd:false,
@@ -112,7 +114,6 @@
 			loadData(e){
 				this.getStudentHomework()
 			},
-		
 			
 			onBlur (event) {
 			  let value = event.detail.value
@@ -137,8 +138,16 @@
 				this.flag=false;
 			},
 			formSubmit(e){
-				var formdata =JSON.stringify(e.detail.value);
+				var formdata=e.detail.value;
 				console.log('form发生了submit事件，携带数据为：', formdata);
+				const validResult=this.formValid(formdata);
+				if(!validResult){
+					uni.showToast({
+					    icon:'none',
+					    title: "输入数据不合法"
+					});
+					return;
+				} 
 				this.studentHomeworkService.updateStudentHomeworkGrade(
 					this.studentHomeworkId,
 					this.grade
@@ -159,6 +168,15 @@
 				}).finally(()=>{
 					
 				}); 
+			},
+			formValid(formdata){
+				this.gradeError=false;
+				let result=true;
+				if(formdata.grade==null || formdata.grade.length==0){
+					this.gradeError=true;
+					result= false;
+				}
+				return result;
 			},
 			downCallback(mescroll){
 				console.log("down",mescroll);
@@ -207,9 +225,6 @@
 			onLoad(option){
 				this.studentHomeworkId=option.studentId
 				this.loadData()
-				console.log("===================",option.studentId)
-				
-				console.log("++++++++++++++++++++",this.studentHomeworkId)
 			},
 			getStudentHomework(){
 				this.studentHomeworkService.getStudentHomework(
@@ -266,6 +281,9 @@
 	border-radius: 10rpx;
 	color:rgba(100,100,100,0.8);
 	text-align: center;
+}
+input.formerror{
+	border: 2rpx solid rgba(250,0,0,0.3) !important;
 }
 .subBtn{
 	width:15vw; 

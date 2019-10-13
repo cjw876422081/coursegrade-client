@@ -12,7 +12,7 @@ import CourseHomework from "../../common/model/CourseHomework.js";
 		 this.grade=0;
 		 this.student="";
 		 this.teacher="";
-		 this.homeworkId=new CourseHomework();
+		 this.homeworkId=0;
 	 /*
 	  * @param {Object} args 初始化对象值
 	  */
@@ -21,14 +21,7 @@ import CourseHomework from "../../common/model/CourseHomework.js";
 	 	Object.assign(this,args);
 	 	console.log("StudentHomework args init merge result",args);
 	 }
-	 }
 	 
-	 setHomework(id){
-	 	this.homework.setId(id);
-	 }
-	 
-	 setSubmitMemo(submitMemo){
-	 	this.submitMemo = submitMemo;
 	 }
  }
  
