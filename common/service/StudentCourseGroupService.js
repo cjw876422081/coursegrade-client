@@ -12,4 +12,11 @@ export default class StudentCourseGroupService{
 		}
 		return this.request.get(requestParam);
 	}
+	checkCourseClassList(course_id){
+		console.log("checkCourseClassList course_id",course_id);
+		const requestParam={
+			url:"/api/student-course-order-group/"+course_id,
+		}
+		return this.request.get(requestParam);
+	}
 }
