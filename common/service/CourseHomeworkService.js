@@ -23,9 +23,9 @@ export default class CourseHomeworkService{
 		}
 		return this.request.get(requestParam);
 	}
-	getOneHomework(id){
+	getOneHomework(homeworkId){
 		const requestParam={
-			url:'/api/course-homeworks/'+id,	
+			url:'/api/course-homeworks/'+homeworkId,	
 		}
 		return this.request.get(requestParam);
 	}
