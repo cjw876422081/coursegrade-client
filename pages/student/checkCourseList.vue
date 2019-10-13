@@ -1,9 +1,13 @@
 <template> 
 	<view class="main-content">
-		      <wuc-tab :tab-list="tabList3" textFlex :tabCur.sync="TabCur3" tab-class="text-center text-black bg-white" select-class="text-orange"></wuc-tab>
+		<scroll-view class="grace-tab-title" :scroll-x="true" :scroll-into-view="titleShowId">
+		  	<view v-for="(tab, index) in tabs" :class="[tabCurrentIndex == index ? 'grace-tab-current' : '']" :id="'tabTag-' + index" @tap="tabChange" :key="index">
+		  		{{ tab.name }}
+		  	</view>
+		</scroll-view>
+		<swiper class="grace-tab-swiper" :current="swiperCurrentIndex" @change="swiperChange">
 			  <swiper-item>
-				  <mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" v-show="markFlag=0">
-					<view style="margin-top: 30px;z-index: 10;">1213515</view>
+				  <mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
 					<view v-for="(course,i) in allCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
 						<uni-swipe-action :options="course.delOptions" @click="courseGroupClick(course.id)" data-course="course">
 			  				<uni-card
@@ -31,8 +35,8 @@
 					</view>
 				</mescroll-uni>
 			</swiper-item>
+		</swiper>
   </view>
-  
 </template>
 
 <script>
@@ -47,9 +51,21 @@ import uniFab from "@/components/uni-fab/uni-fab.vue"
 export default {
     data() {
         return {
-            tabList3: [{ name: '所有课程' }, { name: '我的课程' }],
-			student:0,
-            TabCur3: 0,
+            tabs: [
+            	{
+            		name: '所有课程',
+            		id: 'guanye'
+            	},
+            	{
+            		name: '我的课程',
+            		id: 'dongtai'
+            	}
+            ],
+
+            tabCurrentIndex: 0,
+            swiperCurrentIndex: 0,
+			titleShowId: 'tabTag-0',
+			
 
 			studentCourses:[],
 			allCourses:[],
@@ -89,10 +105,17 @@ export default {
     computed: {},
 
     methods: {
-        swiperChange3(e) {
-            let { current } = e.target;
-            this.TabCur3 = current;
+        tabChange: function(e) {
+        	var index = e.target.id.replace('tabTag-', '');
+        	this.swiperCurrentIndex = index;
+        	this.tabCurrentIndex = index;
+        	this.titleShowId = 'tabTag-' + index;
         },
+		swiperChange: function(e) {
+			var index = e.detail.current;
+			this.tabCurrentIndex = index;
+			this.titleShowId = 'tabTag-' + index;
+		},
 		downCallback(mescroll){
 			console.log("down",mescroll);
 			this.pageIndex=0;
@@ -114,15 +137,6 @@ export default {
 			}).then((result)=>{
 				console.log("CourseService getAllCourses",result)
 				if(result.data && result.data.content){
-					result.data.content.forEach((item)=>{
-						item.delOptions=[{
-								text: '查看开班列表',
-								style: {
-								    backgroundColor: '#FF7b00'
-								},
-								courseId:item.id
-							}]
-					});
 				console.log("CourseService getStudentCourses",result);
 				if(this.pageIndex==0){
 					this.studentCourses=result.data.content;
@@ -148,15 +162,6 @@ export default {
 			}).then((result)=>{
 				console.log("CourseService getAllCourses",result)
 				if(result.data && result.data.content){
-					result.data.content.forEach((item)=>{
-						item.delOptions=[{
-								text: '查看课程开设班级列表',
-								style: {
-								    backgroundColor: '#FF7b00'
-								},
-								courseId:item.id
-							}]
-					});
 				console.log("CourseService getTeacherCourses",result);
 				if(this.pageIndex==0){
 					this.allCourses=result.data.content;
@@ -177,23 +182,12 @@ export default {
 			});
 		},
 		
-		checkCourse(course){
-			console.log("addClick",course);
-			uni.navigateTo({
-				url: '../student/checkCourseInfo'
-			});
-		},
 		courseClick(cId){
 			/* console.log("courseClick",course); */
 			uni.navigateTo({
 								url: '../student/checkCourseContent?cId=' + cId
 							});
 		},
-		courseGroupClick(cId){
-			uni.navigateTo({
-								url: '../student/checkCourseClassList?cId=' + cId
-							});
-		}
 	},
 
     onLoad() {
@@ -203,101 +197,12 @@ export default {
 </script>
 
 <style>
-view,
-scroll-view,
-swiper {
-    box-sizing: border-box;
-}
-view {
-  font-size: 28upx;
-  background-color: #f1f1f1;
-}
-.swiper {
-    height: 140upx;
-}
-
-.cu-bar {
-    display: flex;
-    position: relative;
-    align-items: center;
-    min-height: 100upx;
-    justify-content: space-between;
-}
-
-.cu-bar .action {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    justify-content: center;
-    max-width: 100%;
-  background-color: #ffffff;
-}
-
-.cu-bar .action:first-child {
-    margin-left: 30upx;
-    font-size: 30upx;
-}
-
-.solid,
-.solid-bottom {
-    position: relative;
-}
-
-.solid::after,
-.solid-bottom::after{
-    content: " ";
-    width: 200%;
-    height: 200%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: inherit;
-    transform: scale(0.5);
-    transform-origin: 0 0;
-    pointer-events: none;
-    box-sizing: border-box;
-}
-
-.solid::after {
-    border: 1upx solid rgba(0, 0, 0, 0.1);
-}
-
-.solid-bottom::after {
-    border-bottom: 1upx solid rgba(0, 0, 0, 0.1);
-}
-
-.text-orange{
-  color:#f37b1d
-}
-.text-black{
-  color:#333333;
-}
-.bg-white{
-    background-color: #ffffff;
-}
-
-.padding {
-    padding: 30upx;
-}
-
-.margin {
-    margin: 30upx;
-}
-
-.margin-top {
-    margin-top: 30upx;
-}
-.text-center {
-    text-align: center;
-}
-
-
-.main-content{
-		width:100vw;
-		height:100vh;
-		overflow: hidden;
+	.main-content{
+		width: 100%;
 	}
-	.scroll-Y{
-		height:100vh;
+	
+	.grace-tab-swiper{
+		margin-top: -100upx;
+		height: 1550upx;
 	}
 </style>

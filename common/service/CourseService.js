@@ -29,7 +29,7 @@ export default class CourseService{
 		return this.request.get(requestParam);
 	}
 	
-	getAllCourses(){
+	getAllCourses(pageParam){
 		console.log("getAllCourses pageParam", pageParam);
 		const requestParam={
 			url:'/api/allcourse-infos',
