@@ -146,7 +146,7 @@
 			},
             toMain(userName) {
                 uni.navigateTo({
-                	url: '../creatCoursePlan/creatCoursePlan'
+                	url: '../courseNote/courseNoteByPlan-teacher/courseNoteByPlan-teacher'
                 });
 
             }
