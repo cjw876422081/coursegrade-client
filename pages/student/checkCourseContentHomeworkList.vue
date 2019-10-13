@@ -1,73 +1,138 @@
 <template>
-		<view class="main-content">
-			<view class="segmented-control">
-				<uni-segmented-control :current="current" :values="items" :style-type="styleType" :active-color="activeColor" @clickItem="onClickItem" />
-				</view>
-			<view class="content">
-				<view v-show="current === 0">
-					<!-- <mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" > -->
-					<!-- <view v-for="(courseHomework,i) in courseHomeworks" :key="i" > -->
-					<uni-card
-					 	title="全部"
-					 	:is-shadow="true"
-					 	thumbnail="../../static/img/homework.png"
-					 	extra="Dcloud 2019-05-20 12:32:19"
-					 	note="Tips">
-						<text>帮</text>
-						 </uni-card> 
-					<!-- </view> -->
-					<!-- </mescroll-uni> -->
-				</view>
-				<view v-show="current === 1">
-					<uni-card
-					 	title="已提交"
-					 	:is-shadow="true"
-					 	thumbnail="../../static/img/homework.png"
-					 	extra="Dcloud 2019-05-20 12:32:19"
-					 	note="Tips">
-						 </uni-card> 
-				</view>
-				<view v-show="current === 2">
-					<uni-card
-					 	title="未提交"
-					 	:is-shadow="true"
-					 	thumbnail="../../static/img/homework.png"
-					 	extra="Dcloud 2019-05-20 12:32:19"
-					 	note="Tips">
-						<button class="mini-button" size="mini" type="warn" plain="true" >提交</button>
-						 </uni-card> 
-				</view>
+<!-- 	<view class="main-content">
+		<uni-segmented-control :current="current" :values="items"   @clickItem="onClickItem" />
+		<view class="content">
+			<view v-show="current === 0">
 				
+				 <mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
+			    <view v-for="(courseHomework,i) in courseHomeworks" :key="i">
+				<uni-card
+				 	:title="courseHomework.homeworkCode"
+				 	:is-shadow="true"
+				 	thumbnail="../../static/img/homework.png"
+				 	:extra="grade+courseHomework.homeworkGrade"
+				 	:note="deadlineTime+courseHomework.homeworkDeadline">
+					<text>{{courseHomework.homeworkMemo}}</text>
+					 </uni-card> 
+				 </view>
+				</mescroll-uni>
 			</view>
-		</view>
+			<view v-show="current === 1">
+				
+				<view v-for="(courseHomework,i) in courseHomeworks" :key="i">
+				<uni-card
+				 	:title="courseHomework.homeworkCode"
+				 	:is-shadow="true"
+				 	thumbnail="../../static/img/homework.png"
+				 	:extra="grade+courseHomework.homeworkGrade"
+				 	:note="deadlineTime+courseHomework.homeworkDeadline">
+					<text>{{courseHomework.homeworkMemo}}</text>
+					 </uni-card> 
+				 </view>
+			</view>
+			<view v-show="current === 2">
+				
+				 <view v-for="(courseHomework,i) in courseHomeworks" :key="i">
+				<uni-card
+				 	:title="courseHomework.homeworkCode"
+				 	:is-shadow="true"
+				 	thumbnail="../../static/img/homework.png"
+				 	:extra="grade+courseHomework.homeworkGrade"
+				 	:note="deadlineTime+courseHomework.homeworkDeadline">
+					<text>{{courseHomework.homeworkMemo}}</text>
+					
+					<button class="mini-button" size="mini" type="warn" plain="true" >提交</button>
+					 </uni-card> 
+					 </view>
+		
+			</view>
+</view>
+</view> -->
+<view>
+<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
+               <view v-for="(courseHomework,i) in courseHomeworks" :key="i">
+               <uni-card
+                	:title="courseHomework.homeworkCode"
+                	:is-shadow="true"
+                	thumbnail="../../static/img/homework.png"
+                	:extra="grade+courseHomework.homeworkGrade"
+                	:note="deadlineTime+courseHomework.homeworkDeadline">
+               	<text>{{courseHomework.homeworkMemo}}</text>
+				<button class="mini-btn" type = "primary" size = "mini" @tap="gotoIndex()">提交</button>
+               	 </uni-card> 
+                </view>
+                </mescroll-uni> 
+				<uni-fab
+					horizontal="right"
+					:content="fabButtonContent"
+					@trigger="addClick"
+				></uni-fab>
+            </view>
+           <!-- <view v-show="current === 1">
+                <view v-for="(courseHomework,i) in courseHomeworks" :key="i">
+                <uni-card
+                 	:title="courseHomework.homeworkCode"
+                 	:is-shadow="true"
+                 	thumbnail="../../static/img/homework.png"
+                 	:extra="grade+courseHomework.homeworkGrade"
+                 	:note="deadlineTime+courseHomework.homeworkDeadline">
+                	<text>{{courseHomework.homeworkMemo}}</text>
+                	 </uni-card> 
+                 </view>
+            </view>
+            <view v-show="current === 2">
+                <view v-for="(courseHomework,i) in courseHomeworks" :key="i"
+				 v-if="!courseHomework.submitMemo">
+                <uni-card
+                 	:title="courseHomework.homeworkCode"
+                 	:is-shadow="true"
+                 	thumbnail="../../static/img/homework.png"
+                 	:extra="grade+courseHomework.homeworkGrade"
+                 	:note="deadlineTime+courseHomework.homeworkDeadline">
+                	<text>{{courseHomework.homeworkMemo}}</text>
+                	
+                	<button class="mini-button" size="mini" type="warn" plain="true" >提交</button>
+                	 </uni-card> 
+                	 </view>
+            </view> -->
+        </view>
+    </view>
 </template>
 
 <script>
 	import uniSegmentedControl from "@/components/uni-segmented-control/uni-segmented-control.vue";
 	import uniCard from "@/components/uni-card/uni-card";
-	//import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue";
+	import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue";
+	import uniFab from "@/components/uni-fab/uni-fab.vue"
 	import CourseHomework from "../../common/model/CourseHomework.js"
 	import CheckCourseContentHomeworkService from "../../common/service/CheckCourseContentHomeworkService.js";
 	export default{
 		components:{
 			uniSegmentedControl,
-			uniCard
-			//MescrollUni
+			uniCard,
+			MescrollUni,
+			uniFab
 			
 		},
 		data(){
 			 return {
-			            items: ['全部','已提交','未提交'],
-			            current: 0,
-						 courseHomeworks:[],
+			            /* items: ['全部','已提交','未提交'],
+			            current: 0, */
+						// gotoIndex:"",
+						courseHomeworks:[],
+						coursePlanId:1,
+						//页码
 						pageIndex:0,
+						//页长
 						pageSize:10,
 						checkCourseContentHomeworkService:new CheckCourseContentHomeworkService(),
 						isEnd:false,
 						totalElements:0,
+						deadlineTime:"截止时间：",
+						grade:"分值：",
 						downOption:{
 							use: true, // 是否启用下拉刷新; 默认true
-							auto: true // 是否在初始化完毕之后自动执行下拉刷新的回调; 默认true */
+							auto: true // 是否在初始化完毕之后自动执行下拉刷新的回调; 默认true 
 						},
 						upOption: {
 						use: true, // 是否启用上拉加载; 默认true
@@ -80,9 +145,16 @@
 						empty: {
 							tip: '暂无相关数据'
 						}
-					},
+					}, 
 						
-			        
+			        fabButtonContent: [
+			        	{
+			        		iconPath: '/static/img/submittedHomework.png',
+			        		selectedIconPath: '/static/img/submittedHomework.png',
+			        		text: '已提交',
+			        		active: false
+			        	}
+			        ]
 		}
 		},
 		methods:{
@@ -92,36 +164,34 @@
 			            }
 			        },
 			downCallback(mescroll){
-						console.log("down",mescroll);
-						this.pageIndex=0;
-						this.getCourseHomeworks(()=>{
-							mescroll.resetUpScroll();
-						});
-					},
+				console.log("down",mescroll);
+				this.pageIndex=0;
+				this.getCoursehomeworks(()=>{
+					mescroll.resetUpScroll();
+				});
+			},
 			upperCallback(mescroll){
-						console.log("upper",mescroll);
-						this.pageIndex=mescroll.num;
-						this.getCourseHomeworks(()=>{
-							mescroll.endSuccess(this.totalElements, !this.isEnd); 
-						});
-					},
+				console.log("upper",mescroll);
+				this.pageIndex=mescroll.num;
+				this.
+				getCoursehomeworks(()=>{
+					mescroll.endSuccess(this.totalElements, !this.isEnd); 
+				});
+			}, 
 			getCoursehomeworks(callback){
-						this.checkCourseContentHomeworkService.getCourseHomework({
+						this.checkCourseContentHomeworkService.getCourseHomework(this.coursePlanId,{
 							page:this.pageIndex,
 							size:this.pageSize
 						}).then((result)=>{
-							//console.log("CourseService getTeacherCourses",result)
-							if(result.data && result.data.content){
-								result.data.content.forEach((item)=>{
-	
-								});
-								console.log("deloptions add",result.data.content);
+							console.log("CourseService getTeacherCourses",result)
+							if(result.data){
+								console.log("deloptions add",result.data);
 								if(this.pageIndex==0){
-									this.courses=result.data.content;
+									this.courseHomeworks=result.data;
 								}else{
-									this.courses=this.courses.concat(result.data.content);
+									this.courseHomeworks=this.courseHomeworks.concat(result.data);
 								}
-								
+								console.log("------------------");
 								this.isEnd=result.data.last;
 								this.pageIndex=result.data.number;
 								//this.pageSize=result.data.numberOfElements;
@@ -135,14 +205,30 @@
 							}
 						});
 					},
+					addClick(e){
+							console.log("addClick",e);
+							uni.navigateTo({
+								url: '../courseHomework/submittedHomework'
+							});
+						},
+						gotoIndex(){
+							console.log("点击")
+							uni.navigateTo({
+								url: '../courseHomework/submitHomework'
+							});
+						},
+					},
+		
+					
 			onLoad(){
-						
+					
+					//	this.getCoursehomeworks();
 					},
 			courseClick(courseHomework){
 						
 					}
 		}
-	}
+
 </script>
 
 <style>
@@ -161,7 +247,7 @@
 			height: 5vh;
 			weight: 30vw;
 		}
-	    .mini-button{
+	    .mini-btn{
 			float: right;
 		}
 </style>

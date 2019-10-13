@@ -6,9 +6,10 @@ export default class CheckCourseContentHomeworkService{
 	}
 	getCourseHomework(courseId){
 		const requestParam={
-			url:"/api/homework-grade/"+courseId,
+			url:"/api/homework-plan/"+courseId,
 		}
 		return this.request.get(requestParam);
 		
 	}
+
 }
