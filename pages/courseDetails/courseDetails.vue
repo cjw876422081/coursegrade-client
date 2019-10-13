@@ -57,7 +57,7 @@
 				</swiper-item>
 				<swiper-item>
 					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
-						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;" @click="homeworkClick(note.id)">
+						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;">
 							<uni-swipe-action  @click="delClick" data-course="note">
 								<uni-card :title="note.noteMemo" :extra="note.noteType">
 									<view class="note">
@@ -173,12 +173,13 @@ export default {
 		});
 		console.log(option.cId);
 		this.course.id = option.cId;
+		this.getCoursesPlan();
 	},
 	onShow: function() {
 		this.getCourse();
 		this.getCourseHomework();
 		this.getCoursePlan();
-		this.getCoursesPlan();
+		// this.getCoursesPlan();
 	},
 	methods: {
 		tabChange: function(e) {
@@ -200,6 +201,7 @@ export default {
 					// this.getCourseInfo(courseId);
 					console.log('啦啦啦', result.data);
 					this.course = result.data;
+					
 				})
 				.catch(err => {})
 				.finally(() => {});
@@ -211,7 +213,6 @@ export default {
 				.then(result => {
 					// this.getCourseInfo(courseId);
 					console.log('zhangwenxv', result.data);
-
 					this.homeworks = result.data;
 				})
 				.catch(err => {})
@@ -234,7 +235,7 @@ export default {
 		homeworkClick(hId) {
 			/* console.log("courseClick",course); */
 			uni.navigateTo({
-				url:'../homeworkNote/homeworkNote?hId'+hId
+				url:'../homeworkNote/homeworkNote?hId='+hId
 });
 		},
 		delClick(e) {

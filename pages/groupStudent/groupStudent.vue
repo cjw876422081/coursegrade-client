@@ -105,8 +105,9 @@
 			},
 			
 		},
-		onLoad() {
-			//this.getStudents();
+		onLoad(option) {
+			console.log(option.gId);
+			this.courseGroupId = option.gId;
 		}
 	}
 	

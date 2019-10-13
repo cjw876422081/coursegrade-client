@@ -1,17 +1,37 @@
 <template> 
 	<view class="main-content">
-			<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
 		      <wuc-tab :tab-list="tabList3" textFlex :tabCur.sync="TabCur3" tab-class="text-center text-black bg-white" select-class="text-orange"></wuc-tab>
-			  	<view v-for="(course,i) in courses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
+			  <swiper-item>
+				  <mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" v-show="markFlag=0">
+					<view v-for="(course,i) in allCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
+						<uni-swipe-action :options="course.delOptions" @click="courseGroupClick(course.id)" data-course="course">
 			  				<uni-card
 			  				:title="course.courseName" 
 			  				thumbnail="/static/logocolor.png" 
 			  				:extra="course.courseCode" >
 			  					<text>{{course.courseMemo}}</text>
 			  				</uni-card>
-			  	</view>
-			  </mescroll-uni>
+							</uni-swipe-action>
+					</view>
+				</mescroll-uni>
+			</swiper-item>
+			
+			<swiper-item>
+				<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
+					<view v-for="(course,i) in studentCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
+						<uni-swipe-action :options="course.delOptions" @click="courseGroupClick(course.id)" data-course="course">
+			  				<uni-card
+			  				:title="course.courseName" 
+			  				thumbnail="/static/logocolor.png" 
+			  				:extra="course.courseCode" >
+			  					<text>{{course.courseMemo}}</text>
+			  				</uni-card>
+							</uni-swipe-action>
+					</view>
+				</mescroll-uni>
+			</swiper-item>
   </view>
+  
 </template>
 
 <script>
@@ -31,7 +51,7 @@ export default {
             TabCur3: 0,
 
 			studentCourses:[],
-			allCourse:[],
+			allCourses:[],
 			pageIndex: 0,
 			pageSize: 10,
 			courseService: new CourseService(),
@@ -91,22 +111,22 @@ export default {
 				page:this.pageIndex,
 				size:this.pageSize
 			}).then((result)=>{
-				console.log("CourseService getTeacherCourses",result)
+				console.log("CourseService getAllCourses",result)
 				if(result.data && result.data.content){
 					result.data.content.forEach((item)=>{
 						item.delOptions=[{
-								text: '进入详情',
+								text: '查看开班列表',
 								style: {
 								    backgroundColor: '#FF7b00'
 								},
 								courseId:item.id
 							}]
 					});
-				console.log("CourseService getTeacherCourses",result);
+				console.log("CourseService getStudentCourses",result);
 				if(this.pageIndex==0){
-					this.courses=result.data.content;
+					this.studentCourses=result.data.content;
 				}else{
-					this.courses=this.courses.concat(result.data.content);
+					this.studentCourses=this.studentCourses.concat(result.data.content);
 				}
 				this.isEnd=result.data.last;
 				this.pageIndex=result.data.number;
@@ -120,17 +140,16 @@ export default {
 					callback();
 				}
 			});
-		},
-		getAllCourses(callback){
-			this.courseService.getStudentCourses({
+			
+			this.courseService.getAllCourses({
 				page:this.pageIndex,
 				size:this.pageSize
 			}).then((result)=>{
-				console.log("CourseService getTeacherCourses",result)
+				console.log("CourseService getAllCourses",result)
 				if(result.data && result.data.content){
 					result.data.content.forEach((item)=>{
 						item.delOptions=[{
-								text: '进入详情',
+								text: '查看课程开设班级列表',
 								style: {
 								    backgroundColor: '#FF7b00'
 								},
@@ -139,9 +158,9 @@ export default {
 					});
 				console.log("CourseService getTeacherCourses",result);
 				if(this.pageIndex==0){
-					this.courses=result.data.content;
+					this.allCourses=result.data.content;
 				}else{
-					this.courses=this.courses.concat(result.data.content);
+					this.allCourses=this.allCourses.concat(result.data.content);
 				}
 				this.isEnd=result.data.last;
 				this.pageIndex=result.data.number;
@@ -169,6 +188,11 @@ export default {
 								url: '../student/checkCourseInfo?cId=' + cId
 							});
 		},
+		courseGroupClick(cId){
+			uni.navigateTo({
+								url: '../student/checkCourseClassList?cId=' + cId
+							});
+		}
 	},
 
     onLoad() {
