@@ -10,6 +10,9 @@
 		<form @submit="submitHomework">
 			<textarea class="homeworkText" v-model="studentHomework.submitMemo" placeholder="在此输入作业文本内容...">
 			</textarea>
+			<view>
+				<robby-image-upload v-model="imageData" :server-url="serverUrl" fileKeyName="file"></robby-image-upload>
+			</view>
 			<button class="submit" form-type="submit" type="default">提交</button>
 		</form>	
 	</view>
@@ -22,12 +25,13 @@
 		overflow: hidden;
 	},
 	.homeworkText{
-		height: 20vh;
+		height: 15vh;
 	}
 	
 </style>
 
 <script>
+	import robbyImageUpload from '@/components/robby-image-upload/robby-image-upload.vue';
 	import CourseHomework from "../../common/model/CourseHomework.js";
 	import CourseHomeworkService from "../../common/service/CourseHomeworkService.js";
 	import uniList from "../../components/uni-list/uni-list.vue";
@@ -36,19 +40,21 @@
 	import mInput from "../../components/m-input.vue";
 	import StudentHomework from "../../common/model/StudentHomework.js";
 	export default {
-	    components: {uniList,uniListItem},
+	    components: {uniList,uniListItem,robbyImageUpload},
 		data() {
 			return {
 				homeworkId:3,
 				studentHomework:new StudentHomework(),
 				courseHomework:CourseHomework,
 				courseHomeworService:new CourseHomeworkService(),
-				studentHomeworkService:new StudentHomeworkService()
+				studentHomeworkService:new StudentHomeworkService(),
+				imageData:[],
+				serverUrl:"/api/file/upload"
 			}
 		},
 		methods: {
-			onLoad(){
-				// 从作业列表点击进来
+			onLoad(option){
+				// 得到 homeworkId
 				this.getOneHomework();
 			},
 			getOneHomework(){
@@ -64,6 +70,10 @@
 				});
 			},
 			submitHomework(){
+				// 作业截止时间（标准时间）转时间戳
+				var deadLine =new Date(this.courseHomework.homeworkDeadline).getTime();				
+				// 当前时间戳
+				var now = (new Date().getTime());
 				let data = this.studentHomework;
 				data.homework={id:this.homeworkId};
 				if(data.submitMemo==null || data.submitMemo==""){
@@ -71,11 +81,13 @@
 						icon:'none',
 						title: '请输入文本内容!'
 					});
-					setTimeout(()=> {
-						console.log("settime out")
-						uni.navigateBack();
-					}, 1500);
-				}else{
+				}else if(now > deadLine){
+					uni.showToast({
+						icon:"none",
+						title: '已超时，不能提交'
+					});
+				}
+				else {
 					this.studentHomeworkService.submitHomework(data).then((result)=>{
 						console.log("StudentHomeworkService submit homework",result);
 						if(result.data && result.data.id>0){
