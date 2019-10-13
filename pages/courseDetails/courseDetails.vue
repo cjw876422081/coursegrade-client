@@ -57,8 +57,8 @@
 				</swiper-item>
 				<swiper-item>
 					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
-						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;" @click="homeworkClick(note.id)">
-							<uni-swipe-action :options="note.delOptions" @click="delClick" data-course="note">
+						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;">
+							<uni-swipe-action  @click="delClick" data-course="note">
 								<uni-card :title="note.noteMemo" :extra="note.noteType">
 									<view class="note">
 										<view class="code">
@@ -83,6 +83,7 @@
 					<view class="addButton"><button class="mini-btn" type="default" size="mini" @click="addCoursePlan">添加章节</button></view>
 					<mix-tree :list="list"></mix-tree>
 				</swiper-item>
+
 			</swiper>
 		</view>
 	</view>
@@ -138,6 +139,10 @@ export default {
 				{
 					name: '授课内容',
 					id: 'shouke'
+				 },
+				{
+					name:"班级",
+					id:'banji'
 				}
 			],
 			titleShowId: 'tabTag-0',
@@ -195,6 +200,7 @@ export default {
 					// this.getCourseInfo(courseId);
 					console.log('啦啦啦', result.data);
 					this.course = result.data;
+					
 				})
 				.catch(err => {})
 				.finally(() => {});
@@ -206,7 +212,6 @@ export default {
 				.then(result => {
 					// this.getCourseInfo(courseId);
 					console.log('zhangwenxv', result.data);
-
 					this.homeworks = result.data;
 				})
 				.catch(err => {})
@@ -228,7 +233,9 @@ export default {
 		},
 		homeworkClick(hId) {
 			/* console.log("courseClick",course); */
-			uni.navigateTo({});
+			uni.navigateTo({
+				url:'../homeworkNote/homeworkNote?hId='+hId
+});
 		},
 		delClick(e) {
 			console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text, e);
@@ -367,13 +374,13 @@ export default {
 		align-items: center;
 		position: absolute;
 		top: 56upx;
-		left: 51upx;
+		left: 30upx;
 		z-index: 998;
-		width: 162upx;
+		width: 100upx;
 		height: 163upx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 8upx;
-		padding: 10upx;
+		padding: 5upx;
 		.name {
 			font-size: 26upx;
 			font-weight: 500;
