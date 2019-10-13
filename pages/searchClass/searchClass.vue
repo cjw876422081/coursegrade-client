@@ -9,7 +9,7 @@
 						:title="group.groupName" 
 						thumbnail="/static/logocolor.png" 
 						:extra="group.groupCode" >
-							<text>{{group.groupMemo}}</text>
+							<text>班级人数:  {{group.groupCount}}</text>
 						</uni-card>
 					</uni-swipe-action>
 			</view>
