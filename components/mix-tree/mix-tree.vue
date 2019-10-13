@@ -188,7 +188,6 @@ export default {
 			});
 		},
 		getParmter(index){
-			
 			this.parmeter = {
 				planId:0,
 				courseId:0,
