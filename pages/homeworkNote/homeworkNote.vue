@@ -145,6 +145,7 @@
 
 
 <script>
+	import CourseService from '../../common/service/CourseService.js';
 	import uniCard from "@/components/uni-card/uni-card";
 	import CourseNote from "../../common/model/CourseNote.js";
 	import CourseNoteService from "../../common/service/CourseNoteService.js";
@@ -166,7 +167,7 @@
 				//课程列表
 				notes:[],
 				//对应类型id
-				homeworkId:2,
+				homeworkId:0,
 				//页码
 				pageIndex:0,
 				//页长
@@ -317,10 +318,8 @@
 			    this['val'+val] = e;
 			} */
 		},
-		/* onLoad(option) {
-			this.homeworkId=option.
-			
-			
-		} */
+		onLoad(option) {
+			this.homeworkId=option.hId;
+		}
 	}
 </script>
