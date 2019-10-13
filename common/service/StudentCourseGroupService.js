@@ -29,7 +29,7 @@ export default class StudentCourseGroupService{
 			}
 			return this.request.get(requestParam);
 		}
-	
+
 		getCourseInfo(courseId){
 			console.log(courseId)
 			const requestParam={
