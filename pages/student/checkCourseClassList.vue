@@ -44,7 +44,7 @@
 		data() {
 			return {
 				classes:[],
-				courseId: 5,
+				courseId:0,
 				courseName:'',
 				studentCourseGroupservice:new StudentCourseGroupService(),
 				CourseService:new CourseService(),
@@ -81,16 +81,18 @@
 			
 		},
 		onLoad(e) {
-			this.getclasses();
+			
 			var courseName = this.getCourseName();
+			console.log(e.cId)
 			console.log("课程名"+courseName);
-			var courseId = e.cId;
-			console.log("课程id为："+courseId);
-			if(courseId!=''){
-			this.courseId=courseId;
-			}else{
+			this.courseId = e.cId;
+			console.log("*******************************课程id为："+this.courseId);
+			this.getclasses();
+			// if(courseId!=''){
+			// this.courseId=courseId;
+			// }else{
 				
-			}
+			// }
 			
 		}
 	}
