@@ -3,11 +3,13 @@
  */
 export default class CourseHomework {
 	constructor(args) {
+		this.id=0;
 	    this.homeworkCode='';
 		this.homeworkMemo="";
 		this.homeworkTarget='';
 		this.homeworkGrade=0;
 		this.homeworkDeadline=new Date();
+		this.homeworkDataTime=new Date();
 		this.planId=0;
 		/**
 		 * @param {Object} args 初始化对象值
@@ -18,9 +20,6 @@ export default class CourseHomework {
 			console.log("CourseHomework args init merge result",args);
 		}
 		
-	}
-	setId(id){
-		this.id = id;
 	}
 	
 }
