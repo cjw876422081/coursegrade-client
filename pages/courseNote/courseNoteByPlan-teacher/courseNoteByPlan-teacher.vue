@@ -4,7 +4,9 @@
 	background-size: 100% 100%;
 	padding: 0;"
 	>
+	<form @submit="formSubmit">
 		<view class="uni-form-item uni-column" style="position:relative">
+			
 		                    <view class="title">xx课程笔记内容</view>
 							<view class="wth" v-for="(CourseNoteByPlanTeacher, index) in CourseNoteTeacherService" :key="index">
 								<view class="word">{{CourseNoteByPlanTeacher.noteMemo}}</view>
@@ -15,7 +17,10 @@
 		                    <button class="uni-btn-l button-l" form-type="submit">提交</button>
 		                    <button class="uni-btn-r button-r" type="default" form-type="reset">重置</button>
 		                </view>
+						
+						</form>
 	</view>
+	
 </template>
 
 <script>
@@ -66,13 +71,13 @@
 	.button-r {
 		opacity: 0.35;
 		position:absolute; 
-		left: 0;
+		right: 0;
 		bottom: 0;
 	}
 	.button-l {
 		opacity: 0.35;
 		position: absolute; 
-		right: 0; 
+		left: 0; 
 		bottom: 0;
 	}
 	.table {
