@@ -81,7 +81,7 @@
 				<swiper-item>
 					<!-- 授课内容 -->
 					<view class="addButton"><button class="mini-btn" type="default" size="mini" @click="addCoursePlan">添加章节</button></view>
-					<mix-tree :list="list.children"></mix-tree>
+					<mix-tree :list="list"></mix-tree>
 				</swiper-item>
 
 			</swiper>
@@ -173,12 +173,13 @@ export default {
 		});
 		console.log(option.cId);
 		this.course.id = option.cId;
+		this.getCoursesPlan();
 	},
 	onShow: function() {
 		this.getCourse();
 		this.getCourseHomework();
 		this.getCoursePlan();
-		this.getCoursesPlan();
+		// this.getCoursesPlan();
 	},
 	methods: {
 		tabChange: function(e) {
