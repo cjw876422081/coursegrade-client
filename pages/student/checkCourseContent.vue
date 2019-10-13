@@ -119,7 +119,7 @@
 				},
 				JointheClass(){
 					uni.navigateTo({
-					url: '../student/checkClassStudentList?id=' + this.courseId
+					url: '../student/checkCourseClassList?cId=' + this.courseId
 					});
 				},
 				treeItemClick(item) {

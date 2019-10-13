@@ -318,10 +318,13 @@
 				})
 				},
 			score(studentId){
-				console.log("score",studentId);
+				console.log("+=++++++score",studentId);
 				uni.navigateTo({
 					url: '../checkHomework/checkHomework?studentId='+studentId
 				});
+			},
+			onLoad(option){
+				this.homeworkId=option.homeworkId;
 			}
 		}
 	}

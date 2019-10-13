@@ -50,6 +50,7 @@
 				homeworkTargetError:false,
 				homeworkGradeError:false,
 				homeworkDeadlineError:false,
+				createTime:new Date(),
 				//授课内容id，应从上一页面获取
 				coursePlan:{id:1}
 			}
@@ -71,8 +72,9 @@
 					});
 					return;
 				} 
-				
-				formdata=Object.assign(formdata,{plan:this.coursePlan});
+				this.createTime=new Date();
+				console.log('form发生了submit事件，携带数据为：' + this.createTime);
+				formdata=Object.assign(formdata,{plan:this.coursePlan,dataTime:this.createTime});
 				/* uni.showModal({
 					content: '表单数据内容：' + formdata,
 					showCancel: true
@@ -86,10 +88,10 @@
 						    icon:'success',
 						    title: "作业发布成功"
 						});
-						setTimeout(()=>{
+						/* setTimeout(()=>{
 							console.log("settime out")
 							uni.navigateBack();
-						},1500); 
+						},1500); */
 					}
 				}).catch((error)=>{
 					
