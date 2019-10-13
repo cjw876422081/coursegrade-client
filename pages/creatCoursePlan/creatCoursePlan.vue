@@ -56,16 +56,13 @@ export default {
 			CoursePlanService: new CoursePlanService(),
 			planMemoError: false,
 			planTargetError: false,
-			parmeter:{
-				
-			},
+			parmeter:{},
 			courseNames: ''
 		};
 	},
 	onLoad: function(option) {
 		this.parmeter = JSON.parse(decodeURIComponent(option.parmeter));
 		console.log(this.parmeter);
-		// console.log('+++++++++++:' + parmeter);
 		this.getCourseNames();
 	},
 	methods: {

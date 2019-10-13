@@ -178,7 +178,7 @@ export default {
 			this.getParmter(index);
 			//进入单个授课内容的作业  courseHomework/getHomeworkByPlan，传 homework-plan  id
 			uni.navigateTo({
-			    url: '../courseHomework/getHomeworkByPlan?parmeter='+encodeURIComponent(this.parmeter)
+			    url: '../courseHomework/getHomeworkByPlan?parmeter='+encodeURIComponent(JSON.stringify(this.parmeter))
 			});
 		},
 		courseNote(index){
@@ -186,7 +186,7 @@ export default {
 			// console.log("this.treeList:"+JSON.stringify(this.treeList[index].id));
 			//进入单个笔记及全部回复
 			uni.navigateTo({
-			    url: '../courseNote/courseNoteByPlan-teacher/courseNoteByPlan-teacher?parmeter='+this.parmeter
+			    url: '../courseNote/courseNoteByPlan-teacher/courseNoteByPlan-teacher?parmeter='+encodeURIComponent(JSON.stringify(this.parmeter))
 			});
 		},
 		getParmter(index){
