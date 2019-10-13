@@ -46,9 +46,10 @@
 							:title="student.student" 
 							:extra="'得分:'+student.grade" >
 							<label>作业内容:</label><br><br>
-								<text>{{student.submitMemo}}</text><br><br>
+								<text style="word-wrap: break-word;word-break: break-all;">{{student.submitMemo}}</text><br><br>
 								<label >提交时间:{{student.submitTime}}</label><br>
-								<button type="primary" size="default" style="margin: 0 15vh 0 15vh;" @trigger="score">去评分</button>
+								<label>{{student.id}}</label><br><br>
+								<button type="primary" size="default" style="margin: 0 15vh 0 15vh;" @click="score(student.id)">去评分</button>
 							</uni-card>
 				</view>
 			</view>
@@ -193,7 +194,6 @@
 							if( this.allStudentHomework[i].submitMemo==null||
 								this.allStudentHomework[i].submitMemo==""){	
 							}else{
-		
 								count++;
 							}
 						}
@@ -210,10 +210,8 @@
 							flag0=false;
 							let num = 0;
 							for(let i = 0;i<count;i++){
-								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){
-									
+								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){				
 									num++;
-									console.log("==========================",num)
 								}
 								
 							}
@@ -223,21 +221,17 @@
 							 if(num==0){//只显示未评分
 								flag2=false;
 							}
-							
 						}
 						else if(count!=result.data.totalElements){//判断评分和未评分
 							for(let i = 0 ;i<result.data.totalElements;i++){
 								if(this.allStudentHomework[i].submitMemo!=null||this.allStudentHomework[i].submitMemo!=""){
 									if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=null){
 										count2++;
-										console.log("ppppppppppppppppppppp",count2)
 									}else{
 										
 									}
 								}
 							}
-							console.log("-----------ppppppppppppppppppppp",count2)
-							console.log("uuuuuuuuuuuuuuuuuuuuuuuuu",count)
 							if(count2==0){//全部都是未评分
 								flag2=false;
 							}
@@ -258,7 +252,6 @@
 							if( this.allStudentHomework[i].submitMemo==null||
 								this.allStudentHomework[i].submitMemo==""){	
 							}else{
-								
 								count++;
 							}
 						}
@@ -275,12 +268,9 @@
 							flag0=false;
 							let num = 0;
 							for(let i = 0;i<count;i++){
-								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){
-									
+								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){	
 									num++;
-									console.log("==========================",num)
 								}
-								
 							}
 							if(num==count){//没有未评分的学生
 								flag1=false;
@@ -288,21 +278,15 @@
 							 if(num==0){//只显示未评分
 								flag2=false;
 							}
-							
 						}
 						else if(count!=result.data.totalElements){//判断评分和未评分
 							for(let i = 0 ;i<result.data.totalElements;i++){
 								if(this.allStudentHomework[i].submitMemo!=null||this.allStudentHomework[i].submitMemo!=""){
 									if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=null){
 										count2++;
-										console.log("ppppppppppppppppppppp",count2)
-									}else{
-										
 									}
 								}
 							}
-							console.log("-----------ppppppppppppppppppppp",count2)
-							console.log("uuuuuuuuuuuuuuuuuuuuuuuuu",count)
 							if(count2==0){//全部都是未评分
 								flag2=false;
 							}
@@ -316,6 +300,7 @@
 						this.numberOfSubmissions=count;
 					}
 					console.log("allStudentHomework===------------++-",result.data.content);
+					console.log("allStudentHomework================",this.allStudentHomework);
 					//获取发布该作业的教师
 					this.teacher=this.allStudentHomework[0].teacher;
 					//获取总人数
@@ -332,10 +317,10 @@
 					}
 				})
 				},
-			score(e){
-				console.log("score",e);
+			score(studentId){
+				console.log("score",studentId);
 				uni.navigateTo({
-					url: '../checkHomework/checkHomework'
+					url: '../checkHomework/checkHomework?studentId='+studentId
 				});
 			}
 		}
