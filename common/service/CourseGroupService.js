@@ -6,15 +6,15 @@ export default class CourseGroupService{
 	constructor() {
 	    this.request=new request();
 	}
-	getCreateGroup(pageParam){
-		console.log("getCreateGroup pageParam",pageParam);
+	getCreateGroup(param,courseInfo){
+		console.log("getCreateGroup param",param);
 		const requestParam={
-			url:'/api/course-groups/courseInfoId',
+			url:'/api/course-groups/courseInfoId?courseInfoId='+courseInfo,
 		}
-		if(pageParam){
-			Object.assign(requestParam,{data:pageParam});
+		if(param){
+			Object.assign(requestParam,{data:param});
 		}
-		return this.request.get(requestParam);
+		return this.request.post(requestParam);
 	}
 	
 }
