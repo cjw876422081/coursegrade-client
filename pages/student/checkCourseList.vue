@@ -3,6 +3,7 @@
 		      <wuc-tab :tab-list="tabList3" textFlex :tabCur.sync="TabCur3" tab-class="text-center text-black bg-white" select-class="text-orange"></wuc-tab>
 			  <swiper-item>
 				  <mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" v-show="markFlag=0">
+					<view style="margin-top: 30px;z-index: 10;">1213515</view>
 					<view v-for="(course,i) in allCourses" :key="i" style="margin-bottom:10rpx;" @click="courseClick(course.id)">
 						<uni-swipe-action :options="course.delOptions" @click="courseGroupClick(course.id)" data-course="course">
 			  				<uni-card
@@ -185,7 +186,7 @@ export default {
 		courseClick(cId){
 			/* console.log("courseClick",course); */
 			uni.navigateTo({
-								url: '../student/checkCourseInfo?cId=' + cId
+								url: '../student/checkCourseContent?cId=' + cId
 							});
 		},
 		courseGroupClick(cId){
