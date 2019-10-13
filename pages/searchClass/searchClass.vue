@@ -102,7 +102,7 @@
 			groupClick(gId){
 				/* console.log("courseClick",course); */
 				uni.navigateTo({
-									url: '../student/checkClassStudentList?gId=' + gId
+									url: '../groupStudent/groupStudent?gId=' + gId
 								});
 			},
 			addClick(e){
