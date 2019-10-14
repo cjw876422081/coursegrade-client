@@ -43,10 +43,10 @@
 				</view> 
 			</view>
 		</mescroll-uni>
-		<view class="mask" :class="{'enlarge':flag}" @click="exit">
+		<view class="mask" v-show="show" @click="exit">
 			<img :src="studentHomework.submitMemo" alt="作业内容" 
-			style="width:50vw;height:50wh;
-			position:absolute" @click="exit"/>
+			style="width:90vw;height:50vh;margin:10vh 5vw;
+			position:absolute"/>
 		</view>
 	</view> 
 </template>
@@ -66,16 +66,16 @@
 		},
 		data() {
 			return {
-				flag:false,
 				//学生提交作业的id，应从上页面获取
 				studentHomeworkId:0,
 				grade:0,
+				show:false,
 				studentHomework:{},
 				studentHomeworkService:new StudentHomeworkService(),
 			    //笔记列表
 				notes:[],
 				//对应类型id
-				homeworkId:2,
+				homeworkId:0,
 				//页码
 				pageIndex:0,
 				//页长
@@ -132,10 +132,10 @@
 			  this.grade=value
 			},
 			toEnlarge(e){
-				this.flag=true;
+				this.show=true;
 			},
 			exit(){
-				this.flag=false;
+				this.show=false;
 			},
 			formSubmit(e){
 				var formdata=e.detail.value;
@@ -225,8 +225,8 @@
 				});
 			},
 			onLoad(option){
-				console.log("-----------------score",option.studentId);
 				this.studentHomeworkId=option.studentId;
+				this.homeworkId=option.homeworkId;
 				this.loadData()
 			},
 			getStudentHomework(){
@@ -235,7 +235,6 @@
 				).then((result)=>{
 					if(result.data){
 						this.studentHomework=result.data;
-						console.log("+++++++++",this.studentHomework);
 					}
 				}).catch(err=>{
 					
@@ -253,7 +252,7 @@
 		height:100vh;
 		overflow: hidden;
 	}
-.mask.enlarge{
+.mask{
 	background: rgba(10,10,10,0.6);
 	left: 0;
 	top: 0;

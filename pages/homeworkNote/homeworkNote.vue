@@ -21,7 +21,7 @@
 		                </view>
 						<view class="uni-comment-replay-btn"
 						style="float: right;"
-						@click="addClick"
+						@click="replayClick(homeworkId,note.id)"
 						>回复</view>
 		                <view class="uni-comment-date">
 		                    <text>{{note.noteTime}}  笔记ID:{{note.id}}</text>
@@ -36,14 +36,9 @@
 				</uni-swipe-action>
 				</view>
 		    </view> 
-			<view style="align:center;" @click="addClick"><button type="primary" plain="true">发布笔记</button></view>
+			<view style="align:center;" @click="addClick(homeworkId)"><button type="primary" plain="true">发布笔记</button></view>
 			</mescroll-uni>
 		</view>
-		<!-- <uni-fab
-			horizontal="right"
-			:content="fabButtonContent"
-			@trigger="addClick"
-		></uni-fab> -->
 	</view>
 </template>
 <style>
@@ -200,14 +195,6 @@
 						tip: '暂未查询到数据'
 					}
 				},
-				/* fabButtonContent: [
-					{
-						iconPath: '/static/add-icon.png',
-						selectedIconPath: '/static/add-icon.png',
-						text: '创建课程',
-						active: false
-					}
-				] */
 			}
 		},
 		methods: {
@@ -307,10 +294,15 @@
 				}
 				
 			},
-			addClick(e){
-				console.log("addClick",e);
+			addClick(hId){
+				console.log("addClick",hId);
 				uni.navigateTo({
-					url: '../createHomeworkNote/createHomeworkNote'
+					url: '../createHomeworkNote/createHomeworkNote?hId='+hId
+				});
+			},
+			replayClick(hId,pId){
+				uni.navigateTo({
+					url: '../replayHomeworkNote/replayHomeworkNote?hId='+hId+"&pId="+pId
 				});
 			},
 			/* search(e, val) {

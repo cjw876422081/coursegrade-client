@@ -29,7 +29,7 @@
 				</view>
 			</view>
 		
-			<uni-fab horizontal="right" :content="fabButtonContent" @trigger="courseHomework"></uni-fab>
+			<uni-fab horizontal="right" :content="fabButtonContent" @trigger="courseHomework(homeworks[0].plan.id)"></uni-fab>
 		</view>
 	</view>
 	
@@ -146,10 +146,9 @@ export default {
 		},
 
 		/* 布置作业 @trigger */
-		courseHomework(e) {
-			console.log('courseHomework', e);
+		courseHomework(homeworkPlanId,homeworkId) {
 			uni.navigateTo({
-				url: '../createCourse/createCourse'
+				url: '../createHomework/createHomework?homeworkPlanId='+homeworkPlanId
 			});
 		}
 	}
