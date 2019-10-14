@@ -1,362 +1,202 @@
 <template>
 	<!-- 教师查看单个授课内容作业 -->
-	<view class="main">
-		<view class="top">
-			<view class="picture-box"><image src="../../static/img/login-bg.jpg" class="picture"></image></view>
-			<view class="courseInformation-box">
-				<form>
-					<view class="courseInformation">
-						<view class="courseName">授课名称</view>
-						<view class="nameInput-box"><input class="nameInput" type="text" placeholder="请输入授课名称" /></view>
-					</view>
-					<view class="courseInformation">
-						<view class="courseName">授课班级</view>
-						<view class="nameInput-box"><input class="nameInput" type="text" placeholder="请输入授课班级" /></view>
-					</view>
-					<view class="submit-box"><button class="submit">查询</button></view>
-				</form>
-			</view>
-		</view>
-
-		<view class="homework-box">
-			<scroll-view class="grace-tab-title" :scroll-x="true" :scroll-into-view="titleShowId">
-				<view
-					class="tab"
-					v-for="(tab, index) in homeworkStatus"
-					:class="[tabCurrentIndex == index ? 'grace-tab-current' : '']"
-					:id="'tabTag-' + index"
-					@tap="tabChange"
-					:key="index"
-				>
-					{{ tab.text }}
+	<view class="content">
+		<view class="main">
+			<view class="list" v-for="(homework, index) in homeworks" :key="index">
+				<view @tap="gotohomework(homework.id)">
+					<uni-swipe-action :options="options2" @click="deleteHomework">
+						<view class="homework-list">
+							<text class="homework-H">作业代码 : </text>
+							<text class="homework-Data"> {{ homework.homeworkCode }}</text>
+						</view>
+						<view class="homework-list">
+							<text class="homework-H">作业内容 :</text>
+							<text class="homework-Data">{{ homework.homeworkMemo }}</text>
+						</view>
+						<view class="homework-list">
+							<text class="homework-H">作业目标 :</text>
+							<text class="homework-Data">{{ homework.homeworkTarget }}</text>
+						</view>
+						<view class="homework-list">
+							<text class="homework-H">作业分值 :</text>
+							<text class="homework-Data">{{ homework.homeworkGrade }}</text>
+						</view>
+						<view class="homework-list">
+							<text class="homework-H">截止时间 :</text>
+							<text class="homework-Data">{{ handleTime(homework.homeworkDeadline) }}</text>
+						</view>
+					</uni-swipe-action>
 				</view>
-			</scroll-view>
-			<swiper :current="swiperCurrentIndex" @change="swiperChange" style="height:1000upx;">
-				
-				<swiper-item>
-					<view class="courseHomework-box" v-if="show">
-						<view class="courseHomework-infor">
-							<view class="courseHomework-hint">作业代码：</view>
-							<view class="courseHomework-input"><input class="nameInput" type="text" placeholder="请输入作业代码" /></view>
-						</view>
-						<view class="courseHomework-infor">
-							<view class="courseHomework-hint">作业名称：</view>
-							<view class="courseHomework-input"><input class="nameInput" type="text" placeholder="请输入作业名称" /></view>
-						</view>
-						<view class="courseHomework-infor">
-							<view class="courseHomework-hint">target：</view>
-							<view class="courseHomework-input"><input class="nameInput" type="text" placeholder="请输入target" /></view>
-						</view>
-						<view class="courseHomework-infor">
-							<view class="courseHomework-hint">分数：</view>
-							<view class="courseHomework-input"><input class="nameInput" type="text" placeholder="请输入分数" /></view>
-						</view>
-						<view class="courseHomework-infor">
-							<view class="courseHomework-hint">人数：</view>
-							<view class="courseHomework-input"><input class="nameInput" type="text" placeholder="请输入人数" /></view>
-						</view>
-						<view class="courseHomework-infor">
-							<view class="courseHomework-hint">时间：</view>
-							<view class="courseHomework-input"><input class="nameInput" type="text" placeholder="请输入时间" /></view>
-						</view>
-						<view class="courseHomework-infor">
-							<view class="courseHomework-hint">状态：</view>
-							<view class="courseHomework-input"><input class="nameInput" type="text" placeholder="请输入时间" /></view>
-						</view>
-						<view>
-							<button class="submit">提交</button>
-						</view>
-					</view>
-					<view class="homework-details" v-for="(work, index) in homework" :key="index">
-						<view class="workName">{{ work.name }}</view>
-						<view class="workOthers">
-							<view class="others">
-								已参与:
-								<text class="participant">{{ work.participant }}</text>
-								/{{ work.total }}
-							</view>
-							<view class="others">分值: {{ work.csore }}</view>
-							<view class="others" v-if="work.state == 0">状态:全部</view>
-							<view class="others" v-if="work.state == 1">
-								状态:
-								<text class="others1">进行中</text>
-							</view>
-							<view class="others" v-if="work.state == 2">
-								状态:
-								<text class="others2">已结束</text>
-							</view>
-						</view>
-						<view class="data-time">
-							{{work.time}}
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="homework-details" v-for="(work, index) in homework" :key="index" v-if="work.state == 1">
-						<view class="workName">{{ work.name }}</view>
-						<view class="workOthers">
-							<view class="others">
-								已参与:
-								<text class="participant">{{ work.participant }}</text>
-								/{{ work.total }}
-							</view>
-
-							<view class="others">分值: {{ work.csore }}</view>
-							<view class="others" v-if="work.state == 0">状态:全部</view>
-							<view class="others" v-if="work.state == 1">
-								状态:
-								<text class="others1">进行中</text>
-							</view>
-							<view class="others" v-if="work.state == 2">
-								状态:
-								<text
-								 class="others2">已结束</text>
-							</view>
-						</view>
-						<view class="data-time">
-							{{work.time}}
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="homework-details" v-for="(work, index) in homework" :key="index" v-if="work.state == 2">
-						<view class="workName">{{ work.name }}</view>
-						<view class="workOthers">
-							<view class="others">
-								已参与:
-								<text class="participant">{{ work.participant }}</text>
-								/{{ work.total }}
-							</view>
-
-							<view class="others">分值: {{ work.csore }}</view>
-							<view class="others" v-if="work.state == 0">状态:全部</view>
-							<view class="others" v-if="work.state == 1">
-								状态:
-								<text class="others1">进行中</text>
-							</view>
-							<view class="others" v-if="work.state == 2">
-								状态:
-								<text class="others2">已结束</text>
-							</view>
-						</view>
-						<view class="data-time">
-							{{work.time}}
-						</view>
-					</view>
-				</swiper-item>
-			</swiper>
-		</view>
-		<view class="">
-			<button @click="handleClick" ><image src="../../static/img/add.png" class="courseHomework"></image></button>
+			</view>
+		
+			<uni-fab horizontal="right" :content="fabButtonContent" @trigger="courseHomework(homeworks[0].plan.id)"></uni-fab>
 		</view>
 	</view>
+	
 </template>
 <script>
+import CourseHomeworkService from '../../common/service/CourseHomeworkService.js'; //引入CourseHomeworkService
+import uniFab from '@/components/uni-fab/uni-fab.vue';
+
+import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
+import uniList from '@/components/uni-list/uni-list.vue';
+import uniListItem from '@/components/uni-list-item/uni-list-item.vue';
 export default {
+	components: {
+		uniSwipeAction,
+		uniList,
+		uniListItem,
+		uniFab
+	},
 	data() {
 		return {
-			tabCurrentIndex: 0,
-			swiperCurrentIndex: 0,
-			titleShowId: 'tabTag-0',
-			show: false,
-			follow: true,
-			homeworkStatus: [
+			CourseHomeworkService: new CourseHomeworkService(),
+			planId: '2',
+
+			homeworks: [],
+
+			/* 左滑删除作业 */
+			options2: [
 				{
-					text: '全部',
-					id: 'quanbu'
-				},
-				{
-					text: '进行中',
-					id: 'jinxing'
-				},
-				{
-					text: '已结束',
-					id: 'jieshu'
+					text: '删除',
+					style: {
+						backgroundColor: 'rgb(255,58,49)'
+					}
 				}
 			],
 
-			homework: [
+			/*布置作业 */
+			fabButtonContent: [
 				{
-					id: 1,
-					name: '作业1',
-					participant: '48',
-					total: '50',
-					csore: '90',
-					state: '1',
-					time:'2019-10-01 17:28:20'
-				},
-				{
-					id: 2,
-					name: '作业2',
-					participant: '48',
-					total: '50',
-					csore: '100',
-					state: '0',
-					time:'2019-10-01 17:28:20'
-				},
-				{
-					id: 3,
-					name: '作业3',
-					participant: '48',
-					total: '50',
-					csore: '50',
-					state: '2',
-					time:'2019-10-01 17:28:20'
-				},
-				{
-					id: 4,
-					name: '作业4',
-					participant: '48',
-					total: '50',
-					csore: '50',
-					state: '1',
-					time:'2019-10-01 17:28:20'
+					iconPath: '/static/add-icon.png',
+					selectedIconPath: '/static/add-icon.png',
+					text: '布置作业',
+					active: false
 				}
 			]
 		};
 	},
+	onLoad: function(option) {
+		uni.setNavigationBarTitle({
+			title: '单个授课内容作业'
+		});
+		console.log(option.homeworkId);
+		this.homework.id = option.homeworkId;
+		this.getHomework();
+	},
+	onShow: function() {
+		this.getHomework();
+	},
 	methods: {
-		tabChange: function(e) {
-			var index = e.target.id.replace('tabTag-', '');
-			this.swiperCurrentIndex = index;
-			this.tabCurrentIndex = index;
-			this.titleShowId = 'tabTag-' + index;
+		/* 获取作业列表 */
+		getHomework: function() {
+			var a = '2';
+			console.log(a);
+			// const planId = this.plan.id;
+			this.CourseHomeworkService.getHomework(2)
+				.then(result => {
+					// this.getCourseInfo(courseId);
+					console.log('啦啦啦', result.data);
+					this.homeworks = result.data;
+				})
+				.catch(err => {})
+				.finally(() => {});
 		},
-		swiperChange: function(e) {
-			var index = e.detail.current;
-			this.tabCurrentIndex = index;
-			this.titleShowId = 'tabTag-' + index;
+		
+		/*日期格式化 */
+		handleTime: function(date) {
+			var d = new Date(date);
+			var year = d.getFullYear();
+			var month = d.getMonth() + 1;
+			var day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate();
+			var hour = d.getHours() < 10 ? '0' + d.getHours() : '' + d.getHours();
+			var minutes = d.getMinutes() < 10 ? '0' + d.getMinutes() : '' + d.getMinutes();
+			var seconds = d.getSeconds() < 10 ? '0' + d.getSeconds() : '' + d.getSeconds();
+			return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
 		},
-		handleClick: function() {
-			this.show = !this.show;
-			this.follow = !this.follow;
+		/* 删除作业 */
+		deleteHomework(e) {
+			console.log('当前点击的是第'+e.index+'个按钮，点击内容是'+e.content.text,e)
+			if(e.content){
+				const homerworkId=e.content.homerworkId;
+				console.log('---------1---',homerworkId)
+				this.CourseHomeworkService.deHomework(homerworkId).then((result)=>{
+					this.deHomework(homerworkId);
+				}).catch((err)=>{
+					uni.showToast({
+					    icon:'none',
+					    title: err.data.title
+					});
+				}).finally(()=>{
+					
+				})
+			}
+			
+		},
+		/* 删除作业列表 */
+		dehomework(homeworkId){
+			for(let i=0;i<this.homeworks.length;i++){
+				const homerwork=this.homeworks[i];
+				if(homerwork.id===homerwork){
+					console.log("delete homerworkId",homerworkId);
+					this.homeworks.splice(i,1);
+					break;
+				}
+			}
+		},
+
+		/* 布置作业 @trigger */
+		courseHomework(homeworkPlanId,homeworkId) {
+			uni.navigateTo({
+				url: '../createHomework/createHomework?homeworkPlanId='+homeworkPlanId
+			});
 		}
 	}
 };
 </script>
 
 <style>
-	.courseHomework-infor{
-		margin-bottom: 1.5vh;
-		/* border: 1px solid #0000FF; */
-	}
-	.courseHomework-input{
-		width: 95%;
-		margin-top: 1vh;
-		margin-left: 2vw;
-		border-radius: 8px;
-		border: 1px solid rgb(153, 201, 255);
+	.content{
+		background: rgb(250, 250, 250);
 	}
 .main {
-	height: 100vh;
-	width: 100vw;
-}
-.top {
-	display: flex;
-	height: 30vh;
-	width: 96vw;
+	width: 96%;
 	margin: 0 auto;
-	margin-top: 1vh;
-	/* border: 1px solid #000000; */
 }
-.picture-box {
-	width: 45%;
-	height: 98%;
-	/* border: 1px solid #0000ff; */
-}
-.picture {
-	width: 100%;
-	height: 100%;
-	border-radius: 10px;
-}
-.courseInformation-box {
-	margin-left: 2vw;
-	/* border: 1px solid #00ff00; */
-}
-.courseInformation {
-	margin-top: 1.5vh;
-	/* border: 1px solid red; */
-}
-.courseName {
-	/* color: red; */
-	font-size: 12pt;
-}
-.nameInput-box {
-	width: 95%;
-	/* height: 5vh; */
-	border-radius: 8px;
-	border: 1px solid rgb(153, 201, 255);
-}
-.submit-box {
-	margin-top: 2vh;
-	/* border: 1px solid #000000; */
-}
-.submit {
-	width: 95%;
-	height: 6vh;
-	background: rgb(0, 122, 255);
-	color: rgb(255, 255, 255);
-	border-radius: 10px;
-}
-.homework-box {
-	width: 96vw;
+.list {
+	width: 98%;
 	margin: 0 auto;
 	margin-top: 2vh;
-	background: rgb(243, 243, 243);
-	/* border: 1px solid #000000; */
+	border: 1px solid rgb(0, 122, 255);
+	border-radius: 10px;
 }
-.grace-tab-title {
-	color: #000000;
+.homework-list {
+	margin-left: 1vw;
+	border-bottom: 1px solid rgb(238, 238, 238) ;
+	
 }
-.courseHomework-box{
-	margin-top: 1vh;
-	background: rgb(255, 255, 255);
-	border: 1px solid #000000;
+/* .homework-H{
+	color: rgb(234, 241, 244);
+} */
+.homework-Data {
+	color: rgb(130, 190, 255);
 }
-.homework-details {
-	margin-top: 1vh;
-	width: 100%;
-	height: 20%;
-	background: rgb(255, 255, 255);
-	/* border: 1px solid #000000; */
-}
-.workName {
-	width: 100;
-	margin-top: 1vh;
-	margin-bottom: 3vh;
-	font-size: 13pt;
-}
-.workOthers {
-	display: flex;
-	/* border: 1px solid #000000; */
-}
-.others {
-	font-size: 11pt;
-	font-weight: 100;
-	flex: 1;
-}
-.others1 {
-	color: red;
-}
-.others2 {
-	color: rgb(110, 110, 110);
-}
-.data-time{
+.circle-btn {
 	position: absolute;
-	right: 0;
-	margin-right: 2vw;
-	font-style: italic;
-}
-.participant {
-	color: red;
-}
-
-.courseHomework {
-	width: 3rem;
-	height: 3rem;
+	bottom: 65px;
+	right: 15px;
 	position: fixed;
-	bottom: 2rem;
-	right: 0.5rem;
-	z-index: 9999;
+	width: 58px;
+	height: 58px;
+	border-radius: 50%;
+	background-color: #de533a;
+	background: linear-gradient(40deg, #ffd86f, #fc6262);
+	box-shadow: 2px 5px 10px #aaa;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 </style>

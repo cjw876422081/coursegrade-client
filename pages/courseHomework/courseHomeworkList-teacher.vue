@@ -17,7 +17,7 @@
 			<swiper-item key="0">
 				<view data-scindex="0">
 					<view class="content1">
-						<view class="wth" v-for="(homework, index) in homeworks" :key="index">
+						<view class="wth" v-for="(homework, index) in homeworks" :key="index" @click="change(homework.id)">
 							<view class="word">{{homework.homeworkCode}}</view>
 						</view>
 					</view>
@@ -98,7 +98,11 @@
 					}
 				});
 			},
-
+            change(homeworkId){
+				uni.navigateTo({
+					url:'../homeworkSituation/homeworkSituation?homeworkId='+homeworkId
+				});
+			}
 		}
 	}
 </script>
