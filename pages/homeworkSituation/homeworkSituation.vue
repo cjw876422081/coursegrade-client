@@ -8,7 +8,7 @@
 			<view class="content-head">
 			<view class="classInfo">
 				<label class="homeworkId">作业ID:{{homeworkId}}</label>
-				<label>{{teacher}}</label>
+				<label></label>
 				</view>
 				<hr style="margin-right: 5vh;">
 			<view class="count">
@@ -23,7 +23,7 @@
 				<!--根据学生提交的作业内容和得分判断是否提交作业和评分-->
 						<uni-card
 						v-for="(student,i) in allStudentHomework" :key="i" 
-						v-if="student.submitMemo&&student.grade"
+						v-show="student.grade"
 						style="margin-bottom:10rpx;background: #f0ffff;"
 						:title="student.student" 
 						:extra="'得分:'+student.grade" >
@@ -41,8 +41,8 @@
 					</view>
 							<uni-card
 							v-for="(student,i) in allStudentHomework" :key="i" 
-							v-if="!student.grade && student.submitMemo"
 							style="margin-bottom:10rpx;background: #f0ffff;"
+							v-show="!student.grade"
 							:title="student.student" 
 							:extra="'得分:'+student.grade" >
 							<label>作业内容:</label><br><br>
@@ -59,8 +59,7 @@
 					<view style="text-align: center;font-weight: bold;color: red;">
 						<label>未提交</label>
 					</view>
-							<uni-list v-for="(student,i) in allStudentHomework" :key="i" 
-									  v-if="!student.submitMemo">
+							<uni-list v-for="(student,i) in notSubmitStudent" :key="i" >
 							    <uni-list-item :title="student.student" 
 												show-arrow="false"
 												show-extra-icon="true"
@@ -107,6 +106,8 @@
 <script>
 	import StudentHomework from '../../common/model/StudentHomework.js';
 	import StudentHomeworkService from '../../common/service/StudentHomeworkService.js';
+	import StudentCourseGroupService from '../../common/service/StudentCourseGroupService.js'; 
+	import StudentCourseGroup from '../../common/model/StudentCourseGroup.js'
 	import uniCard from '@/components/uni-card/uni-card'
 	import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue";
 	import uniList from '@/components/uni-list/uni-list'
@@ -121,16 +122,18 @@
 		},
 		data(){
 			return{
-				//作业ID------  
-				homeworkId:5,
-				//创建者
-				teacher:'',
+				//作业ID---
+				homeworkId:3,
 				//提交人数
 				numberOfSubmissions:0,
 				//总人数
 				totalNumber:0,
+				//所有学生
+				allStudents:[],
 				//所有学生作业
 				allStudentHomework:[],
+				//未提交学生名单
+				notSubmitStudent:[],
 				//根据提交人数判断是否显示未提交
 				flag:true,
 				//是否显示未评分
@@ -140,8 +143,11 @@
 				//页码
 				pageIndex:0,
 				//页长
-				pageSize:10,
+				pageSize:1000,
 				isEnd:false,
+				totalElements:0,
+				temp:0,
+				studentCourseGroup:new StudentCourseGroupService(),
 				studentHomework:new StudentHomeworkService(),
 				downOption: {
 					use: true, // 是否启用下拉刷新; 默认true
@@ -168,14 +174,161 @@
 				this.getStudentHomework(()=>{
 					mescroll.resetUpScroll();
 				});
+				this.getNotSubmitName(()=>{
+					mescroll.resetUpScroll();
+				});
 			},
 			upperCallback(mescroll){
 				console.log("upper",mescroll);
 				this.pageIndex=mescroll.num;
+				
 				this.getStudentHomework(()=>{
 					mescroll.endSuccess(this.totalElements, !this.isEnd); 
 				});
+				this.getNotSubmitName(()=>{
+					mescroll.endSuccess(this.totalElements, !this.isEnd); 
+				});
 			},
+			getNotSubmitName(callback){
+				this.studentCourseGroup.getStudentName(
+				{
+					page:this.pageIndex,
+					size:this.pageSize
+				}
+				).then((result)=>{
+					console.log("zzzzzzzzzzzzzzzzzzzzzzzResult",result)
+						if(this.pageIndex==0){		
+							this.allStudents=result.data.content;	
+							this.totalNumber=result.data.totalElements;
+							if(this.allStudentHomework.length==0){
+								this.flagI=false;
+								this.flagII=false;
+								this.notSubmitStudent=this.allStudents
+							}else if(this.allStudentHomework.length==result.data.totalElements){//提交人数等于学生总数 则没有未提交学生
+								this.flag=false;
+								let count=0;
+								//判断提交学生中未评分的学生
+								for(let i=0;i<this.allStudentHomework.length;i++){									
+									if(this.allStudentHomework[i].grade!=null&&this.allStudentHomework[i].grade!=0){
+										count++;
+									}
+								}
+								//如果长度等于提交人数 则没有未评分的学生
+								if(count==this.allStudentHomework.length){
+									this.flagI=false;
+								}
+								//如果等于0则全部都是未评分的学生
+								else if(count==0){
+									this.flagII=false;
+								}
+							}else{
+								
+								let students=[];
+								//判断未提交学生名单
+								for(let i=0; i < result.data.totalElements; i++){
+									let count = 0;
+									for(let j=0; j < this.allStudentHomework.length; j++){
+										if(this.allStudents[i].student!=this.allStudentHomework[j].student){
+											count++;
+										}
+									}
+									//如果长度等于提交学生名单   则该学生未提交作业
+									if(count==this.allStudentHomework.length){
+										students.push(this.allStudents[i])
+									}
+								}
+								this.notSubmitStudent=students;
+								let count2=0;
+								//判断提交学生中未评分的学生
+								for(let i=0;i<this.allStudentHomework.length;i++){									
+									if(this.allStudentHomework[i].grade!=null&&this.allStudentHomework[i].grade!=0){
+										count2++;
+									}
+								}
+								//如果长度等于提交人数 则没有未提交
+								if(count2==this.allStudentHomework.length){
+									this.flagI=false;
+								}
+								//如果等于0则全部都是未评分的学生
+								if(count2==0){
+									this.flagII=false;
+								}
+							}
+							this.isEnd=result.data.last;
+							this.pageIndex=result.data.number;
+							this.totalElements=result.data.totalElements;
+						}else{
+							this.allStudents=this.allStudents.concat(result.data.content);
+							this.totalNumber=result.data.totalElements;
+							if(this.allStudentHomework.length==0){
+								this.flagI=false;
+								this.flagII=false;
+								this.notSubmitStudent=this.allStudents
+							}else if(this.allStudentHomework.length==result.data.totalElements){//提交人数等于学生总数 则没有未提交学生
+								this.flag=false;
+								let count=0;
+								//判断提交学生中未评分的学生
+								for(let i=0;i<this.allStudentHomework.length;i++){									
+									if(this.allStudentHomework[i].grade!=null&&this.allStudentHomework[i].grade!=0){
+										count++;
+									}
+								}
+								//如果长度等于提交人数 则没有未提交
+								if(count==this.allStudentHomework.length){
+									this.flagI=false;
+								}
+								//如果等于0则全部都是未评分的学生
+								if(count==0){
+									this.flagII=false;
+								}
+								
+							}else if(this.allStudentHomework.length!=0&&this.allStudentHomework.length!=this.allStudents.length){
+								let students=[];
+								//判断未提交学生名单
+								for(let i=0; i < result.data.totalElements; i++){
+									let count = 0;
+									for(let j=0; j < this.allStudentHomework.length; j++){
+										if(this.allStudents[i].student!=this.allStudentHomework[j].student){
+											count++;
+										}
+									}
+									//如果长度等于提交学生名单   则该学生未提交作业
+									
+									if(count==this.allStudentHomework.length){
+										students.push(this.allStudents[i])
+									}
+									//console.log("未提交学生名单222222222222",this.notSubmitStudent)
+								}
+								this.notSubmitStudent=students;
+								let count2=0;
+								//判断提交学生中未评分的学生
+								for(let i=0;i<this.allStudentHomework.length;i++){									
+									if(this.allStudentHomework[i].grade!=null&&this.allStudentHomework[i].grade!=0){
+										count2++;
+									}
+								}
+								//如果长度等于提交人数 则没有未提交
+								if(count2==this.allStudentHomework.length){
+									this.flagI=false;
+								}
+								//如果等于0则全部都是未评分的学生
+								if(count2==0){
+									this.flagII=false;
+								}
+							}	
+							this.isEnd=result.data.last;
+							this.pageIndex=result.data.number;
+							this.totalElements=result.data.totalElements;
+						}	
+				}).catch(err=>{
+				
+			}).finally(()=>{
+				if(callback){
+					callback();
+				}
+			})
+			},
+			
 			getStudentHomework(callback){
 				this.studentHomework.getHomeworkSituation(
 					this.homeworkId,
@@ -184,145 +337,39 @@
 					size:this.pageSize
 					}
 				).then((result) => {
-					console.log("StudentHomeworkService getHomeworkSituation+++++++++",result);
-					if(this.pageIndex==0){
-						this.allStudentHomework=result.data.content;
-						//计算提交人数
-						let count = 0;
-						for(let i=0;i<this.allStudentHomework.length;i++){
-							
-							if( this.allStudentHomework[i].submitMemo==null||
-								this.allStudentHomework[i].submitMemo==""){	
-							}else{
-								count++;
+					console.log("StudentHomeworkService getHomeworkSituation+++++++++",result.data.content);
+						if(this.pageIndex==0){
+							this.allStudentHomework=result.data.content;
+						}else{
+							this.allStudentHomework=this.allStudentHomework.concat(result.data.content);
 							}
-						}
-						//计算提交并评分人数
-						let count2 = 0;
-						let flag0=true;
-						let flag1=true;
-						let flag2=true;
-						if(count==0){//无人提交  只显示未提交
-							flag1=false;
-							flag2=false;
+						this.numberOfSubmissions=result.data.totalElements;
 						
-						}else if(count==result.data.totalElements){//提交人数等于总人数  则不显示未提交 对评分进行判断
-							flag0=false;
-							let num = 0;
-							for(let i = 0;i<count;i++){
-								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){				
-									num++;
-								}
-								
-							}
-							if(num==count){//没有未评分的学生
-								flag1=false;
-							}
-							 if(num==0){//只显示未评分
-								flag2=false;
-							}
-						}
-						else if(count!=result.data.totalElements){//判断评分和未评分
-							for(let i = 0 ;i<result.data.totalElements;i++){
-								if(this.allStudentHomework[i].submitMemo!=null||this.allStudentHomework[i].submitMemo!=""){
-									if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=null){
-										count2++;
-									}else{
-										
-									}
-								}
-							}
-							if(count2==0){//全部都是未评分
-								flag2=false;
-							}
-							if(count==count2){//全部都是已提交并评分
-								flag1=false;
-							}
-						}
-						this.flag=flag0;//flag
-						this.flagI=flag1;//flagI
-						this.flagII=flag2;//flagII
-						this.numberOfSubmissions=count;
-					}else{
-						this.allStudentHomework=this.allStudentHomework.concat(result.data.content);
-						//计算提交人数
-						let count = 0;
-						for(let i=0;i<this.allStudentHomework.length;i++){
-							
-							if( this.allStudentHomework[i].submitMemo==null||
-								this.allStudentHomework[i].submitMemo==""){	
-							}else{
-								count++;
-							}
-						}
-						//计算提交并评分人数
-						let count2 = 0;
-						let flag0=true;
-						let flag1=true;
-						let flag2=true;
-						if(count==0){//无人提交  只显示未提交
-							flag1=false;
-							flag2=false;
 						
-						}else if(count==result.data.totalElements){//提交人数等于总人数  则不显示未提交 对评分进行判断
-							flag0=false;
-							let num = 0;
-							for(let i = 0;i<count;i++){
-								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){	
-									num++;
-								}
-							}
-							if(num==count){//没有未评分的学生
-								flag1=false;
-							}
-							 if(num==0){//只显示未评分
-								flag2=false;
-							}
-						}
-						else if(count!=result.data.totalElements){//判断评分和未评分
-							for(let i = 0 ;i<result.data.totalElements;i++){
-								if(this.allStudentHomework[i].submitMemo!=null||this.allStudentHomework[i].submitMemo!=""){
-									if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=null){
-										count2++;
-									}
-								}
-							}
-							if(count2==0){//全部都是未评分
-								flag2=false;
-							}
-							if(count==count2){//全部都是已提交并评分
-								flag1=false;
-							}
-						}
-						this.flag=flag0;
-						this.flagI=flag1;
-						this.flagII=flag2;
-						this.numberOfSubmissions=count;
-					}
-					console.log("allStudentHomework===------------++-",result.data.content);
-					console.log("allStudentHomework================",this.allStudentHomework);
-					//获取发布该作业的教师
-					this.teacher=this.allStudentHomework[0].teacher;
-					//获取总人数
-					this.totalNumber=result.data.totalElements;
-					
-					this.isEnd=result.data.last;
-					this.pageIndex=result.data.number;
-					this.totalElements=result.data.totalElements;
+						this.isEnd=result.data.last;
+						this.pageIndex=result.data.number;
+						this.totalElements=result.data.totalElements;
 				}).catch(err=>{
 					
 				}).finally(()=>{
 					if(callback){
-						callback();
+						callback();	
 					}
 				})
 				},
+				
 			score(studentId){
 				console.log("score",studentId);
 				uni.navigateTo({
 					url: '../checkHomework/checkHomework?studentId='+studentId
 				});
+			},
+			onLoad(option){
+				this.homeworkId=option.homeworkId;
 			}
+			/* onLoad(){
+				this.loadData()
+			} */
 		}
 	}
 </script>
