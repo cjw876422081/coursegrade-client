@@ -44,7 +44,7 @@
 			            current: 0, */
 						// gotoIndex:"",
 						courseHomeworks:[],
-						coursePlanId:1,
+						coursePlanId:0,
 						//页码
 						pageIndex:0,
 						//页长
@@ -144,9 +144,9 @@
 					},
 		
 					
-			onLoad(){
-					
-					//	this.getCoursehomeworks();
+			onLoad(e){
+					this.coursePlanId = e.id ; 
+					this.getCoursehomeworks();
 					},
 			courseClick(courseHomework){
 						

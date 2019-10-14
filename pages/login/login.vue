@@ -141,7 +141,7 @@ export default {
 				// }); 
 			} else {
 				uni.navigateTo({
-					url: '../student/checkCourseInfo'
+					url: '../student/checkCourseList'
 				});
 			}
 		}

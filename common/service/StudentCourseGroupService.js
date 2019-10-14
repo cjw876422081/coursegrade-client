@@ -54,4 +54,10 @@ export default class StudentCourseGroupService{
 			}
 			return this.request.get(requestParam);
 		}
+		joinTheClass(groupCode){
+			const requestParam={
+				url:"/api/student-course-group/groupId"+groupCode,
+			}
+			return this.request.post(requestParam);
+		}
 }
