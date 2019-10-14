@@ -72,6 +72,11 @@
 				"navigationBarTitleText": "学生查看课程掌握程度评估"
 			}
 		}, {
+			"path": "pages/courseInfo/studentDetail",
+			"style": {
+				"navigationBarTitleText": "学生详情"
+			}
+		},{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登录"
@@ -184,9 +189,17 @@
 		{
 			"path":"pages/teacherCourse/testFile"
 		}
+        // ,{
+        //     "path" : "pages/createHomeworkNote/createHomeworkNote",
+        //     "style" : {"navigationBarTitleText": "创建或回复笔记"}
+        // }
+        // ,{
+        //     "path" : "pages/createHomeworkNote/createHomeworkNote/createHomeworkNote",
+        //     "style" : {}
+        // }
         ,{
             "path" : "pages/createHomeworkNote/createHomeworkNote",
-            "style" : {"navigationBarTitleText": "创建或回复笔记"}
+            "style" : {}
         }
     ],
 	"globalStyle": {

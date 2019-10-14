@@ -4,6 +4,7 @@ import App from './App'
 
 
 Vue.config.productionTip = false
+// Vue.prototype.apiServer = 'http://112.74.177.53:9090/api/'
 Vue.prototype.$authLoginUrl = '/api/authenticate'
 Vue.prototype.$accountUrl = '/api/account'
 Vue.prototype.dateFormat = function(date = new Date(), format){

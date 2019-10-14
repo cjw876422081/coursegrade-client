@@ -135,7 +135,10 @@ export default {
 			if (userName == 'teacher') {
 				uni.navigateTo({
 					url: '../teacherCourse/teacherCourse'
-				}); 
+				});
+				// uni.navigateTo({
+				// 	url: '../courseInfo/courseEvaluation'
+				// }); 
 			} else {
 				uni.navigateTo({
 					url: '../student/checkCourseInfo'
