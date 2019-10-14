@@ -23,10 +23,23 @@ export default class CourseHomeworkService{
 		}
 		return this.request.get(requestParam);
 	}
-	getOneHomework(id){
+	getOneHomework(homeworkId){
 		const requestParam={
-			url:'/api/course-homeworks/'+id,	
+			url:'/api/course-homeworks/'+homeworkId,	
 		}
 		return this.request.get(requestParam);
+	}
+	/*查询单个授课内容作业 */
+	getHomework(planId) {
+		const requestParam = {
+			url: '/api/homework-plan/'+planId,
+		}
+		return this.request.get(requestParam);
+	}
+	
+	/*删除授课内容作业 根据作业id */
+	deHomework(homeworkId) {
+		const url= '/api/course-homeworks/'+homeworkId;
+		return this.request.delete({url:url});
 	}
 }

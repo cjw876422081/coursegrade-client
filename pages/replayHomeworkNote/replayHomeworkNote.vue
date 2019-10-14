@@ -1,37 +1,13 @@
-<<<<<<< HEAD
-<template>
-	<view>
-		
-	</view>
-</template>
-
-<script>
-	export default {
-		data() {
-			return {
-				
-			}
-		},
-		methods: {
-			
-		}
-	}
-</script>
-
-<style>
-
-</style>
-=======
 
 <template>
 	<view style="width:92vw;padding:0 4vw;">
 	<form @submit="formSubmit">
 		<view class="uni-form-item uni-column uni-textarea">
-			<view class="title">笔记内容</view>
-			<textarea class="uni-input formitem" placeholder="笔记内容"  name="noteMemo"/>
+			<view class="title">回复内容</view>
+			<textarea class="uni-input formitem" placeholder="回复内容"  name="noteMemo"/>
 		</view>
 		<view class="submit">
-			<button type="primary" form-type="submit">提交作业笔记信息</button>
+			<button type="primary" form-type="submit">提交回复笔记信息</button>
 		</view>
 	</form>
 	</view>
@@ -61,6 +37,7 @@
 				courseNoteService:new CourseNoteService(),
 				noteMemoError:false,
 				courseHomework:{id:0},
+				parentNote:{id:0},
 				noteType:'作业'
 			}
 		},
@@ -76,15 +53,18 @@
 					});
 					return;
 				}
+				console.log("this.courseHomework-------",this.courseHomework.id);
 				formData=Object.assign(formData,{noteType:this.noteType,
-					                             homework:this.courseHomework});
+					                             homework:this.courseHomework,
+				                                 parentNote:this.parentNote
+												});
 				
 				this.courseNoteService.createNote(formData).then((result)=>{
 					console.log("course formSubmit callback",result);
 					if(result.data && result.data.id>0){
 						uni.showToast({
 						    icon:'success',
-						    title: "笔记创建成功"
+						    title: "回复笔记成功"
 						});
 						setTimeout(()=>{
 							console.log("settime out")
@@ -116,7 +96,7 @@
 		},
 		onLoad(option) {
 			this.courseHomework.id=option.hId;
+			this.parentNote.id=option.pId;
 		}
 	}
 </script>
->>>>>>> d544234ec2e9b7d4b7f13874d96b2406da264040

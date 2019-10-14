@@ -62,7 +62,7 @@
 				}
 				this.coursegroupService.getCreateGroup(formData,5).then((result)=>{
 					console.log("group formSubmit callback",result);
-					if(result.data && result.data.courseGroupId>0){
+					if(result.data && result.data.id>0){
 						uni.showToast({
 							icon:'success',
 							title: "班级创建成功"

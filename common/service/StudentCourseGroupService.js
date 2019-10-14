@@ -22,4 +22,36 @@ export default class StudentCourseGroupService{
 		}
 		return this.request.get(requestParam);
 	}
+
+	getStudentName(pageParam){
+		const requestParam={
+			url:'/api/student-course-groups'
+		}
+		if(pageParam){
+			Object.assign(requestParam,{data:pageParam});
+		}
+		return this.request.get(requestParam)
+	}
+
+		getCoursePlanTree(courseId) {
+			console.log(courseId)
+			const requestParam = {
+				url: '/api/course-plans/tree/' + courseId,
+			}
+			return this.request.get(requestParam);
+		}
+
+		getCourseInfo(courseId){
+			console.log(courseId)
+			const requestParam={
+				url:"/api/course-infos/"+courseId,
+			}
+			return this.request.get(requestParam);
+		}
+		IsJoinTheClass(){
+			const requestParam = {
+				url:'/api/student-course-group/student'
+			}
+			return this.request.get(requestParam);
+		}
 }
