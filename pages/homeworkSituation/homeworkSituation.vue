@@ -187,117 +187,10 @@
 					console.log("StudentHomeworkService getHomeworkSituation+++++++++",result);
 					if(this.pageIndex==0){
 						this.allStudentHomework=result.data.content;
-						//计算提交人数
-						let count = 0;
-						for(let i=0;i<this.allStudentHomework.length;i++){
-							
-							if( this.allStudentHomework[i].submitMemo==null||
-								this.allStudentHomework[i].submitMemo==""){	
-							}else{
-								count++;
-							}
-						}
-						//计算提交并评分人数
-						let count2 = 0;
-						let flag0=true;
-						let flag1=true;
-						let flag2=true;
-						if(count==0){//无人提交  只显示未提交
-							flag1=false;
-							flag2=false;
 						
-						}else if(count==result.data.totalElements){//提交人数等于总人数  则不显示未提交 对评分进行判断
-							flag0=false;
-							let num = 0;
-							for(let i = 0;i<count;i++){
-								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){				
-									num++;
-								}
-								
-							}
-							if(num==count){//没有未评分的学生
-								flag1=false;
-							}
-							 if(num==0){//只显示未评分
-								flag2=false;
-							}
-						}
-						else if(count!=result.data.totalElements){//判断评分和未评分
-							for(let i = 0 ;i<result.data.totalElements;i++){
-								if(this.allStudentHomework[i].submitMemo!=null||this.allStudentHomework[i].submitMemo!=""){
-									if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=null){
-										count2++;
-									}else{
-										
-									}
-								}
-							}
-							if(count2==0){//全部都是未评分
-								flag2=false;
-							}
-							if(count==count2){//全部都是已提交并评分
-								flag1=false;
-							}
-						}
-						this.flag=flag0;//flag
-						this.flagI=flag1;//flagI
-						this.flagII=flag2;//flagII
-						this.numberOfSubmissions=count;
 					}else{
 						this.allStudentHomework=this.allStudentHomework.concat(result.data.content);
-						//计算提交人数
-						let count = 0;
-						for(let i=0;i<this.allStudentHomework.length;i++){
-							
-							if( this.allStudentHomework[i].submitMemo==null||
-								this.allStudentHomework[i].submitMemo==""){	
-							}else{
-								count++;
-							}
-						}
-						//计算提交并评分人数
-						let count2 = 0;
-						let flag0=true;
-						let flag1=true;
-						let flag2=true;
-						if(count==0){//无人提交  只显示未提交
-							flag1=false;
-							flag2=false;
 						
-						}else if(count==result.data.totalElements){//提交人数等于总人数  则不显示未提交 对评分进行判断
-							flag0=false;
-							let num = 0;
-							for(let i = 0;i<count;i++){
-								if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=""){	
-									num++;
-								}
-							}
-							if(num==count){//没有未评分的学生
-								flag1=false;
-							}
-							 if(num==0){//只显示未评分
-								flag2=false;
-							}
-						}
-						else if(count!=result.data.totalElements){//判断评分和未评分
-							for(let i = 0 ;i<result.data.totalElements;i++){
-								if(this.allStudentHomework[i].submitMemo!=null||this.allStudentHomework[i].submitMemo!=""){
-									if(this.allStudentHomework[i].grade!=0 && this.allStudentHomework[i].grade!=null){
-										count2++;
-									}
-								}
-							}
-							if(count2==0){//全部都是未评分
-								flag2=false;
-							}
-							if(count==count2){//全部都是已提交并评分
-								flag1=false;
-							}
-						}
-						this.flag=flag0;
-						this.flagI=flag1;
-						this.flagII=flag2;
-						this.numberOfSubmissions=count;
 					}
 					console.log("allStudentHomework===------------++-",result.data.content);
 					console.log("allStudentHomework================",this.allStudentHomework);
@@ -322,9 +215,9 @@
 					url: '../checkHomework/checkHomework?studentId='+studentId+"&homeworkId="+this.homeworkId
 				});
 			},
-			onLoad(option){
+			 onLoad(option){
 				this.homeworkId=option.homeworkId;
-			}
+			} 
 		}
 	}
 </script>

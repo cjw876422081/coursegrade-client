@@ -1,15 +1,14 @@
 <template>
-	<view class="main-content">
+	<view class="main-content" style="background-image: url('./static/img/checkhomework-bg.png');
+		background-repeat: no-repeat;background-color: rgb(230,230,240);
+		background-size: 100% 100%;padding:0;">
 		
 		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
-			<uni-card>
-				<view class="input-row">
+			<uni-card class="card" :title="studentHomework.student" >
+				<view class="submitInfo">
 					<img :src="studentHomework.submitMemo" @click="toEnlarge"
-					alt="作业内容" style="width:13vw; height:8vh;" />
-					<view class="submitInfo">
-					<text>学生: {{studentHomework.student}}</text><br>
+					alt="作业内容" style="width:31vw; height:25vh;" /><br>
 					<text>提交时间: {{studentHomework.submitTime}}</text>
-					</view>
 				</view>
 				<view class="grade">
 				<form @submit="formSubmit">
@@ -45,7 +44,7 @@
 		</mescroll-uni>
 		<view class="mask" v-show="show" @click="exit">
 			<img :src="studentHomework.submitMemo" alt="作业内容" 
-			style="width:90vw;height:50vh;margin:10vh 5vw;
+			style="width:90vw;height:90vh;margin:10vh 5vw;
 			position:absolute"/>
 		</view>
 	</view> 
@@ -225,8 +224,8 @@
 				});
 			},
 			onLoad(option){
-				this.studentHomeworkId=option.studentId;
-				this.homeworkId=option.homeworkId;
+				this.studentHomeworkId=option.studentId; 
+				this.homeworkId=option.homeworkId; 
 				this.loadData()
 			},
 			getStudentHomework(){
@@ -261,6 +260,9 @@
 	position: absolute;
 	z-index: 100;
 	}
+.card{
+	background-color:rgba(255,255,255,0.9);
+}
 .submitInfo{
 	margin:0 20rpx;
 	color:rgba(80,90,100,0.8)

@@ -23,7 +23,7 @@
 								<view class="left">
 									<image class="pic" src="../../static/img/zuoye.png"></image>
 								</view>
-								<view class="right">
+								<view class="right" @click="change(homework.id)">
 									<view class="word">{{homework.homeworkCode}}</view>
 									<view>{{homework.dataTime}}</view>
 								</view>
@@ -170,7 +170,11 @@
 				var seconds = d.getSeconds() < 10 ? '0' + d.getSeconds() : '' + d.getSeconds();
 				return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
 			},
-
+            change(homeworkId){
+            	uni.navigateTo({
+            		url:'../homeworkSituation/homeworkSituation?homeworkId='+homeworkId
+            	})
+            }
 		}
 	}
 </script>
