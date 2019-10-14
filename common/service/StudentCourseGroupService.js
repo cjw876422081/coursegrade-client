@@ -22,6 +22,17 @@ export default class StudentCourseGroupService{
 		}
 		return this.request.get(requestParam);
 	}
+
+	getStudentName(pageParam){
+		const requestParam={
+			url:'/api/student-course-groups'
+		}
+		if(pageParam){
+			Object.assign(requestParam,{data:pageParam});
+		}
+		return this.request.get(requestParam)
+	}
+
 		getCoursePlanTree(courseId) {
 			console.log(courseId)
 			const requestParam = {
