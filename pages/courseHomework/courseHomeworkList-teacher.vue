@@ -40,7 +40,7 @@
 							<view class="left">
 								<image class="pic" src="../../static/img/zuoye.png"></image>
 							</view>
-							<view class="right">
+							<view class="right" @click="change(homework.id)">
 								<view class="word">{{homework.homeworkCode}}</view>
 								<view>{{homework.dataTime}}</view>
 							</view>
@@ -57,7 +57,7 @@
 							<view class="left">
 								<image class="pic" src="../../static/img/zuoye.png"></image>
 							</view>
-							<view class="right">
+							<view class="right" @click="change(homework.id)">
 								<view class="word">{{homework.homeworkCode}}</view>
 								<view>{{homework.dataTime}}</view>
 							</view>
