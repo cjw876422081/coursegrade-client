@@ -184,10 +184,16 @@
 		{
 			"path":"pages/teacherCourse/testFile"
 		}
+
         ,{
             "path" : "pages/createHomeworkNote/createHomeworkNote",
-            "style" : {"navigationBarTitleText": "创建或回复笔记"}
+            "style" : {"navigationBarTitleText": "创建笔记"}
         }
+        ,{
+            "path" : "pages/replayHomeworkNote/replayHomeworkNote",
+            "style" : {"navigationBarTitleText": "回复笔记"}
+        }
+
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

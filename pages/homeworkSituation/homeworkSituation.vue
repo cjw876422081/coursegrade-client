@@ -359,9 +359,8 @@
 				},
 				
 			score(studentId){
-				console.log("score",studentId);
 				uni.navigateTo({
-					url: '../checkHomework/checkHomework?studentId='+studentId
+					url: '../checkHomework/checkHomework?studentId='+studentId+"&homeworkId="+this.homeworkId
 				});
 			},
 			onLoad(option){

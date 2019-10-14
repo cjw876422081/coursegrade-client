@@ -25,28 +25,28 @@
 			</uni-card>
 			<view class="comment">
 				<h4>评论</h4>
-			<view class="commentItem" v-for="(note,i) in notes" :key="i" @click="noteClick(note)">
-				<view class="uni-comment-list" :options="note.delOptions" @click="delClick" data-note="note">
-					<view class="uni-comment-face">
-						<image src="/static/logocolor.png" mode="widthFix"></image>
-					</view>
-					<view class="uni-comment-body">
-						<view class="uni-comment-top">
-							<text>@{{note.publishUser}}</text>
+				<view class="commentItem" v-for="(note,i) in notes" :key="i" @click="noteClick(note)">
+					<view class="uni-comment-list" :options="note.delOptions" @click="delClick" data-note="note">
+						<view class="uni-comment-face">
+							<image src="/static/logocolor.png" mode="widthFix"></image>
 						</view>
-						<view class="uni-comment-content"><text>{{note.noteMemo}}</text></view>
-					    <view class="uni-comment-date">
-					    	<text>{{note.noteTime}}</text>
-					    </view>
+						<view class="uni-comment-body">
+							<view class="uni-comment-top">
+								<text>@{{note.publishUser}}</text>
+							</view>
+							<view class="uni-comment-content"><text>{{note.noteMemo}}</text></view>
+							<view class="uni-comment-date">
+								<text>{{note.noteTime}}</text>
+							</view>
+						</view>
 					</view>
-				</view>
-			</view> 
+				</view> 
 			</view>
 		</mescroll-uni>
-		<view class="mask" :class="{'enlarge':flag}" @click="exit">
+		<view class="mask" v-show="show" @click="exit">
 			<img :src="studentHomework.submitMemo" alt="作业内容" 
-			style="width:50vw;height:50wh;
-			position:absolute" @click="exit"/>
+			style="width:90vw;height:50vh;margin:10vh 5vw;
+			position:absolute"/>
 		</view>
 	</view> 
 </template>
@@ -66,16 +66,16 @@
 		},
 		data() {
 			return {
-				flag:false,
 				//学生提交作业的id，应从上页面获取
 				studentHomeworkId:0,
 				grade:0,
-				studentHomework:[],
+				show:false,
+				studentHomework:{},
 				studentHomeworkService:new StudentHomeworkService(),
 			    //笔记列表
 				notes:[],
 				//对应类型id
-				homeworkId:2,
+				homeworkId:0,
 				//页码
 				pageIndex:0,
 				//页长
@@ -132,10 +132,10 @@
 			  this.grade=value
 			},
 			toEnlarge(e){
-				this.flag=true;
+				this.show=true;
 			},
 			exit(){
-				this.flag=false;
+				this.show=false;
 			},
 			formSubmit(e){
 				var formdata=e.detail.value;
@@ -148,9 +148,11 @@
 					});
 					return;
 				} 
+				this.studentHomework.readTime=new Date();
+				this.studentHomework.homework.id=this.studentHomeworkId;
+				this.studentHomework.grade=this.grade;
 				this.studentHomeworkService.updateStudentHomeworkGrade(
-					this.studentHomeworkId,
-					this.grade
+					this.studentHomework
 				).then((result)=>{
 					console.log("course formSubmit callback",result);
 					if(result.data && result.data.id>0){
@@ -223,7 +225,8 @@
 				});
 			},
 			onLoad(option){
-				this.studentHomeworkId=option.studentId
+				this.studentHomeworkId=option.studentId;
+				this.homeworkId=option.homeworkId;
 				this.loadData()
 			},
 			getStudentHomework(){
@@ -238,7 +241,7 @@
 				}).finally(()=>{
 					
 				});
-			}
+			} 
 		}
 	}
 </script>
@@ -249,7 +252,7 @@
 		height:100vh;
 		overflow: hidden;
 	}
-.mask.enlarge{
+.mask{
 	background: rgba(10,10,10,0.6);
 	left: 0;
 	top: 0;
