@@ -15,4 +15,32 @@ export default class StudentCourseGroupService{
 		}
 		return this.request.get(requestParam);
 	}
+	checkCourseClassList(course_id){
+		console.log("checkCourseClassList course_id",course_id);
+		const requestParam={
+			url:"/api/student-course-order-group/"+course_id,
+		}
+		return this.request.get(requestParam);
+	}
+		getCoursePlanTree(courseId) {
+			console.log(courseId)
+			const requestParam = {
+				url: '/api/course-plans/tree/' + courseId,
+			}
+			return this.request.get(requestParam);
+		}
+
+		getCourseInfo(courseId){
+			console.log(courseId)
+			const requestParam={
+				url:"/api/course-infos/"+courseId,
+			}
+			return this.request.get(requestParam);
+		}
+		IsJoinTheClass(){
+			const requestParam = {
+				url:'/api/student-course-group/student'
+			}
+			return this.request.get(requestParam);
+		}
 }

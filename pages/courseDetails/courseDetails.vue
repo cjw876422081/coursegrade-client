@@ -57,8 +57,8 @@
 				</swiper-item>
 				<swiper-item>
 					<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback">
-						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;" @click="homeworkClick(note.id)">
-							<uni-swipe-action  @click="delClick" data-course="note">
+						<view v-for="(note, i) in notes" :key="i" style="margin-bottom:10rpx;">
+							<uni-swipe-action @click="delClick" data-course="note">
 								<uni-card :title="note.noteMemo" :extra="note.noteType">
 									<view class="note">
 										<view class="code">
@@ -77,17 +77,12 @@
 						<button class="circle-btn" @tap="gotoNote"><text class="icon-text">+</text></button>
 					</view>
 				</swiper-item>
-<<<<<<< HEAD
-				<swiper-item></swiper-item>
-				<swiper-item></swiper-item>
-=======
 
 				<swiper-item>
 					<!-- 授课内容 -->
 					<view class="addButton"><button class="mini-btn" type="default" size="mini" @click="addCoursePlan">添加章节</button></view>
-					<mix-tree :list="list.children"></mix-tree>
+					<mix-tree :list="list"></mix-tree>
 				</swiper-item>
->>>>>>> f80cb5765a3827fdf720d1791d4a3ba869a2adf3
 			</swiper>
 		</view>
 	</view>
@@ -119,7 +114,7 @@ export default {
 			//授课内容
 			list: [],
 			coursePlanTeacherTreeService: new CoursePlanTeacherTreeService(),
-			
+
 			courseService: new CourseService(),
 			tabCurrentIndex: 0,
 			swiperCurrentIndex: 0,
@@ -143,10 +138,10 @@ export default {
 				{
 					name: '授课内容',
 					id: 'shouke'
-				 },
+				},
 				{
-					name:"班级",
-					id:'banji'
+					name: '班级',
+					id: 'banji'
 				}
 			],
 			titleShowId: 'tabTag-0',
@@ -168,6 +163,11 @@ export default {
 				empty: {
 					tip: '暂未查询到数据'
 				}
+			},
+			parmeter: {
+				courseId: 0,
+				courseName: '',
+				planMemo: []
 			}
 		};
 	},
@@ -177,12 +177,13 @@ export default {
 		});
 		console.log(option.cId);
 		this.course.id = option.cId;
+		this.getCoursesPlan();
 	},
 	onShow: function() {
 		this.getCourse();
 		this.getCourseHomework();
 		this.getCoursePlan();
-		this.getCoursesPlan();
+		// this.getCoursesPlan();
 	},
 	methods: {
 		tabChange: function(e) {
@@ -215,7 +216,6 @@ export default {
 				.then(result => {
 					// this.getCourseInfo(courseId);
 					console.log('zhangwenxv', result.data);
-
 					this.homeworks = result.data;
 				})
 				.catch(err => {})
@@ -237,7 +237,9 @@ export default {
 		},
 		homeworkClick(hId) {
 			/* console.log("courseClick",course); */
-			uni.navigateTo({});
+			uni.navigateTo({
+				url: '../homeworkNote/homeworkNote?hId=' + hId
+			});
 		},
 		delClick(e) {
 			console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text, e);
@@ -300,13 +302,16 @@ export default {
 			console.log(item);
 		},
 		addCoursePlan() {
-			// console.log(JSON.stringify(this.list));
-			uni.showToast({
-				title: '显示:' + JSON.stringify(this.list.id),
-				duration: 2000
-			});
+			this.parmeter = {
+				courseId: 0,
+				courseName: '',
+				planMemo: []
+			};
+			this.parmeter.courseId = this.course.id;
+			this.parmeter.courseName = this.course.courseName;
+			console.log(this.parmeter);
 			uni.navigateTo({
-				url: '添加授课内容路径'
+				url: '../creatCoursePlan/creatCoursePlan?parmeter=' + encodeURIComponent(JSON.stringify(this.parmeter))
 			});
 		}
 	}
@@ -376,13 +381,13 @@ export default {
 		align-items: center;
 		position: absolute;
 		top: 56upx;
-		left: 51upx;
+		left: 30upx;
 		z-index: 998;
-		width: 140upx;
+		width: 100upx;
 		height: 163upx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 8upx;
-		padding: 10upx;
+		padding: 5upx;
 		.name {
 			font-size: 26upx;
 			font-weight: 500;

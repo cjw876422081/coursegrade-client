@@ -16,7 +16,7 @@
 					<view class="input-row" >
 						<view class="gradeItme input-row">
 							<label>评分：</label>
-							<input name="grade" type="number" @blur="onBlur" ref="grade"/>
+							<input name="grade" :class="{'formerror':gradeError}" type="number" @blur="onBlur" ref="grade"/>
 						</view>
 						<button class="subBtn" form-type="submit">提交</button>
 					</view>
@@ -25,22 +25,22 @@
 			</uni-card>
 			<view class="comment">
 				<h4>评论</h4>
-			<view class="commentItem" v-for="(note,i) in notes" :key="i" @click="noteClick(note)">
-				<view class="uni-comment-list" :options="note.delOptions" @click="delClick" data-note="note">
-					<view class="uni-comment-face">
-						<image src="/static/logocolor.png" mode="widthFix"></image>
-					</view>
-					<view class="uni-comment-body">
-						<view class="uni-comment-top">
-							<text>@{{note.publishUser}}</text>
+				<view class="commentItem" v-for="(note,i) in notes" :key="i" @click="noteClick(note)">
+					<view class="uni-comment-list" :options="note.delOptions" @click="delClick" data-note="note">
+						<view class="uni-comment-face">
+							<image src="/static/logocolor.png" mode="widthFix"></image>
 						</view>
-						<view class="uni-comment-content"><text>{{note.noteMemo}}</text></view>
-					    <view class="uni-comment-date">
-					    	<text>{{note.noteTime}}</text>
-					    </view>
+						<view class="uni-comment-body">
+							<view class="uni-comment-top">
+								<text>@{{note.publishUser}}</text>
+							</view>
+							<view class="uni-comment-content"><text>{{note.noteMemo}}</text></view>
+							<view class="uni-comment-date">
+								<text>{{note.noteTime}}</text>
+							</view>
+						</view>
 					</view>
-				</view>
-			</view> 
+				</view> 
 			</view>
 		</mescroll-uni>
 		<view class="mask" :class="{'enlarge':flag}" @click="exit">
@@ -70,7 +70,7 @@
 				//学生提交作业的id，应从上页面获取
 				studentHomeworkId:0,
 				grade:0,
-				studentHomework:[],
+				studentHomework:{},
 				studentHomeworkService:new StudentHomeworkService(),
 			    //笔记列表
 				notes:[],
@@ -84,6 +84,8 @@
 				sortS:'asc',
 				//作业类型
 				type:'作业',
+				
+				gradeError:false,
 
 				courseNoteService:new CourseNoteService(),
 				isEnd:false,
@@ -112,7 +114,6 @@
 			loadData(e){
 				this.getStudentHomework()
 			},
-		
 			
 			onBlur (event) {
 			  let value = event.detail.value
@@ -137,11 +138,21 @@
 				this.flag=false;
 			},
 			formSubmit(e){
-				var formdata =JSON.stringify(e.detail.value);
+				var formdata=e.detail.value;
 				console.log('form发生了submit事件，携带数据为：', formdata);
+				const validResult=this.formValid(formdata);
+				if(!validResult){
+					uni.showToast({
+					    icon:'none',
+					    title: "输入数据不合法"
+					});
+					return;
+				} 
+				this.studentHomework.readTime=new Date();
+				this.studentHomework.homework.id=this.studentHomeworkId;
+				this.studentHomework.grade=this.grade;
 				this.studentHomeworkService.updateStudentHomeworkGrade(
-					this.studentHomeworkId,
-					this.grade
+					this.studentHomework
 				).then((result)=>{
 					console.log("course formSubmit callback",result);
 					if(result.data && result.data.id>0){
@@ -159,6 +170,15 @@
 				}).finally(()=>{
 					
 				}); 
+			},
+			formValid(formdata){
+				this.gradeError=false;
+				let result=true;
+				if(formdata.grade==null || formdata.grade.length==0){
+					this.gradeError=true;
+					result= false;
+				}
+				return result;
 			},
 			downCallback(mescroll){
 				console.log("down",mescroll);
@@ -205,11 +225,9 @@
 				});
 			},
 			onLoad(option){
-				this.studentHomeworkId=option.studentId
+				console.log("-----------------score",option.studentId);
+				this.studentHomeworkId=option.studentId;
 				this.loadData()
-				console.log("===================",option.studentId)
-				
-				console.log("++++++++++++++++++++",this.studentHomeworkId)
 			},
 			getStudentHomework(){
 				this.studentHomeworkService.getStudentHomework(
@@ -217,13 +235,14 @@
 				).then((result)=>{
 					if(result.data){
 						this.studentHomework=result.data;
+						console.log("+++++++++",this.studentHomework);
 					}
 				}).catch(err=>{
 					
 				}).finally(()=>{
 					
 				});
-			}
+			} 
 		}
 	}
 </script>
@@ -266,6 +285,9 @@
 	border-radius: 10rpx;
 	color:rgba(100,100,100,0.8);
 	text-align: center;
+}
+input.formerror{
+	border: 2rpx solid rgba(250,0,0,0.3) !important;
 }
 .subBtn{
 	width:15vw; 

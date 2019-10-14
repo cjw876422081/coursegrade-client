@@ -19,6 +19,10 @@
 		                <view class="uni-comment-top">
 		                    <text>{{note.publishUser}}</text> 
 		                </view>
+						<view class="uni-comment-replay-btn"
+						style="float: right;"
+						@click="addClick"
+						>回复</view>
 		                <view class="uni-comment-date">
 		                    <text>{{note.noteTime}}  笔记ID:{{note.id}}</text>
 		                </view>
@@ -31,8 +35,8 @@
 		        </view>
 				</uni-swipe-action>
 				</view>
-				
 		    </view> 
+			<view style="align:center;" @click="addClick"><button type="primary" plain="true">发布笔记</button></view>
 			</mescroll-uni>
 		</view>
 		<!-- <uni-fab
@@ -141,6 +145,7 @@
 
 
 <script>
+	import CourseService from '../../common/service/CourseService.js';
 	import uniCard from "@/components/uni-card/uni-card";
 	import CourseNote from "../../common/model/CourseNote.js";
 	import CourseNoteService from "../../common/service/CourseNoteService.js";
@@ -162,7 +167,7 @@
 				//课程列表
 				notes:[],
 				//对应类型id
-				homeworkId:2,
+				homeworkId:0,
 				//页码
 				pageIndex:0,
 				//页长
@@ -305,7 +310,7 @@
 			addClick(e){
 				console.log("addClick",e);
 				uni.navigateTo({
-					url: '../createCourse/createCourse'
+					url: '../createHomeworkNote/createHomeworkNote'
 				});
 			},
 			/* search(e, val) {
@@ -313,8 +318,8 @@
 			    this['val'+val] = e;
 			} */
 		},
-		onLoad() {
-			
+		onLoad(option) {
+			this.homeworkId=option.hId;
 		}
 	}
 </script>

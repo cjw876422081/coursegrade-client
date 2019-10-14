@@ -144,11 +144,6 @@
 					}
 				});
 			},
-			gotocreatHomework: function() {
-				uni.navigateTo({
-					url: '../createHomework/createHomework'
-				});
-			},
 			getTime: function(b,list) {
 				var noList = []
 				var yesList = []
