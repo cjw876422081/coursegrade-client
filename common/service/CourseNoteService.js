@@ -18,7 +18,7 @@ export default class CourseNoteService{
 	}
 	createNote(courseNote){
 		return this.request.post({
-			url:'/api/course-infos/',
+			url:'/api/course-notes',
 			data:courseNote,
 			contentType: 'json'
 		})
