@@ -23,7 +23,7 @@
 				</view>
 				<view class="input-row border">
 					<label class="title">截止时间：</label>
-					<input name="homeworkDeadline" :class="{'formerror':homeworkDeadlineError}" class="input" focus="true" placeholder="选择截止时间" ref="deadLine" @tap="toggleTab()" adjust-position="true" />
+					<input name="homeworkDeadline" :class="{'formerror':homeworkDeadlineError}" class="input" :value="deadLineTime" focus="true" placeholder="选择截止时间" ref="deadLine" @tap="toggleTab()" adjust-position="true" />
 				</view>
 				<!-- 时间选择组件 -->
 				<yu-datetime-picker @confirm="onConfirm" ref="dateTime"></yu-datetime-picker>  
@@ -51,13 +51,14 @@
 				homeworkGradeError:false,
 				homeworkDeadlineError:false,
 				createTime:new Date(),
+				deadLineTime:"",
 				//授课内容id，应从上一页面获取
 				coursePlan:{id:0}
 			}
 	    },
 	    methods: {
 	        onConfirm(e) {
-			    this.$refs.deadLine.value=e.selectRes
+				this.deadLineTime=e.selectRes
 			},
 			toggleTab(item, index) {  
 				this.$refs.dateTime.show();  
@@ -73,17 +74,8 @@
 					return;
 				} 
 				this.createTime=new Date();
-				console.log('form发生了submit事件，携带数据为：' + this.createTime);
-				console.log('+++++++++++++++：' + this.coursePlan.id);
 				formdata=Object.assign(formdata,{plan:this.coursePlan,dataTime:this.createTime});
-				/* uni.showModal({
-					content: '表单数据内容：' + formdata,
-					showCancel: true
-				}); */
-				console.log('form发生了submit事件，携带数据为：' + formdata);
-				
 				this.courseHomeworkService.createCourseHomework(formdata).then((result)=>{
-					console.log("course formSubmit callback",result);
 					if(result.data && result.data.id>0){
 						uni.showToast({
 						    icon:'success',
@@ -101,9 +93,7 @@
 				});
 			},
 			onLoad(option){
-				console.log("-----------------score",option.homeworkPlanId);
 				this.coursePlan.id=option.homeworkPlanId;
-				console.log("-----------------onLoad",this.planId);
 			},
 			formValid(formdata){
 				this.homeworkCodeError=false;
@@ -111,10 +101,7 @@
 				this.homeworkTargetError=false;
 				this.homeworkGradeError=false;
 				this.homeworkDeadlineError=false;
-				/* let errItem={
-					errorText:"",
-					error:false
-				} */
+				
 				let result=true;
 				if(formdata.homeworkCode==null || formdata.homeworkCode.length==0){
 					this.homeworkCodeError=true;
