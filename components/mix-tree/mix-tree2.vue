@@ -18,6 +18,8 @@
 				>
 					<image class="mix-tree-icon" :src="item.lastRank ? treeParams.lastIcon : item.showChild ? treeParams.currentIcon : treeParams.defaultIcon"></image>
 					{{item.name}}
+					<img  class="option-icon" src="../../static/img/zy.png" @click="checkcourseHomework(index)"></img>
+					<img  class="icon" src="/static/img/add.png" @click="courseNote(index)"></img>
 				</view>
 			</block>
 		</view>
@@ -42,12 +44,19 @@
 		},
 		data() {
 			return {
+				courseTreeList:[],
 				treeList: [],
 				treeParams: {
 					defaultIcon: '/static/mix-tree/defaultIcon.png',
 					currentIcon: '/static/mix-tree/currentIcon.png',
 					lastIcon: '',
 					border: false
+				},
+				parmeter:{
+					planId:0,
+					courseId:0,
+					courseName: '',
+					planMemo:[]
 				}
 			}
 		},
@@ -56,6 +65,7 @@
 				
 				this.treeParams = Object.assign(this.treeParams, this.params);
 				console.log(this.treeParams, this.params);
+				this.courseTreeList = list ;
 				this.renderTreeList(list);
 			}
 		},
@@ -106,7 +116,57 @@
 						}
 					}
 				})
+			},
+			checkcourseHomework(index){
+				this.getParmter(index);
+				console.log("this.parmeter.planId" ,this.parmeter.planId)
+				uni.navigateTo({
+				    url: '../student/checkCourseContentHomeworkList?id=' + this.parmeter.planId 
+				});
+			},
+			courseNote(index){
+				this.getParmter(index);
+				uni.navigateTo({
+				    url: '../courseNote/courseNoteByPlan-teacher/courseNoteByPlan-teacher?parmeter='+encodeURIComponent(JSON.stringify(this.parmeter))
+				});
+				
+			},
+			getParmter(index){
+				this.parmeter = {
+					planId:0,
+					courseId:0,
+					courseName: '',
+					planMemo:[]
+				}
+				// console.log("this.list:"+JSON.stringify(this.treeList));
+				this.parmeter.planId = this.treeList[index].id - 999;
+				this.parmeter.courseId =  this.courseTreeList.id;
+				this.parmeter.courseName = this.courseTreeList.courseName;
+				console.log("courseId",this.parmeter.courseName);
+				console.log("courseName",this.courseTreeList.courseName);
+				// console.log("planMemo",this.parmeter);
+				this.parmeter.planMemo.push(this.treeList[index].planMemo);
+				for(;;){
+					const level =  this.treeList[index].parentId.length;
+					// console.log("级别:"+level);
+					// console.log("this.list_________:"+this.treeList[index].pId);
+					// console.log("this.list+++++++++++++:"+JSON.stringify(this.treeList[index].planMemo));
+					if(level > 0 && this.treeList[index].pId && (this.treeList[index].pId != null || this.treeList[index].course != null)){
+						this.parmeter.planMemo.push(this.treeList[index-1].planMemo);
+						// console.log("planMemo+++++++++++++:"+JSON.stringify(this.treeList[index-1].planMemo));
+						index = index - 1;
+					}
+					if(level < 2){
+						// console.log("跳出循环");
+						return;
+					}
+				}
 			}
+			
+			
+			
+			
+			
 		}
 	}
 </script>
@@ -146,5 +206,17 @@
 	}
 	.mix-tree-item.last:before{
 		opacity: 0;
+	}
+	.option-icon{
+		width: 35upx;
+		height: 35upx;
+		margin-left: 200upx;
+		
+		opacity: 0.9;
+	}
+	.icon{
+		width: 35upx;
+		height: 35upx;
+		opacity: 0.9;
 	}
 </style>

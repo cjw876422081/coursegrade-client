@@ -1,3 +1,27 @@
+<<<<<<< HEAD
+<template>
+	<view>
+		
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style>
+
+</style>
+=======
 
 <template>
 	<view style="width:92vw;padding:0 4vw;">
@@ -95,3 +119,4 @@
 		}
 	}
 </script>
+>>>>>>> d544234ec2e9b7d4b7f13874d96b2406da264040

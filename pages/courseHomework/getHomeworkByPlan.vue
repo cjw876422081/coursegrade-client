@@ -6,8 +6,8 @@
 				<view @tap="gotohomework(homework.id)">
 					<uni-swipe-action :options="options2" @click="deleteHomework">
 						<view class="homework-list">
-							<text class="homework-H">作业代码 : </text>
-							<text class="homework-Data"> {{ homework.homeworkCode }}</text>
+							<text class="homework-H">作业代码 :</text>
+							<text class="homework-Data">{{ homework.homeworkCode }}</text>
 						</view>
 						<view class="homework-list">
 							<text class="homework-H">作业内容 :</text>
@@ -28,11 +28,10 @@
 					</uni-swipe-action>
 				</view>
 			</view>
-		
+
 			<uni-fab horizontal="right" :content="fabButtonContent" @trigger="courseHomework(homeworks[0].plan.id)"></uni-fab>
 		</view>
 	</view>
-	
 </template>
 <script>
 import CourseHomeworkService from '../../common/service/CourseHomeworkService.js'; //引入CourseHomeworkService
@@ -51,12 +50,10 @@ export default {
 	data() {
 		return {
 			CourseHomeworkService: new CourseHomeworkService(),
-			planId: '2',
-
+			parmeter:{},/* 参数 */
+			plan:{},
 			homeworks: [],
-
-			/* 左滑删除作业 */
-			options2: [
+			options2: [/* 左滑删除作业 */
 				{
 					text: '删除',
 					style: {
@@ -64,9 +61,7 @@ export default {
 					}
 				}
 			],
-
-			/*布置作业 */
-			fabButtonContent: [
+			fabButtonContent: [/*布置作业*/
 				{
 					iconPath: '/static/add-icon.png',
 					selectedIconPath: '/static/add-icon.png',
@@ -80,8 +75,8 @@ export default {
 		uni.setNavigationBarTitle({
 			title: '单个授课内容作业'
 		});
-		console.log(option.homeworkId);
-		this.homework.id = option.homeworkId;
+		this.parmeter = JSON.parse(decodeURIComponent(option.parmeter));
+		console.log(this.parmeter);
 		this.getHomework();
 	},
 	onShow: function() {
@@ -90,10 +85,10 @@ export default {
 	methods: {
 		/* 获取作业列表 */
 		getHomework: function() {
-			var a = '2';
-			console.log(a);
-			// const planId = this.plan.id;
-			this.CourseHomeworkService.getHomework(2)
+			const planId = this.parmeter.planId;
+			console.log('赋值后',planId);
+			// this.CourseHomeworkService.getHomework(2)
+			this.CourseHomeworkService.getHomework(planId)
 				.then(result => {
 					// this.getCourseInfo(courseId);
 					console.log('啦啦啦', result.data);
@@ -102,7 +97,7 @@ export default {
 				.catch(err => {})
 				.finally(() => {});
 		},
-		
+
 		/*日期格式化 */
 		handleTime: function(date) {
 			var d = new Date(date);
@@ -116,39 +111,39 @@ export default {
 		},
 		/* 删除作业 */
 		deleteHomework(e) {
-			console.log('当前点击的是第'+e.index+'个按钮，点击内容是'+e.content.text,e)
-			if(e.content){
-				const homerworkId=e.content.homerworkId;
-				console.log('---------1---',homerworkId)
-				this.CourseHomeworkService.deHomework(homerworkId).then((result)=>{
-					this.deHomework(homerworkId);
-				}).catch((err)=>{
-					uni.showToast({
-					    icon:'none',
-					    title: err.data.title
-					});
-				}).finally(()=>{
-					
-				})
+			console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text, e);
+			if (e.content) {
+				const homerworkId = e.content.homerworkId;
+				console.log('---------1---', homerworkId);
+				this.CourseHomeworkService.deHomework(homerworkId)
+					.then(result => {
+						this.deHomework(homerworkId);
+					})
+					.catch(err => {
+						uni.showToast({
+							icon: 'none',
+							title: err.data.title
+						});
+					})
+					.finally(() => {});
 			}
-			
 		},
 		/* 删除作业列表 */
-		dehomework(homeworkId){
-			for(let i=0;i<this.homeworks.length;i++){
-				const homerwork=this.homeworks[i];
-				if(homerwork.id===homerwork){
-					console.log("delete homerworkId",homerworkId);
-					this.homeworks.splice(i,1);
+		dehomework(homeworkId) {
+			for (let i = 0; i < this.homeworks.length; i++) {
+				const homerwork = this.homeworks[i];
+				if (homerwork.id === homerwork) {
+					console.log('delete homerworkId', homerworkId);
+					this.homeworks.splice(i, 1);
 					break;
 				}
 			}
 		},
 
 		/* 布置作业 @trigger */
-		courseHomework(homeworkPlanId,homeworkId) {
+		courseHomework(homeworkPlanId, homeworkId) {
 			uni.navigateTo({
-				url: '../createHomework/createHomework?homeworkPlanId='+homeworkPlanId
+				url: '../createHomework/createHomework?homeworkPlanId=' + homeworkPlanId
 			});
 		}
 	}
@@ -156,9 +151,9 @@ export default {
 </script>
 
 <style>
-	.content{
-		background: rgb(250, 250, 250);
-	}
+.content {
+	background: rgb(250, 250, 250);
+}
 .main {
 	width: 96%;
 	margin: 0 auto;
@@ -172,8 +167,7 @@ export default {
 }
 .homework-list {
 	margin-left: 1vw;
-	border-bottom: 1px solid rgb(238, 238, 238) ;
-	
+	border-bottom: 1px solid rgb(238, 238, 238);
 }
 /* .homework-H{
 	color: rgb(234, 241, 244);

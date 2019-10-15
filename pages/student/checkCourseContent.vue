@@ -2,25 +2,33 @@
 	<view class="container">
 		<view class="top">
 			<view class="avatar-box"><image :src="course.courseCover" mode="scaleToFill" class="cover"></image></view>
+	
 		</view>
 		   <wuc-tab :tab-list="tabList" textFlex :tabCur.sync="TabCur" tab-class="text-center text-black bg-white" select-class="text-orange"></wuc-tab>
 		      <swiper :current="TabCur" class="swiper" duration="300" :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange" style="height:1000upx;">
 		        <swiper-item>
-					<uni-list-item title="课程名称" :note="course.courseName" ></uni-list-item>
-					<uni-list-item title="课程总数" :note="course.courseCount" show-arrow="true"></uni-list-item>
-					<uni-list-item title="课程描述" :note="course.courseMemo" show-arrow="false"></uni-list-item>
-					<uni-list-item title="课程周数" :note="course.courseWeekCount" show-arrow="false"></uni-list-item>
-					<uni-list-item title="创建时间" :note="course.dataTime" show-arrow="false"></uni-list-item>
-					<button id="Join1" type="primary" v-bind:disabled="JoinBtn" plain="true" v-on:click="JointheClass()" size="mini">{{joincontent}}</button>
+					<text id="txt">
+						课程名称 : {{course.courseName}}
+						课程总数 : {{course.courseCount}}
+						课程描述 : {{course.courseMemo}}
+						课程周数 : {{course.courseWeekCount}}
+						创建时间 : {{course.dataTime}}
+					</text>
+					<button  id="Join1" type="primary" v-bind:disabled="JoinBtn" plain="true" v-on:click="JointheClass()" >{{joincontent}}</button>
 				</swiper-item>
 				<swiper-item >
 					<mix-tree
 						:list="list"
-						@treeItemClick="treeItemClick"
+					
 					></mix-tree>
-					<button id="Join2" type="primary" v-bind:disabled="JoinBtn" plain="true" v-on:click="JointheClass()" size="mini">{{joincontent}}</button>
+					<uni-fab
+						horizontal="right"
+						:content="fabButtonContent"
+						@trigger="checkhomework"
+					></uni-fab>
 		        </swiper-item>
 		     </swiper>
+			 <!-- 	@treeItemClick="treeItemClick" -->
 	</view>
 </template>
 
@@ -44,6 +52,9 @@
 				  StudentCourseGroupService: new StudentCourseGroupService(),
 				  CourseService: new CourseService(),
 		          tabList: [{ name: '课程简介' }, { name: '章节内容' }],
+				  fabButtonContent:[
+					
+					],
 		        }},
 		    components: {
 				WucTab ,
@@ -55,7 +66,7 @@
 		    methods: {
 				getCourseInfo(){
 					const courseId = this.courseId;
-					console.log('啦啦啦',courseId)
+				
 					this.StudentCourseGroupService
 						.getCourseInfo(courseId)
 						.then((result) => {
@@ -69,7 +80,7 @@
 
 				getCoursesPlan(){
 					this.StudentCourseGroupService.
-					getCoursePlanTree(1).
+					getCoursePlanTree(this.courseId).
 					then((result) => {
 							console.log('StudentCourseGroupService getCoursePlanTree', result);
 							if (result.data) {
@@ -103,32 +114,41 @@
 					})
 					return result;
 				},
+					
+				checkhomework(){
+					// uni.navigateTo({
+					// 	url: '../student/checkCourseContentHomework?cId=' + this.courseId
+					// });
+				},
+				
 
 				IsJoinTheClass(){
-					this.StudentCourseGroupService.
-					IsJoinTheClass().then((result) =>{
-						console.log("result " ,result)
-						for(var i = 0,l=result.length ;i<l;i++){
-							if( result[i] == "id" && result[i][key] == this.course.id){
-									JoinBtn = false
-							}
-						}
-					})
-					.catch(e=>{})
-					.finally(()=>{})
+					// this.StudentCourseGroupService.
+					// IsJoinTheClass().then((result) =>{
+					// 	console.log("result " ,result)
+					// 	for(var i = 0,l=result.length ;i<l;i++){
+					// 		if( result[i] == "id" && result[i][key] == this.course.id){
+					// 				JoinBtn = false
+					// 				return false;
+					// 		}
+					// 	}
+					// 	 return true;
+					// })
+					// .catch(e=>{})
+					// .finally(()=>{})
 				},
 				JointheClass(){
 					uni.navigateTo({
 					url: '../student/checkCourseClassList?cId=' + this.courseId
 					});
 				},
-				treeItemClick(item) {
-					let { id, planMemo, parentId } = item;
-					uni.showModal({
-						content: `点击了${parentId.length + 1}级菜单, ${planMemo.toString()}, id为${id}, 父id为${parentId.toString()}`
-					});
-					console.log(item);
-				},
+				// treeItemClick(item) {
+				// 	let { id, planMemo, parentId } = item;
+				// 	uni.showModal({
+				// 		content: `点击了${parentId.length + 1}级菜单, ${planMemo.toString()}, id为${id}, 父id为${parentId.toString()}`
+				// 	});
+				// 	console.log(item);
+				// },
 				tabChange(index) {
 				    this.TabCur = index;
 				},
@@ -141,10 +161,10 @@
 				console.log("option" , option.cId)
 				this.courseId = option.cId
 				this.getCourseInfo();
+				this.getCoursesPlan();
+				
 			},
 			onShow() {
-			
-				this.getCoursesPlan();
 				this.IsJoinTheClass();
 			}
     }
@@ -162,10 +182,15 @@
 		height:25vh;
 	}
 	#Join1{
-
-		margin-bottom: 0;
+		margin-bottom: 0vh;
+		padding-bottom: 0vh;
+	
 	}
 	.cover {
 		width: 100%;
+	}
+		
+	.txt{
+	font: 12px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif; 
 	}
 </style>

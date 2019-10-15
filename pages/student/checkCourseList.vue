@@ -135,7 +135,7 @@ export default {
 				page:this.pageIndex,
 				size:this.pageSize
 			}).then((result)=>{
-				console.log("CourseService getAllCourses",result)
+				console.log("CourseService getStudentCourses",result)
 				if(result.data && result.data.content){
 				console.log("CourseService getStudentCourses",result);
 				if(this.pageIndex==0){

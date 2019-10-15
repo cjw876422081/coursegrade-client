@@ -7,11 +7,15 @@
 				    <t-tr font-size="15" color="black" align="left">
 				        <t-th align="left">班级</t-th>
 				        <t-th align="left">人数</t-th>
+						<t-th align="center">查看</t-th>
+						<t-th align="center">加入</t-th>
 				    </t-tr>
-				    <view v-for="(courseGroup,i) in classes" :key="i" @click="classclick(courseGroup.id,courseGroup.groupName)">
+				    <view v-for="(courseGroup,i) in classes" :key="i" >
 						<t-tr font-size="15" color="black" align="left" >
 				        <t-td align="left" >{{courseGroup.groupName}}</t-td>
 						<t-td align="left">{{courseGroup.groupCount}} </t-td>
+						<t-td ><button  style="font-size: 3vw;" v-on:click="classclick(courseGroup.id,courseGroup.groupName)" size="mini" >查看学生</button></t-td>
+						<t-td ><button  style="font-size: 3vw;"  size="mini" v-on:click="JointheClass(courseGroup.groupCode)" >立即加入</button></t-td>
 				    </t-tr>
 					</view>
 				</t-table>
@@ -74,9 +78,36 @@
 				});
 			},
 			classclick(cgid,cgname){
+				console.log("查看学生",cgid , cgname)
 				uni.navigateTo({
 									url: 'checkClassStudentList?id='+cgid+'&className='+cgname
 								});
+			},
+			JointheClass(groupCode){
+				this.studentCourseGroupservice.joinTheClass(groupCode) //调用courseService中的createCourse方法，将提取出的有效信息formData传给创建课程的接口
+					.then(result => {
+						//.then(返回值)方法可以保证上面的创建语句执行完后再执行下面的代码，避免了执行下面语句时还没有收到返回值的情况
+						console.log('join the class', result); //控制台打印创建课程操作的返回值
+						if (result.data) {
+							//判断返回值中的data字段是否存在，如果存在则其中的id属性是否>0(如果创建成功，数据库会自动给id赋值)
+							uni.showToast({
+								//找到了正确的id值，弹窗显示"课程创建成功"
+								icon: 'success',
+								title: '加入班级成功'
+							});
+							setTimeout(() => {
+								//等待1.5秒以确保判断完成，然后退出当前界面，返回上个界面
+								console.log('settime out');
+								uni.navigateBack();
+							}, 1500);
+						}
+					})
+					.catch(error => {
+						//如果没有找到正确的id值，则执行的操作
+					})
+					.finally(() => {
+						//这是无论有没有检测到正确的id值都要执行的语句
+					});
 			}
 			
 		},
@@ -106,5 +137,12 @@
 	}
 	.scroll-Y{
 		height:100vh;
+	}
+	#Join1{
+		margin-bottom: 0vh;
+		padding-bottom: 0vh;
+		width: 20vw;
+		font-size: 20;
+		color: #000000;
 	}
 </style>
