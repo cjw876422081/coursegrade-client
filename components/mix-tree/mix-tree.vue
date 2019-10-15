@@ -24,9 +24,10 @@
 					</view>
 					<view>
 						<img class="option-icon" src="/static/img/delete.png" @click="deleteCoursePlan(index)" v-if="item.leaf == true"></img>
-						<img class="option-icon" src="/static/img/add.png" @click="addCoursePlan(index)"></img>
-						<img class="option-icon" src="/static/img/add.png" @click="courseHomework(index)"></img>
-						<img class="option-icon" src="/static/img/add.png" @click="courseNote(index)"></img>
+						<img class="option-icon" src="/static/img/plan.png" @click="addCoursePlan(index)"></img>
+						<img class="option-icon" src="/static/img/homework.png" @click="courseHomework(index)" v-if="item.leaf == true"></img>
+						<img class="option-icon" src="/static/img/note.png" @click="courseNote(index)" v-if="item.leaf == true"></img>
+						<!-- <img class="option-icon" src="/static/img/details.png" @click="courseNote(index)"></img> -->
 					</view>
 					
 				</view>
