@@ -279,6 +279,7 @@ export default {
 		},
 		//授课内容
 		getCoursesPlan() {
+			this.list = '';
 			const courseId = this.course.id;
 			console.log('courseId：' + courseId);
 			this.coursePlanTeacherTreeService

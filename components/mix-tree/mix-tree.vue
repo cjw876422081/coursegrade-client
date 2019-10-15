@@ -27,9 +27,8 @@
 						<img class="option-icon" src="/static/img/plan.png" @click="addCoursePlan(index)"></img>
 						<img class="option-icon" src="/static/img/homework.png" @click="courseHomework(index)" v-if="item.leaf == true"></img>
 						<img class="option-icon" src="/static/img/note.png" @click="courseNote(index)" v-if="item.leaf == true"></img>
-						<!-- <img class="option-icon" src="/static/img/details.png" @click="courseNote(index)"></img> -->
+						<img class="option-icon" src="/static/img/details.png" @click="planDetails(index)"></img>
 					</view>
-					
 				</view>
 			</block>
 		</view>
@@ -160,15 +159,7 @@ export default {
 		},
 		addCoursePlan(index){
 			this.getParmter(index);
-			// uni.showToast({
-			//     title: '点击了'+JSON.stringify(this.treeList[index].id),
-			//     duration: 2000
-			// });
-			
 			console.log("+++++++++++=1:"+JSON.stringify(this.parmeter));
-			// console.log("+++++++++++=2:"+JSON.stringify(encodeURIComponent(this.parmeter)));
-			// console.log("+++++++++++=3:"+JSON.stringify(decodeURIComponent(this.parmeter)));
-			
 			uni.navigateTo({
 			    url: '../creatCoursePlan/creatCoursePlan?parmeter='+ encodeURIComponent(JSON.stringify(this.parmeter))
 			});
@@ -182,7 +173,6 @@ export default {
 		},
 		courseNote(index){
 			this.getParmter(index);
-			// console.log("this.treeList:"+JSON.stringify(this.treeList[index].id));
 			//进入单个笔记及全部回复
 			uni.navigateTo({
 			    url: '../courseNote/courseNoteByPlan-teacher/courseNoteByPlan-teacher?parmeter='+encodeURIComponent(JSON.stringify(this.parmeter))
@@ -195,29 +185,50 @@ export default {
 				courseName: '',
 				planMemo:[]
 			}
-			// console.log("this.list:"+JSON.stringify(this.treeList));
 			this.parmeter.planId = this.treeList[index].id;
 			this.parmeter.courseId =  this.courseTreeList.id;
 			this.parmeter.courseName = this.courseTreeList.courseName;
-			console.log("courseId",this.parmeter.courseName);
-			console.log("courseName",this.courseTreeList.courseName);
-			// console.log("planMemo",this.parmeter);
 			this.parmeter.planMemo.push(this.treeList[index].planMemo);
 			for(;;){
 				const level =  this.treeList[index].parentId.length;
-				// console.log("级别:"+level);
-				// console.log("this.list_________:"+this.treeList[index].pId);
-				// console.log("this.list+++++++++++++:"+JSON.stringify(this.treeList[index].planMemo));
 				if(level > 0 && this.treeList[index].pId && (this.treeList[index].pId != null || this.treeList[index].course != null)){
 					this.parmeter.planMemo.push(this.treeList[index-1].planMemo);
-					// console.log("planMemo+++++++++++++:"+JSON.stringify(this.treeList[index-1].planMemo));
 					index = index - 1;
 				}
 				if(level < 2){
-					// console.log("跳出循环");
 					return;
 				}
 			}
+		},
+		planDetails(index){
+			var planMemo = JSON.stringify(this.treeList[index].planMemo);
+			planMemo = planMemo.substring(1,planMemo.length-1);
+			var planTarget = JSON.stringify(this.treeList[index].planTarget);
+			planTarget = planTarget.substring(1,planTarget.length-1);
+			var planCount = JSON.stringify(this.treeList[index].planCount);
+			var planTime = JSON.stringify(this.treeList[index].planTime);
+			console.log("time："+planTime);
+			planTime = planTime.substring(1,11);
+			console.log("time："+planTime);
+			// const planTime2 = this.formatDate(planTime);
+			// console.log("handle Time: "+planTime2);
+			const content = '课程目标:'+planTarget+"\n课程数:"+planCount+"\n时间:"+planTime;
+			console.log("详情："+ content);
+			uni.showModal({
+				title: `${planMemo}`,
+				content: `${content}`,
+				showCancel: false
+			});
+		},
+		handleTime(date) {
+			var d = new Date(date);
+			var year = d.getFullYear();
+			var month = d.getMonth() + 1;
+			var day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate();
+			var hour = d.getHours() < 10 ? '0' + d.getHours() : '' + d.getHours();
+			var minutes = d.getMinutes() < 10 ? '0' + d.getMinutes() : '' + d.getMinutes();
+			var seconds = d.getSeconds() < 10 ? '0' + d.getSeconds() : '' + d.getSeconds();
+			return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
 		}
 	}
 };
