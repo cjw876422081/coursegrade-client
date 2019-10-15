@@ -1,7 +1,7 @@
 <template>
 	<view
 		class="content"
-		style="background-image: url('./static/img/createCoursePlan.jpg');
+		style="background-image: url('./static/img/1.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;padding:0;overflow: hidden;"
 	>
@@ -118,10 +118,15 @@ export default {
 		},
 		getCourseNames() {
 			this.courseNames = this.parmeter.courseName + '/';
-			for (var i = this.parmeter.planMemo.length-1; i >= 0; i--) {
-				this.courseNames += this.parmeter.planMemo[i] + '/';
+			// console.log(this.courseNames);
+			for (var i = this.parmeter.planMemo.length-1; i >= 0; i--) 
+			{
+			var text=this.courseNames += this.parmeter.planMemo[i] + '/';
+			var  text1= text.substring(0,text.length-1);
 			}
-			console.log(this.courseNames);
+			this.courseNames =text1;
+			// console.log("text1"+text1);
+			// console.log("最后一个："+this.courseNames);
 		}
 	}
 };
