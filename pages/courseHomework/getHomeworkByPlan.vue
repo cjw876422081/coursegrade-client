@@ -4,7 +4,7 @@
 		<view class="main">
 			<view class="list" v-for="(homework, index) in homeworks" :key="index">
 				<view @tap="gotohomework(homework.id)">
-					<uni-swipe-action :options="options2" @click="deleteHomework">
+					<uni-swipe-action :options="options2" @click="delHomework(index)">
 						<view class="homework-list">
 							<text class="homework-H">作业代码 :</text>
 							<text class="homework-Data">{{ homework.homeworkCode }}</text>
@@ -36,7 +36,6 @@
 <script>
 import CourseHomeworkService from '../../common/service/CourseHomeworkService.js'; //引入CourseHomeworkService
 import uniFab from '@/components/uni-fab/uni-fab.vue';
-
 import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue';
 import uniList from '@/components/uni-list/uni-list.vue';
 import uniListItem from '@/components/uni-list-item/uni-list-item.vue';
@@ -50,10 +49,11 @@ export default {
 	data() {
 		return {
 			CourseHomeworkService: new CourseHomeworkService(),
-			parmeter:{},/* 参数 */
-			plan:{},
+			parmeter: {} /* 参数 */,
+			plan: {},
 			homeworks: [],
-			options2: [/* 左滑删除作业 */
+			options2: [
+				/* 左滑删除作业 */
 				{
 					text: '删除',
 					style: {
@@ -61,7 +61,8 @@ export default {
 					}
 				}
 			],
-			fabButtonContent: [/*布置作业*/
+			fabButtonContent: [
+				/*布置作业*/
 				{
 					iconPath: '/static/add-icon.png',
 					selectedIconPath: '/static/add-icon.png',
@@ -77,7 +78,7 @@ export default {
 		});
 		this.parmeter = JSON.parse(decodeURIComponent(option.parmeter));
 		console.log(this.parmeter);
-		this.getHomework();
+		// this.getHomework();
 	},
 	onShow: function() {
 		this.getHomework();
@@ -86,7 +87,7 @@ export default {
 		/* 获取作业列表 */
 		getHomework: function() {
 			const planId = this.parmeter.planId;
-			console.log('赋值后',planId);
+			console.log('赋值后', planId);
 			// this.CourseHomeworkService.getHomework(2)
 			this.CourseHomeworkService.getHomework(planId)
 				.then(result => {
@@ -109,35 +110,21 @@ export default {
 			var seconds = d.getSeconds() < 10 ? '0' + d.getSeconds() : '' + d.getSeconds();
 			return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
 		},
-		/* 删除作业 */
-		deleteHomework(e) {
-			console.log('当前点击的是第' + e.index + '个按钮，点击内容是' + e.content.text, e);
-			if (e.content) {
-				const homerworkId = e.content.homerworkId;
-				console.log('---------1---', homerworkId);
-				this.CourseHomeworkService.deHomework(homerworkId)
-					.then(result => {
-						this.deHomework(homerworkId);
-					})
-					.catch(err => {
-						uni.showToast({
-							icon: 'none',
-							title: err.data.title
-						});
-					})
-					.finally(() => {});
-			}
-		},
 		/* 删除作业列表 */
-		dehomework(homeworkId) {
-			for (let i = 0; i < this.homeworks.length; i++) {
-				const homerwork = this.homeworks[i];
-				if (homerwork.id === homerwork) {
-					console.log('delete homerworkId', homerworkId);
-					this.homeworks.splice(i, 1);
-					break;
-				}
-			}
+		delHomework(index) {
+			const homerworkId = JSON.stringify(this.homeworks[index].id);
+			// console.log('id:' + homerworkId);
+			this.CourseHomeworkService.delHomework(homerworkId)
+				.then(result => {
+					// console.log('删除返回结果:' + JSON.stringify(result));
+					uni.showToast({
+						title: '删除成功',
+						duration: 2000
+					});
+					this.getHomework();
+				})
+				.catch(err => {})
+				.finally(() => {});
 		},
 
 		/* 布置作业 @trigger */

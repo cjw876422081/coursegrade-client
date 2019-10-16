@@ -38,7 +38,7 @@ export default class CourseHomeworkService{
 	}
 	
 	/*删除授课内容作业 根据作业id */
-	deHomework(homeworkId) {
+	delHomework(homeworkId) {
 		const url= '/api/course-homeworks/'+homeworkId;
 		return this.request.delete({url:url});
 	}
