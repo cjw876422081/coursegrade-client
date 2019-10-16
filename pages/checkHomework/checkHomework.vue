@@ -6,8 +6,10 @@
 		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upperCallback" >
 			<uni-card class="card" :title="studentHomework.student" >
 				<view class="submitInfo">
-					<img :src="studentHomework.submitMemo" @click="toEnlarge"
-					alt="作业内容" style="width:31vw; height:25vh;" /><br>
+					<view v-for="(file,index) in files" :key="index">
+						<img :src="file" @click="toEnlarge(file)"
+						alt="作业内容" style="width:26vw; height:17vh; float:left; margin-right:1vh;margin-bottom:1vh;" />
+					</view>
 					<text>提交时间: {{studentHomework.submitTime}}</text>
 				</view>
 				<view class="grade">
@@ -43,7 +45,7 @@
 			</view>
 		</mescroll-uni>
 		<view class="mask" v-show="show" @click="exit">
-			<img :src="studentHomework.submitMemo" alt="作业内容" 
+			<img :src="path" alt="作业内容" 
 			style="width:90vw;height:90vh;margin:10vh 5vw;
 			position:absolute"/>
 		</view>
@@ -69,6 +71,8 @@
 				studentHomeworkId:0,
 				grade:0,
 				show:false,
+				files:[],
+				path:'',
 				studentHomework:{},
 				studentHomeworkService:new StudentHomeworkService(),
 			    //笔记列表
@@ -130,8 +134,10 @@
 			  }
 			  this.grade=value
 			},
-			toEnlarge(e){
+			toEnlarge(path){
+				this.path=path;
 				this.show=true;
+				
 			},
 			exit(){
 				this.show=false;
@@ -234,6 +240,9 @@
 				).then((result)=>{
 					if(result.data){
 						this.studentHomework=result.data;
+						console.log("this.studentHomework---",this.studentHomework.submitMemo);
+						this.files=this.studentHomework.submitMemo.split(',');
+						console.log("this.files---",this.files);
 					}
 				}).catch(err=>{
 					
@@ -265,14 +274,20 @@
 }
 .submitInfo{
 	margin:0 20rpx;
-	color:rgba(80,90,100,0.8)
+	color:rgba(80,90,200,0.8)
+}
+.submitInfo text{
+	margin:0 20rpx;
+	color:rgba(80,90,200,0.8);
+	float:left;
 }
 .grade{
 	border-top: rgba(0,0,0,0.2) solid 2rpx;
 	padding-top:2vh;
+	float:left;
 }
 .input-row .gradeItme{
-	margin-left:45vw;
+	margin-left:44vw;
 }
 .input-row label{
 	padding:7rpx 5rpx;
@@ -293,8 +308,7 @@ input.formerror{
 .subBtn{
 	width:15vw; 
 	height:50upx;
-	margin-right:0rpx;
-	margin-top: 0vh;
+	margin:0 1vw;
 	background: rgba(20,100,255,0.8);
 	font-size: 23rpx;
 	color:rgb(70,80,100)
